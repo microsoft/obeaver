@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry architecture — engine selection, code structure, tool-calling internals.">
-  <title>Architecture — ofoundry</title>
+  <meta name="description" content="oFoundry architecture — engine selection, code structure, tool-calling internals.">
+  <title>Architecture — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -54,7 +54,7 @@
   <main class="main-content content">
 
     <h1><span data-en>Architecture</span><span data-zh>架构说明</span></h1>
-    <p><span data-en>ofoundry is designed as a modular, layered system with a CLI frontend, a FastAPI server, and pluggable inference engines.</span><span data-zh>ofoundry 采用模块化分层设计，包含 CLI 前端、FastAPI 服务和可插拔推理引擎。</span></p>
+    <p><span data-en>oFoundry is designed as a modular, layered system with a CLI frontend, a FastAPI server, and pluggable inference engines.</span><span data-zh>oFoundry 采用模块化分层设计，包含 CLI 前端、FastAPI 服务和可插拔推理引擎。</span></p>
 
     <!-- Architecture Diagram -->
     <h2 id="diagram"><span data-en>Architecture Diagram</span><span data-zh>架构图</span></h2>
@@ -108,7 +108,7 @@
   → load_model(alias)
   → OpenAI client streams via manager.endpoint</code></pre>
     </div>
-    <p>The Foundry Local engine delegates to the Microsoft Foundry Local daemon, which handles hardware detection and model management. The SDK provides an OpenAI-compatible client that streams responses directly.</p>
+    <p><span data-en>The Foundry Local engine delegates to the Microsoft Foundry Local daemon, which handles hardware detection and model management. The SDK provides an OpenAI-compatible client that streams responses directly.</span><span data-zh>Foundry Local 引擎委托给 Microsoft Foundry Local 守护进程，负责硬件检测和模型管理。SDK 提供一个 OpenAI 兼容的客户端，直接流式传输响应。</span></p>
 
     <!-- ORT Flow -->
     <h2 id="ort-flow"><span data-en>ORT Engine Flow</span><span data-zh>ORT 引擎流程</span></h2>
@@ -119,7 +119,7 @@
       <pre><code>og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
   → og.Generator(model, params) → generate_next_token() loop → stream tokens</code></pre>
     </div>
-    <p>The ORT engine loads models directly using ONNX Runtime GenAI. It tokenizes input, configures generation parameters, and runs the inference loop locally — fully offline with zero network dependency.</p>
+    <p><span data-en>The ORT engine loads models directly using ONNX Runtime GenAI. It tokenizes input, configures generation parameters, and runs the inference loop locally — fully offline with zero network dependency.</span><span data-zh>ORT 引擎使用 ONNX Runtime GenAI 直接加载模型。它对输入进行分词、配置生成参数，并在本地运行推理循环——完全离线，零网络依赖。</span></p>
 
     <!-- Tool-Calling Internals -->
     <h2 id="tool-internals"><span data-en>Tool-Calling Internals</span><span data-zh>工具调用内部实现</span></h2>
@@ -196,7 +196,7 @@
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

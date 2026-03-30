@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry quickstart guide — install, get models, and start chatting in minutes.">
-  <title>Quickstart — ofoundry</title>
+  <meta name="description" content="oFoundry quickstart guide — install, get models, and start chatting in minutes.">
+  <title>Quickstart — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -65,13 +65,13 @@
   <main class="main-content content">
 
     <h1><span data-en>Quickstart</span><span data-zh>快速开始</span></h1>
-    <p><span data-en>Get ofoundry up and running in minutes. This guide covers installation, getting models, and your first chat.</span><span data-zh>几分钟即可启动 ofoundry。本指南涵盖安装、获取模型及首次对话。</span></p>
+    <p><span data-en>Get oFoundry up and running in minutes. This guide covers installation, getting models, and your first chat.</span><span data-zh>几分钟即可启动 oFoundry。本指南涵盖安装、获取模型及首次对话。</span></p>
 
     <!-- Requirements -->
     <h2 id="requirements"><span data-en>Requirements</span><span data-zh>系统要求</span></h2>
     <ul>
       <li><strong>Python 3.12+</strong></li>
-      <li>Foundry Local system daemon (macOS / Windows only, for Foundry Local engine):</li>
+      <li><span data-en>Foundry Local system daemon (macOS / Windows only, for Foundry Local engine):</span><span data-zh>Foundry Local 系统守护进程（仅 macOS / Windows，用于 Foundry Local 引擎）：</span></li>
     </ul>
     <div class="code-block">
       <div class="code-block-header">
@@ -83,12 +83,12 @@ winget install Microsoft.FoundryLocal              # Windows">Copy</button>
 winget install Microsoft.FoundryLocal              # Windows</code></pre>
     </div>
     <div class="callout info">
-      <p><strong>Note:</strong> On Linux, Foundry Local is not available. The engine defaults to ORT.</p>
+      <p><span data-en><strong>Note:</strong> On Linux, Foundry Local is not available. The engine defaults to ORT.</span><span data-zh><strong>注意：</strong>Linux 平台不支持 Foundry Local。引擎固定为 ORT。</span></p>
     </div>
 
     <!-- Installation -->
     <h2 id="installation"><span data-en>Installation</span><span data-zh>安装</span></h2>
-    <p><span data-en>Clone the repository and install ofoundry — all Python dependencies are included:</span><span data-zh>克隆仓库并安装 ofoundry——所有 Python 依赖已包含：</span></p>
+    <p><span data-en>Clone the repository and install oFoundry — all Python dependencies are included:</span><span data-zh>克隆仓库并安装 oFoundry——所有 Python 依赖已包含：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -150,7 +150,7 @@ Platform: macOS
 
     <!-- Getting Models -->
     <h2 id="getting-models"><span data-en>Getting Models</span><span data-zh>获取模型</span></h2>
-    <p><span data-en>Before using ofoundry, you need models. Choose based on your engine:</span><span data-zh>使用 ofoundry 前，你需要模型。根据引擎选择：</span></p>
+    <p><span data-en>Before using oFoundry, you need models. Choose based on your engine:</span><span data-zh>使用 oFoundry 前，你需要模型。根据引擎选择：</span></p>
 
     <h3 id="foundry-catalog"><span data-en>Foundry Local Catalog (macOS / Windows)</span><span data-zh>Foundry Local 目录（macOS / Windows）</span></h3>
     <p><span data-en>No manual download needed — pass a catalog alias and Foundry handles it:</span><span data-zh>无需手动下载——传入目录别名，Foundry 自动处理：</span></p>
@@ -165,7 +165,7 @@ Platform: macOS
       <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
     </div>
     <div class="callout warning">
-      <p><strong>⏳ First run requires download:</strong> When you run a Foundry Local model for the first time, the model will be downloaded from the Microsoft Foundry catalog. Please wait for the download to complete before the chat session starts — this may take several minutes depending on network speed and model size. Subsequent runs will use the cached version instantly.</p>
+      <p><span data-en><strong>⏳ First run requires download:</strong> When you run a Foundry Local model for the first time, the model will be downloaded from the Microsoft Foundry catalog. Please wait for the download to complete before the chat session starts — this may take several minutes depending on network speed and model size. Subsequent runs will use the cached version instantly.</span><span data-zh><strong>⏳ 首次运行需要下载：</strong>首次运行 Foundry Local 模型时，模型会从 Microsoft Foundry 目录下载。请等待下载完成后再开始对话——根据网络速度和模型大小，这可能需要几分钟。后续运行将直接使用缓存版本。</span></p>
     </div>
 
     <h3 id="onnx-models"><span data-en>ONNX GenAI Models (all platforms)</span><span data-zh>ONNX GenAI 模型（全平台）</span></h3>
@@ -201,7 +201,7 @@ ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
     <h2 id="first-chat"><span data-en>Your First Chat</span><span data-zh>第一次对话</span></h2>
     <p><span data-en>Start an interactive multi-turn chat in your terminal:</span><span data-zh>在终端中启动交互式多轮对话：</span></p>
 
-    <h3>Foundry Local (macOS / Windows)</h3>
+    <h3><span data-en>Foundry Local (macOS / Windows)</span><span data-zh>Foundry Local（macOS / Windows）</span></h3>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -212,10 +212,10 @@ ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s">
 ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s</code></pre>
     </div>
     <div class="callout info">
-      <p><strong>First run:</strong> Foundry Local will automatically download the model on first use. Please wait for the download to complete — subsequent runs will be instant.</p>
+      <p><span data-en><strong>First run:</strong> Foundry Local will automatically download the model on first use. Please wait for the download to complete — subsequent runs will be instant.</span><span data-zh><strong>首次运行：</strong>Foundry Local 会在首次使用时自动下载模型。请等待下载完成——后续运行将即时启动。</span></p>
     </div>
 
-    <h3>ORT Engine (all platforms)</h3>
+    <h3><span data-en>ORT Engine (all platforms)</span><span data-zh>ORT 引擎（全平台）</span></h3>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -238,7 +238,7 @@ ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU">Copy</button>
 ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
     </div>
     <div class="callout info">
-      <p><strong>Note:</strong> VL models require the ORT engine. When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code>.</p>
+      <p><span data-en><strong>Note:</strong> VL models require the ORT engine. When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code>.</span><span data-zh><strong>注意：</strong>VL 模型需要 ORT 引擎。当检测到 VL 模型目录（包含 <code>vision.onnx</code>）时，引擎会自动设置为 <code>ort</code>。</span></p>
     </div>
 
     <!-- Start the API Server -->
@@ -253,7 +253,7 @@ ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT">Copy</button>
       <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
 ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
     </div>
-    <p>Once running, any OpenAI-compatible client can connect to <code>http://127.0.0.1:18000/v1</code>.</p>
+    <p><span data-en>Once running, any OpenAI-compatible client can connect to <code>http://127.0.0.1:18000/v1</code>.</span><span data-zh>服务启动后，任何 OpenAI 兼容客户端都可以连接到 <code>http://127.0.0.1:18000/v1</code>。</span></p>
 
     <h3><span data-en>Test with curl</span><span data-zh>使用 curl 测试</span></h3>
     <div class="code-block">
@@ -292,11 +292,11 @@ ofoundry dashboard -e ort         # ORT engine (scans ./models)</code></pre>
     <!-- Next Steps -->
     <h2 id="next-steps"><span data-en>Next Steps</span><span data-zh>后续步骤</span></h2>
     <ul>
-      <li><a href="models.html">Browse available models</a> — Foundry catalog, ONNX GenAI, and embedding models</li>
+      <li><a href="models.html"><span data-en>Browse available models</span><span data-zh>浏览可用模型</span></a> — <span data-en>Foundry catalog, ONNX GenAI, and embedding models</span><span data-zh>Foundry 目录、ONNX GenAI 和嵌入模型</span></li>
       <li><a href="models.html#conversion"><span data-en>Model Conversion</span><span data-zh>模型转换</span></a> — <span data-en>convert HF models to ONNX for the ORT engine (text &amp; VL)</span><span data-zh>将 HF 模型转换为 ONNX 格式供 ORT 引擎使用（文本 &amp; VL）</span></li>
-      <li><a href="features.html">Explore features</a> — embeddings, tool calling, VL models</li>
-      <li><a href="api.html">API reference</a> — full endpoint documentation</li>
-      <li><a href="integrations.html">Integrations</a> — LangChain, LlamaIndex, CI pipelines</li>
+      <li><a href="features.html"><span data-en>Explore features</span><span data-zh>探索功能</span></a> — <span data-en>embeddings, tool calling, VL models</span><span data-zh>嵌入、工具调用、VL 模型</span></li>
+      <li><a href="api.html"><span data-en>API reference</span><span data-zh>API 参考</span></a> — <span data-en>full endpoint documentation</span><span data-zh>完整端点文档</span></li>
+      <li><a href="integrations.html"><span data-en>Integrations</span><span data-zh>集成方案</span></a> — <span data-en>LangChain, LlamaIndex, CI pipelines</span><span data-zh>LangChain、LlamaIndex、CI 管线</span></li>
     </ul>
 
     <!-- Bottom Nav -->
@@ -315,7 +315,7 @@ ofoundry dashboard -e ort         # ORT engine (scans ./models)</code></pre>
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

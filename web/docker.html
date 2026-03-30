@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry Docker deployment — build and run CPU containers for amd64 and arm64.">
-  <title>Docker — ofoundry</title>
+  <meta name="description" content="oFoundry Docker deployment — build and run CPU containers for amd64 and arm64.">
+  <title>Docker — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -53,8 +53,8 @@
 <div class="docs-layout">
   <main class="main-content content">
 
-    <h1>Docker</h1>
-    <p>A CPU-only Docker image is provided for <code>linux/amd64</code> and <code>linux/arm64</code> (Apple Silicon, AWS Graviton).</p>
+    <h1><span data-en>Docker</span><span data-zh>Docker 部署</span></h1>
+    <p><span data-en>A CPU-only Docker image is provided for <code>linux/amd64</code> and <code>linux/arm64</code> (Apple Silicon, AWS Graviton).</span><span data-zh>提供支持 <code>linux/amd64</code> 和 <code>linux/arm64</code>（Apple Silicon、AWS Graviton）的纯 CPU Docker 镜像。</span></p>
 
     <!-- Build -->
     <h2 id="build"><span data-en>Build</span><span data-zh>构建</span></h2>
@@ -118,7 +118,7 @@ docker buildx build --platform=linux/arm64 \
   ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 18000</code></pre>
     </div>
 
-    <p>Verify the server is running:</p>
+    <p><span data-en>Verify the server is running:</span><span data-zh>验证服务是否已启动：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -142,7 +142,7 @@ docker buildx build --platform=linux/arm64 \
     </table>
 
     <div class="callout info">
-      <p><strong>Tip:</strong> For performance tuning, increase <code>OMP_NUM_THREADS</code> to match the number of CPU cores available to your container.</p>
+      <p><span data-en><strong>Tip:</strong> For performance tuning, increase <code>OMP_NUM_THREADS</code> to match the number of CPU cores available to your container.</span><span data-zh><strong>提示：</strong>要调优性能，可将 <code>OMP_NUM_THREADS</code> 增加到与容器可用的 CPU 核心数相匹配。</span></p>
     </div>
 
     <nav class="page-nav">
@@ -160,7 +160,7 @@ docker buildx build --platform=linux/arm64 \
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

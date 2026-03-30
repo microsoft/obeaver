@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry API reference — OpenAI-compatible chat completions, embeddings, health check, and system endpoints.">
-  <title>API Reference — ofoundry</title>
+  <meta name="description" content="oFoundry API reference — OpenAI-compatible chat completions, embeddings, health check, and system endpoints.">
+  <title>API Reference — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -54,7 +54,7 @@
   <main class="main-content content">
 
     <h1><span data-en>API Reference</span><span data-zh>API 参考</span></h1>
-    <p><span data-en>ofoundry exposes an OpenAI-compatible HTTP API. Point any OpenAI SDK or compatible client at your local server.</span><span data-zh>ofoundry 提供 OpenAI 兼容的 HTTP API。将任意 OpenAI SDK 或兼容客户端指向本地服务器即可。</span></p>
+    <p><span data-en>oFoundry exposes an OpenAI-compatible HTTP API. Point any OpenAI SDK or compatible client at your local server.</span><span data-zh>oFoundry 提供 OpenAI 兼容的 HTTP API。将任意 OpenAI SDK 或兼容客户端指向本地服务器即可。</span></p>
 
     <!-- Chat Server Endpoints -->
     <h2 id="chat-server"><span data-en>Chat Server (<code>ofoundry serve</code>)</span><span data-zh>聊天服务 (<code>ofoundry serve</code>)</span></h2>
@@ -91,8 +91,8 @@
     </table>
 
     <!-- Chat Completions -->
-    <h2 id="chat-completions">POST <code>/v1/chat/completions</code></h2>
-    <p>Create a chat completion. Supports both streaming (SSE) and non-streaming modes.</p>
+    <h2 id="chat-completions"><span data-en>POST <code>/v1/chat/completions</code></span><span data-zh>POST <code>/v1/chat/completions</code></span></h2>
+    <p><span data-en>Create a chat completion. Supports both streaming (SSE) and non-streaming modes.</span><span data-zh>创建对话补全。支持流式（SSE）和非流式模式。</span></p>
 
     <h3 id="request-params"><span data-en>Request Parameters</span><span data-zh>请求参数</span></h3>
     <table>
@@ -207,8 +207,8 @@
     </div>
 
     <!-- Embeddings API -->
-    <h2 id="embeddings-api">POST <code>/v1/embeddings</code></h2>
-    <p>Compute text embeddings. Available on the embedding server (<code>ofoundry serve-embed</code>).</p>
+    <h2 id="embeddings-api"><span data-en>POST <code>/v1/embeddings</code></span><span data-zh>POST <code>/v1/embeddings</code></span></h2>
+    <p><span data-en>Compute text embeddings. Available on the embedding server (<code>ofoundry serve-embed</code>).</span><span data-zh>计算文本嵌入向量。在嵌入服务（<code>ofoundry serve-embed</code>）上可用。</span></p>
 
     <h3><span data-en>Request Body</span><span data-zh>请求体</span></h3>
     <table>
@@ -240,8 +240,8 @@
     </div>
 
     <!-- Health -->
-    <h2 id="health">GET <code>/health</code></h2>
-    <p>Returns the health status of the server, including loaded model name and engine type.</p>
+    <h2 id="health"><span data-en>GET <code>/health</code></span><span data-zh>GET <code>/health</code></span></h2>
+    <p><span data-en>Returns the health status of the server, including loaded model name and engine type.</span><span data-zh>返回服务器健康状态，包含已加载的模型名称和引擎类型。</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -251,8 +251,8 @@
     </div>
 
     <!-- System Memory -->
-    <h2 id="system-memory">GET <code>/api/system/memory</code></h2>
-    <p>Returns CPU, GPU, NPU, and process memory statistics as JSON. This powers the web dashboard's real-time gauges.</p>
+    <h2 id="system-memory"><span data-en>GET <code>/api/system/memory</code></span><span data-zh>GET <code>/api/system/memory</code></span></h2>
+    <p><span data-en>Returns CPU, GPU, NPU, and process memory statistics as JSON. This powers the web dashboard's real-time gauges.</span><span data-zh>以 JSON 格式返回 CPU、GPU、NPU 和进程内存统计信息。这是网页仪表盘实时仪表的数据源。</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -263,11 +263,11 @@
 
     <!-- Model Management -->
     <h2 id="model-management"><span data-en>Model Management</span><span data-zh>模型管理</span></h2>
-    <h3>GET <code>/api/models/available</code></h3>
-    <p>Lists all cached models available for hot-swapping.</p>
+    <h3><span data-en>GET <code>/api/models/available</code></span><span data-zh>GET <code>/api/models/available</code></span></h3>
+    <p><span data-en>Lists all cached models available for hot-swapping.</span><span data-zh>列出所有可用于热切换的已缓存模型。</span></p>
 
-    <h3>POST <code>/api/models/load</code></h3>
-    <p>Hot-swap the active model at runtime without restarting the server.</p>
+    <h3><span data-en>POST <code>/api/models/load</code></span><span data-zh>POST <code>/api/models/load</code></span></h3>
+    <p><span data-en>Hot-swap the active model at runtime without restarting the server.</span><span data-zh>运行时热切换活动模型，无需重启服务器。</span></p>
 
     <nav class="page-nav">
       <a href="features.html">
@@ -284,7 +284,7 @@
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

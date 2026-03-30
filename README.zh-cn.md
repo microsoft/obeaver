@@ -1,10 +1,10 @@
-# ofoundry
+# oFoundry
 
 <p align="center">
-  <img src="img/logo.png" alt="ofoundry logo" width="*"/>
+  <img src="img/logo.png" alt="oFoundry logo" width="*"/>
 </p>
 
-**ofoundry** 是一个本地优先的 LLM 推理工具包，专为需要在自有硬件上运行模型的 AI 开发者和工程师设计——无需云服务、无需 API 密钥、数据完全不离开你的设备。它提供 **OpenAI 兼容的 API**，让你现有的 Agent 流水线、RAG 技术栈和评估框架无需修改代码即可直接使用。
+**oFoundry** 是一个本地优先的 LLM 推理工具包，专为需要在自有硬件上运行模型的 AI 开发者和工程师设计——无需云服务、无需 API 密钥、数据完全不离开你的设备。它提供 **OpenAI 兼容的 API**，让你现有的 Agent 流水线、RAG 技术栈和评估框架无需修改代码即可直接使用。
 
 > English version: [README.md](README.md)
 
@@ -15,7 +15,7 @@
 ## 目录
 
 - [核心特性](#核心特性)
-- [为什么选择 ofoundry？](#为什么选择-ofoundry)
+- [为什么选择 oFoundry？](#为什么选择-ofoundry)
 - **快速入门**
   - [环境要求](#环境要求)
   - [安装](#安装)
@@ -60,9 +60,9 @@
 
 ---
 
-## 为什么选择 ofoundry？
+## 为什么选择 oFoundry？
 
-| 痛点 | ofoundry 如何解决 |
+| 痛点 | oFoundry 如何解决 |
 |------|-------------------|
 | **云端成本与延迟** | 在本地 CPU、GPU 或 NPU 上运行推理——零网络往返。 |
 | **数据隐私** | 模型在设备上运行，数据完全不离开你的机器。 |
@@ -75,7 +75,7 @@
 
 # 快速入门
 
-本节将引导你完成 ofoundry 的安装和配置，让其在你的机器上运行起来。
+本节将引导你完成 oFoundry 的安装和配置，让其在你的机器上运行起来。
 
 ## 环境要求
 
@@ -151,7 +151,7 @@ ofoundry models
 
 ## 获取模型
 
-使用 ofoundry 前需要先准备模型，根据你的引擎选择获取方式：
+使用 oFoundry 前需要先准备模型，根据你的引擎选择获取方式：
 
 ### Foundry Local 目录（macOS/Windows）
 
@@ -210,7 +210,7 @@ hf download onnx-community/Qwen3-Embedding-0.6B \
 
 # 基础用法
 
-ofoundry 已安装且模型就绪后，以下是核心使用方式。
+oFoundry 已安装且模型就绪后，以下是核心使用方式。
 
 ## 终端交互式对话
 
@@ -308,7 +308,7 @@ http://127.0.0.1:1573/
 - **CPU 内存** — 总量、已用、可用及实时使用率仪表
 - **GPU 内存** — 检测到的 GPU 设备及内存（NVIDIA、AMD、Intel、Qualcomm Adreno）
 - **NPU 内存** — 检测到的 NPU 设备及内存（Intel Meteor Lake、Qualcomm Hexagon）
-- **进程内存** — ofoundry 服务进程的驻留内存和虚拟内存
+- **进程内存** — oFoundry 服务进程的驻留内存和虚拟内存
 - **推理参数** — temperature、top-p、top-k、max tokens、repetition penalty，提供 Creative/Balanced/Precise 预设
 - **聊天界面** — 直接在浏览器中向已加载的模型发送消息，支持流式响应和性能统计（TTFT、tok/s、token 计数）
 - **会话历史** — 侧边栏保存对话记录，支持系统提示词配置
@@ -739,7 +739,7 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ## 致谢
 
-ofoundry 的灵感来源于以下优秀的开源项目，并在其理念基础上构建：
+oFoundry 的灵感来源于以下优秀的开源项目，并在其理念基础上构建：
 
 | 项目 | 说明 |
 |------|------|

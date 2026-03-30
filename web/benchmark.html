@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Benchmark and performance monitoring for ofoundry — TTFT, tok/s, memory tracking, and real-time system resource gauges.">
-  <title>Benchmark — ofoundry</title>
+  <meta name="description" content="Benchmark and performance monitoring for oFoundry — TTFT, tok/s, memory tracking, and real-time system resource gauges.">
+  <title>Benchmark — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
   <style>
@@ -125,16 +125,16 @@
 </aside>
 
 <!-- ============ Main Content ============ -->
-<div class="content-wrapper">
-  <main class="main-content">
+<div class="docs-layout">
+  <main class="main-content content">
 
     <h1><span data-en>Benchmark &amp; Performance</span><span data-zh>性能基准</span></h1>
-    <p class="lead">ofoundry provides built-in performance metrics and real-time resource monitoring so you can measure inference speed, memory usage, and system health — all from the CLI or the web dashboard.</p>
+    <p class="lead"><span data-en>oFoundry provides built-in performance metrics and real-time resource monitoring so you can measure inference speed, memory usage, and system health — all from the CLI or the web dashboard.</span><span data-zh>oFoundry 提供内置的性能指标和实时资源监控，你可以测量推理速度、内存使用和系统健康状态——全部可通过 CLI 或网页仪表盘完成。</span></p>
 
     <!-- ============================================ -->
     <h2 id="cli-timing-stats"><span data-en>CLI Timing Stats</span><span data-zh>CLI 计时统计</span></h2>
 
-    <p>Add the <code>--timings</code> flag to any <code>ofoundry run</code> command to display per-response performance metrics directly in the terminal:</p>
+    <p><span data-en>Add the <code>--timings</code> flag to any <code>ofoundry run</code> command to display per-response performance metrics directly in the terminal:</span><span data-zh>在任何 <code>ofoundry run</code> 命令中添加 <code>--timings</code> 参数，即可在终端直接显示每次响应的性能指标：</span></p>
 
     <pre><code class="language-bash"># Foundry Local engine with timing stats
 ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings
@@ -145,7 +145,7 @@ ofoundry run --engine ort ./models/phi3-mini-int4 --timings
 # VL (Vision-Language) model with timing stats
 ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pre>
 
-    <p>After each response, the CLI prints a summary line:</p>
+    <p><span data-en>After each response, the CLI prints a summary line:</span><span data-zh>每次响应后，CLI 会打印一行摘要信息：</span></p>
 
     <div class="metric-cards">
       <div class="metric-card">
@@ -191,7 +191,7 @@ ofoundry dashboard -e ort</code></pre>
     <!-- ============================================ -->
     <h2 id="system-resource-gauges"><span data-en>System Resource Gauges</span><span data-zh>系统资源仪表</span></h2>
 
-    <p>The dashboard tracks resource utilisation across all available compute hardware with real-time gauges that refresh every 3 seconds:</p>
+    <p><span data-en>The dashboard tracks resource utilisation across all available compute hardware with real-time gauges that refresh every 3 seconds:</span><span data-zh>仪表盘跟踪所有可用计算硬件的资源利用率，实时仪表每 3 秒刷新一次：</span></p>
 
     <table>
       <thead>
@@ -220,7 +220,7 @@ ofoundry dashboard -e ort</code></pre>
         <tr>
           <td><strong>Process Memory</strong></td>
           <td>PID, Resident, Virtual</td>
-          <td>Memory consumed by the ofoundry server process itself</td>
+          <td>Memory consumed by the oFoundry server process itself</td>
         </tr>
       </tbody>
     </table>
@@ -244,7 +244,7 @@ ofoundry dashboard -e ort</code></pre>
     <!-- ============================================ -->
     <h2 id="inference-parameters"><span data-en>Inference Parameters</span><span data-zh>推理参数</span></h2>
 
-    <p>The dashboard sidebar provides real-time tuneable inference parameters with three presets:</p>
+    <p><span data-en>The dashboard sidebar provides real-time tuneable inference parameters with three presets:</span><span data-zh>仪表盘侧边栏提供可实时调整的推理参数，并提供三种预设：</span></p>
 
     <table>
       <thead>
@@ -290,19 +290,19 @@ ofoundry dashboard -e ort</code></pre>
     <!-- ============================================ -->
     <h2 id="chat-performance-metrics"><span data-en>Chat Performance Metrics</span><span data-zh>对话性能指标</span></h2>
 
-    <p>The built-in chat interface shows real-time performance stats for every model response:</p>
+    <p><span data-en>The built-in chat interface shows real-time performance stats for every model response:</span><span data-zh>内置聊天界面为每次模型响应显示实时性能统计：</span></p>
 
     <figure class="screenshot-card">
       <img src="imgs/05_chat_response_hd.png" alt="Chat interface showing streaming response with TTFT, tok/s stats" loading="lazy">
       <figcaption>Chat response to "Explain quantum computing in one sentence" — showing TTFT 1398 ms, 5.7 tok/s, 26 tokens.</figcaption>
     </figure>
 
-    <p>Each message displays three key metrics:</p>
+    <p><span data-en>Each message displays three key metrics:</span><span data-zh>每条消息显示三个关键指标：</span></p>
 
     <ul>
-      <li><strong>TTFT (Time to First Token)</strong> — how quickly the model begins generating after receiving the prompt. Lower is better; strongly influenced by model size and available hardware acceleration.</li>
-      <li><strong>tok/s (Tokens per Second)</strong> — the sustained generation speed. Higher is better; CPU-only inference typically ranges 3-15 tok/s for small models.</li>
-      <li><strong>Token Count</strong> — total tokens generated in the response.</li>
+      <li><strong><span data-en>TTFT (Time to First Token)</span><span data-zh>TTFT\uff08\u9996\u4e2a Token \u65f6\u95f4\uff09</span></strong> — <span data-en>how quickly the model begins generating after receiving the prompt. Lower is better; strongly influenced by model size and available hardware acceleration.</span><span data-zh>\u6a21\u578b\u6536\u5230\u63d0\u793a\u8bcd\u540e\u5f00\u59cb\u751f\u6210\u7684\u901f\u5ea6\u3002\u8d8a\u4f4e\u8d8a\u597d\uff1b\u53d7\u6a21\u578b\u5927\u5c0f\u548c\u53ef\u7528\u786c\u4ef6\u52a0\u901f\u5f71\u54cd\u8f83\u5927\u3002</span></li>
+      <li><strong><span data-en>tok/s (Tokens per Second)</span><span data-zh>tok/s\uff08\u6bcf\u79d2 Token \u6570\uff09</span></strong> — <span data-en>the sustained generation speed. Higher is better; CPU-only inference typically ranges 3-15 tok/s for small models.</span><span data-zh>\u6301\u7eed\u751f\u6210\u901f\u5ea6\u3002\u8d8a\u9ad8\u8d8a\u597d\uff1b\u7eaf CPU \u63a8\u7406\u5c0f\u6a21\u578b\u901a\u5e38\u4e3a 3-15 tok/s\u3002</span></li>
+      <li><strong><span data-en>Token Count</span><span data-zh>Token \u8ba1\u6570</span></strong> — <span data-en>total tokens generated in the response.</span><span data-zh>\u54cd\u5e94\u4e2d\u751f\u6210\u7684\u603b Token \u6570\u3002</span></li>
     </ul>
 
     <figure class="screenshot-card">
@@ -313,7 +313,7 @@ ofoundry dashboard -e ort</code></pre>
     <!-- ============================================ -->
     <h2 id="full-dashboard-overview"><span data-en>Full Dashboard Overview</span><span data-zh>仪表盘完整概览</span></h2>
 
-    <p>The complete dashboard brings together system monitoring, a chat interface, inference parameter controls, conversation history, server logs, and export functionality in a single view:</p>
+    <p><span data-en>The complete dashboard brings together system monitoring, a chat interface, inference parameter controls, conversation history, server logs, and export functionality in a single view:</span><span data-zh>完整的仪表盘将系统监控、聊天界面、推理参数控制、会话历史、服务器日志和导出功能集成在一个视图中：</span></p>
 
     <figure class="screenshot-card">
       <img src="imgs/06_full_overview_hd.png" alt="Full overview of oFoundry dashboard with all sections visible" loading="lazy">
@@ -368,11 +368,11 @@ ofoundry dashboard -e ort</code></pre>
     <h2 id="tips"><span data-en>Performance Tips</span><span data-zh>性能优化建议</span></h2>
 
     <ul>
-      <li><strong>Choose smaller models for faster TTFT</strong> — run <code>foundry model list</code> to see available models; models like <code>Phi-4-mini-instruct-generic-cpu:5</code> start generating in under a second on modern hardware.</li>
-      <li><strong>Use Foundry Local on macOS/Windows</strong> — it automatically selects the best available accelerator (NPU &gt; GPU &gt; CPU).</li>
-      <li><strong>INT4 quantised ONNX models</strong> — provide the best balance of quality and speed for on-device inference.</li>
-      <li><strong>Close other memory-heavy applications</strong> — inference speed is directly affected by available RAM; monitor the CPU Memory gauge in the dashboard.</li>
-      <li><strong>Monitor the dashboard</strong> — run <code>ofoundry dashboard</code> (Foundry Local) or <code>ofoundry dashboard -e ort</code> (ONNX Runtime GenAI) and keep <code>http://127.0.0.1:1573/</code> open while benchmarking to track resource utilisation in real time.</li>
+      <li><strong><span data-en>Choose smaller models for faster TTFT</span><span data-zh>\u9009\u62e9\u8f83\u5c0f\u7684\u6a21\u578b\u4ee5\u83b7\u5f97\u66f4\u5feb\u7684 TTFT</span></strong> — <span data-en>run <code>foundry model list</code> to see available models; models like <code>Phi-4-mini-instruct-generic-cpu:5</code> start generating in under a second on modern hardware.</span><span data-zh>\u8fd0\u884c <code>foundry model list</code> \u67e5\u770b\u53ef\u7528\u6a21\u578b\uff1b<code>Phi-4-mini-instruct-generic-cpu:5</code> \u7b49\u6a21\u578b\u5728\u73b0\u4ee3\u786c\u4ef6\u4e0a\u4e0d\u5230\u4e00\u79d2\u5373\u53ef\u5f00\u59cb\u751f\u6210\u3002</span></li>
+      <li><strong><span data-en>Use Foundry Local on macOS/Windows</span><span data-zh>\u5728 macOS/Windows \u4e0a\u4f7f\u7528 Foundry Local</span></strong> — <span data-en>it automatically selects the best available accelerator (NPU &gt; GPU &gt; CPU).</span><span data-zh>\u5b83\u4f1a\u81ea\u52a8\u9009\u62e9\u6700\u4f73\u53ef\u7528\u52a0\u901f\u5668\uff08NPU &gt; GPU &gt; CPU\uff09\u3002</span></li>
+      <li><strong><span data-en>INT4 quantised ONNX models</span><span data-zh>INT4 \u91cf\u5316\u7684 ONNX \u6a21\u578b</span></strong> — <span data-en>provide the best balance of quality and speed for on-device inference.</span><span data-zh>\u5728\u8bbe\u5907\u4e0a\u63a8\u7406\u65f6\u63d0\u4f9b\u8d28\u91cf\u548c\u901f\u5ea6\u7684\u6700\u4f73\u5e73\u8861\u3002</span></li>
+      <li><strong><span data-en>Close other memory-heavy applications</span><span data-zh>\u5173\u95ed\u5176\u4ed6\u5360\u7528\u5185\u5b58\u7684\u5e94\u7528</span></strong> — <span data-en>inference speed is directly affected by available RAM; monitor the CPU Memory gauge in the dashboard.</span><span data-zh>\u63a8\u7406\u901f\u5ea6\u76f4\u63a5\u53d7\u53ef\u7528\u5185\u5b58\u5f71\u54cd\uff1b\u53ef\u5728\u4eea\u8868\u76d8\u4e2d\u76d1\u63a7 CPU \u5185\u5b58\u4eea\u8868\u3002</span></li>
+      <li><strong><span data-en>Monitor the dashboard</span><span data-zh>\u76d1\u63a7\u4eea\u8868\u76d8</span></strong> — <span data-en>run <code>ofoundry dashboard</code> (Foundry Local) or <code>ofoundry dashboard -e ort</code> (ONNX Runtime GenAI) and keep <code>http://127.0.0.1:1573/</code> open while benchmarking to track resource utilisation in real time.</span><span data-zh>\u8fd0\u884c <code>ofoundry dashboard</code>\uff08Foundry Local\uff09\u6216 <code>ofoundry dashboard -e ort</code>\uff08ONNX Runtime GenAI\uff09\uff0c\u5e76\u5728\u57fa\u51c6\u6d4b\u8bd5\u65f6\u4fdd\u6301 <code>http://127.0.0.1:1573/</code> \u6253\u5f00\u4ee5\u5b9e\u65f6\u8ddf\u8e2a\u8d44\u6e90\u5229\u7528\u7387\u3002</span></li>
     </ul>
 
     <!-- Bottom Navigation -->
@@ -392,7 +392,7 @@ ofoundry dashboard -e ort</code></pre>
 
 <!-- ============ Footer ============ -->
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

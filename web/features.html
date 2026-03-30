@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry features — embeddings, tool calling, vision-language models, model conversion.">
-  <title>Features — ofoundry</title>
+  <meta name="description" content="oFoundry features — embeddings, tool calling, vision-language models, model conversion.">
+  <title>Features — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -54,11 +54,11 @@
   <main class="main-content content">
 
     <h1><span data-en>Features</span><span data-zh>功能特性</span></h1>
-    <p><span data-en>ofoundry goes beyond simple chat — it supports embeddings, tool calling, vision-language models, and model conversion to cover the full spectrum of local AI development.</span><span data-zh>ofoundry 不止于简单对话——支持嵌入、工具调用、视觉语言模型和模型转换，覆盖本地 AI 开发的全部场景。</span></p>
+    <p><span data-en>oFoundry goes beyond simple chat — it supports embeddings, tool calling, vision-language models, and model conversion to cover the full spectrum of local AI development.</span><span data-zh>oFoundry 不止于简单对话——支持嵌入、工具调用、视觉语言模型和模型转换，覆盖本地 AI 开发的全部场景。</span></p>
 
     <!-- Dual Engine -->
     <h2 id="dual-engine"><span data-en>Dual Inference Engine</span><span data-zh>双推理引擎</span></h2>
-    <p>ofoundry supports two inference backends, automatically selecting the right one for your platform:</p>
+    <p><span data-en>oFoundry supports two inference backends, automatically selecting the right one for your platform:</span><span data-zh>oFoundry 支持两种推理后端，自动为你的平台选择合适的后端：</span></p>
 
     <table>
       <thead>
@@ -90,12 +90,12 @@
     </table>
 
     <div class="callout warning">
-      <p><strong>Linux note:</strong> Foundry Local is not available on Linux. The engine is fixed to <code>ort</code>; passing <code>--engine foundry</code> will exit with an error.</p>
+      <p><span data-en><strong>Linux note:</strong> Foundry Local is not available on Linux. The engine is fixed to <code>ort</code>; passing <code>--engine foundry</code> will exit with an error.</span><span data-zh><strong>Linux 注意：</strong>Linux 平台不支持 Foundry Local。引擎固定为 <code>ort</code>；传入 <code>--engine foundry</code> 将报错退出。</span></p>
     </div>
 
     <!-- Embeddings -->
     <h2 id="embeddings"><span data-en>Text Embeddings</span><span data-zh>文本嵌入</span></h2>
-    <p>The embedding engine is ONNX-only — no <code>--engine</code> flag needed. Perfect for RAG &amp; retrieval pipelines.</p>
+    <p><span data-en>The embedding engine is ONNX-only — no <code>--engine</code> flag needed. Perfect for RAG &amp; retrieval pipelines.</span><span data-zh>嵌入引擎仅支持 ONNX——无需 <code>--engine</code> 参数。非常适合 RAG 和检索管线。</span></p>
 
     <h3><span data-en>CLI — One-shot Embedding</span><span data-zh>CLI — 单次嵌入</span></h3>
     <div class="code-block">
@@ -152,7 +152,7 @@ for item in response.data:
 
     <!-- Tool Calling -->
     <h2 id="tool-calling"><span data-en>Tool Calling (Agentic Workflows)</span><span data-zh>工具调用（Agentic 工作流）</span></h2>
-    <p>Both engines support the OpenAI function-calling interface — build agents that plan, call tools, and reason entirely on-device.</p>
+    <p><span data-en>Both engines support the OpenAI function-calling interface — build agents that plan, call tools, and reason entirely on-device.</span><span data-zh>两个引擎均支持 OpenAI 函数调用接口——在设备上构建能规划、调用工具和推理的 Agent。</span></p>
 
     <h3><span data-en>How It Works</span><span data-zh>工作原理</span></h3>
     <table>
@@ -271,7 +271,7 @@ if choice.finish_reason == "tool_calls":
 
     <!-- Vision-Language -->
     <h2 id="vision"><span data-en>Vision-Language Models</span><span data-zh>视觉语言模型</span></h2>
-    <p>VL models auto-switch to the ORT engine when detected. Send images (local or remote) alongside text:</p>
+    <p><span data-en>VL models auto-switch to the ORT engine when detected. Send images (local or remote) alongside text:</span><span data-zh>VL 模型检测到时会自动切换到 ORT 引擎。可同时发送图片（本地或远程）和文本：</span></p>
 
     <div class="code-block">
       <div class="code-block-header">
@@ -315,16 +315,16 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 
     <!-- Web Dashboard -->
     <h2 id="dashboard"><span data-en>Web Dashboard</span><span data-zh>Web 仪表盘</span></h2>
-    <p>Run <code>ofoundry dashboard</code> to launch a real-time monitoring dashboard at <code>http://127.0.0.1:1573/</code>:</p>
+    <p><span data-en>Run <code>ofoundry dashboard</code> to launch a real-time monitoring dashboard at <code>http://127.0.0.1:1573/</code>:</span><span data-zh>运行 <code>ofoundry dashboard</code> 启动实时监控仪表盘，地址为 <code>http://127.0.0.1:1573/</code>：</span></p>
     <ul>
-      <li><strong>Model Selector</strong> — switch between cached models at runtime; NPU-accelerated models are marked with ⚡</li>
-      <li><strong>System Info Bar</strong> — model name, engine type, platform, Python version, live health</li>
-      <li><strong>Memory Gauges</strong> — CPU, GPU, NPU, and process memory in real-time</li>
-      <li><strong>Inference Parameters</strong> — temperature, top-p, top-k, max tokens with presets</li>
-      <li><strong>Chat Interface</strong> — send messages with streaming response and performance stats (TTFT, tok/s)</li>
-      <li><strong>Conversation History</strong> — saved conversations and system prompt configuration</li>
-      <li><strong>Server Logs</strong> — live request log with method, path, status, and timing</li>
-      <li><strong>Export</strong> — export conversations as JSON or Markdown</li>
+      <li><strong><span data-en>Model Selector</span><span data-zh>模型选择器</span></strong> — <span data-en>switch between cached models at runtime; NPU-accelerated models are marked with ⚡</span><span data-zh>运行时切换已缓存的模型；NPU 加速模型标有 ⚡ 标识</span></li>
+      <li><strong><span data-en>System Info Bar</span><span data-zh>系统信息栏</span></strong> — <span data-en>model name, engine type, platform, Python version, live health</span><span data-zh>模型名称、引擎类型、平台、Python 版本、实时健康状态</span></li>
+      <li><strong><span data-en>Memory Gauges</span><span data-zh>内存仪表</span></strong> — <span data-en>CPU, GPU, NPU, and process memory in real-time</span><span data-zh>CPU、GPU、NPU 和进程内存实时监控</span></li>
+      <li><strong><span data-en>Inference Parameters</span><span data-zh>推理参数</span></strong> — <span data-en>temperature, top-p, top-k, max tokens with presets</span><span data-zh>temperature、top-p、top-k、max tokens 及预设</span></li>
+      <li><strong><span data-en>Chat Interface</span><span data-zh>聊天界面</span></strong> — <span data-en>send messages with streaming response and performance stats (TTFT, tok/s)</span><span data-zh>发送消息，支持流式响应和性能统计（TTFT、tok/s）</span></li>
+      <li><strong><span data-en>Conversation History</span><span data-zh>会话历史</span></strong> — <span data-en>saved conversations and system prompt configuration</span><span data-zh>保存的对话和系统提示词配置</span></li>
+      <li><strong><span data-en>Server Logs</span><span data-zh>服务器日志</span></strong> — <span data-en>live request log with method, path, status, and timing</span><span data-zh>实时请求日志，包含方法、路径、状态和耗时</span></li>
+      <li><strong><span data-en>Export</span><span data-zh>导出</span></strong> — <span data-en>export conversations as JSON or Markdown</span><span data-zh>将对话导出为 JSON 或 Markdown</span></li>
     </ul>
 
     <nav class="page-nav">
@@ -342,7 +342,7 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

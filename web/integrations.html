@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry integrations — use with OpenAI SDK, LangChain, LlamaIndex, CI pipelines.">
-  <title>Integrations — ofoundry</title>
+  <meta name="description" content="oFoundry integrations — use with OpenAI SDK, LangChain, LlamaIndex, CI pipelines.">
+  <title>Integrations — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
@@ -54,7 +54,7 @@
   <main class="main-content content">
 
     <h1><span data-en>Integrations</span><span data-zh>集成方案</span></h1>
-    <p><span data-en>ofoundry exposes an OpenAI-compatible API, so it works seamlessly with any framework that supports the OpenAI protocol. Just change the <code>base_url</code> to your local server.</span><span data-zh>ofoundry 提供 OpenAI 兼容 API，可与任何支持 OpenAI 协议的框架无缝配合。只需将 <code>base_url</code> 指向本地服务器。</span></p>
+    <p><span data-en>oFoundry exposes an OpenAI-compatible API, so it works seamlessly with any framework that supports the OpenAI protocol. Just change the <code>base_url</code> to your local server.</span><span data-zh>oFoundry 提供 OpenAI 兼容 API，可与任何支持 OpenAI 协议的框架无缝配合。只需将 <code>base_url</code> 指向本地服务器。</span></p>
 
     <!-- OpenAI SDK -->
     <h2 id="openai-sdk">OpenAI Python SDK</h2>
@@ -87,7 +87,7 @@ for chunk in response:
     </div>
 
     <div class="callout info">
-      <p><strong>Tip:</strong> Point any OpenAI-compatible framework at <code>http://127.0.0.1:18000/v1</code> and it just works. The <code>api_key</code> can be any non-empty string.</p>
+      <p><span data-en><strong>Tip:</strong> Point any OpenAI-compatible framework at <code>http://127.0.0.1:18000/v1</code> and it just works. The <code>api_key</code> can be any non-empty string.</span><span data-zh><strong>提示：</strong>将任何 OpenAI 兼容框架指向 <code>http://127.0.0.1:18000/v1</code> 即可使用。<code>api_key</code> 可以是任意非空字符串。</span></p>
     </div>
 
     <!-- LangChain -->
@@ -138,11 +138,11 @@ llm = OpenAILike(
 
     <!-- Microsoft Agent Framework -->
     <h2 id="agent-framework">Microsoft Agent Framework</h2>
-    <p>ofoundry works with the Microsoft Agent Framework for building agentic AI applications:</p>
+    <p><span data-en>oFoundry works with the Microsoft Agent Framework for building agentic AI applications:</span><span data-zh>oFoundry 与 Microsoft Agent Framework 配合使用，构建 Agentic AI 应用：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">python</span>
-        <button class="copy-btn" data-code='# Point Microsoft Agent Framework at your local ofoundry server
+        <button class="copy-btn" data-code='# Point Microsoft Agent Framework at your local oFoundry server
 # The OpenAI-compatible endpoint works out of the box
 from openai import OpenAI
 
@@ -155,7 +155,7 @@ response = client.chat.completions.create(
     tools=[...],
 )'>Copy</button>
       </div>
-      <pre><code># Point Microsoft Agent Framework at your local ofoundry server
+      <pre><code># Point Microsoft Agent Framework at your local oFoundry server
 # The OpenAI-compatible endpoint works out of the box
 from openai import OpenAI
 
@@ -171,7 +171,7 @@ response = client.chat.completions.create(
 
     <!-- CI / Evaluation -->
     <h2 id="ci"><span data-en>CI / Automated Evaluation</span><span data-zh>CI / 自动化评估</span></h2>
-    <p>Use ofoundry in CI pipelines for offline model evaluation:</p>
+    <p><span data-en>Use oFoundry in CI pipelines for offline model evaluation:</span><span data-zh>在 CI 管线中使用 oFoundry 进行离线模型评估：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
@@ -198,7 +198,7 @@ kill %1</code></pre>
 
     <!-- Embeddings -->
     <h2 id="embedding-integration"><span data-en>Embedding Integrations</span><span data-zh>嵌入集成</span></h2>
-    <p>The embedding server (<code>ofoundry serve-embed</code>) also follows the OpenAI API and works with any framework that supports custom embedding endpoints:</p>
+    <p><span data-en>The embedding server (<code>ofoundry serve-embed</code>) also follows the OpenAI API and works with any framework that supports custom embedding endpoints:</span><span data-zh>嵌入服务（<code>ofoundry serve-embed</code>）也遵循 OpenAI API，可与任何支持自定义嵌入端点的框架配合使用：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">python</span>
@@ -227,7 +227,7 @@ for item in response.data:
 
     <!-- Supported Frameworks -->
     <h2 id="supported"><span data-en>Compatible Frameworks</span><span data-zh>兼容框架</span></h2>
-    <p>Any framework that supports the OpenAI API protocol works with ofoundry:</p>
+    <p><span data-en>Any framework that supports the OpenAI API protocol works with oFoundry:</span><span data-zh>任何支持 OpenAI API 协议的框架都可与 oFoundry 配合使用：</span></p>
     <table>
       <thead>
         <tr><th>Framework</th><th>Type</th><th>Notes</th></tr>
@@ -258,7 +258,7 @@ for item in response.data:
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

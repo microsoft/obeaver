@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ofoundry model conversion — convert Hugging Face models to optimised ONNX INT4/FP16 format for text and vision-language models.">
-  <title>Model Conversion — ofoundry</title>
+  <meta name="description" content="oFoundry model conversion — convert Hugging Face models to optimised ONNX INT4/FP16 format for text and vision-language models.">
+  <title>Model Conversion — oFoundry</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="../img/logo.png" type="image/png">
   <style>
@@ -119,8 +119,8 @@
 </aside>
 
 <!-- ============ Main Content ============ -->
-<div class="content-wrapper">
-  <main class="main-content">
+<div class="docs-layout">
+  <main class="main-content content">
 
     <h1><span data-en>Model Conversion</span><span data-zh>模型转换</span></h1>
     <p class="lead"><span data-en>Convert Hugging Face models to optimised ONNX format directly from the CLI. This step is <strong>required</strong> when using the ORT engine with models downloaded from Hugging Face.</span><span data-zh>通过 CLI 直接将 Hugging Face 模型转换为优化的 ONNX 格式。使用 ORT 引擎运行从 Hugging Face 下载的模型时，此步骤是<strong>必需的</strong>。</span></p>
@@ -176,7 +176,7 @@ ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embedding
       </li>
       <li>
         <strong><span data-en>Run with ORT engine</span><span data-zh>使用 ORT 引擎运行</span></strong>
-        <span data-en>Point ofoundry to the converted model directory:</span><span data-zh>将 ofoundry 指向转换后的模型目录：</span>
+        <span data-en>Point oFoundry to the converted model directory:</span><span data-zh>将 oFoundry 指向转换后的模型目录：</span>
         <pre><code>ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
       </li>
     </ol>
@@ -325,11 +325,11 @@ ofoundry run --engine ort ./models/phi3-mini-int4</code></pre>
       <tbody>
         <tr>
           <td><code>ModuleNotFoundError: onnxruntime_genai</code></td>
-          <td><span data-en>Re-run <code>pip install -e .</code> from the ofoundry project root to install all dependencies.</span><span data-zh>在 ofoundry 项目根目录重新运行 <code>pip install -e .</code> 安装所有依赖。</span></td>
+          <td><span data-en>Re-run <code>pip install -e .</code> from the oFoundry project root to install all dependencies.</span><span data-zh>在 oFoundry 项目根目录重新运行 <code>pip install -e .</code> 安装所有依赖。</span></td>
         </tr>
         <tr>
           <td><span data-en>VL conversion fails with <code>olive</code> not found</span><span data-zh>VL 转换失败，提示 <code>olive</code> 未找到</span></td>
-          <td><span data-en>Re-run <code>pip install -e .</code> from the ofoundry project root. If the issue persists, try <code>pip install olive-ai</code> manually.</span><span data-zh>在项目根目录重新运行 <code>pip install -e .</code>。如问题仍存在，尝试手动安装 <code>pip install olive-ai</code>。</span></td>
+          <td><span data-en>Re-run <code>pip install -e .</code> from the oFoundry project root. If the issue persists, try <code>pip install olive-ai</code> manually.</span><span data-zh>在项目根目录重新运行 <code>pip install -e .</code>。如问题仍存在，尝试手动安装 <code>pip install olive-ai</code>。</span></td>
         </tr>
         <tr>
           <td><span data-en>Qwen 3 VL conversion fails without <code>--build-from-source</code></span><span data-zh>Qwen 3 VL 转换失败（未使用 <code>--build-from-source</code>）</span></td>
@@ -363,7 +363,7 @@ ofoundry run --engine ort ./models/phi3-mini-int4</code></pre>
 
 <!-- ============ Footer ============ -->
 <footer class="site-footer">
-  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <span>© 2026 oFoundry · Apache 2.0 License</span>
   <div class="footer-links">
     <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>

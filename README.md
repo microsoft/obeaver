@@ -1,10 +1,10 @@
-# ofoundry
+# oFoundry
 
 <p align="center">
-  <img src="img/logo.png" alt="ofoundry logo" width="*"/>
+  <img src="img/logo.png" alt="oFoundry logo" width="*"/>
 </p>
 
-**ofoundry** is a local-first LLM inference toolkit designed for AI developers and engineers who need to run models on their own hardware — no cloud, no API keys, no data leaving your machine. It exposes an **OpenAI-compatible API** so your existing agent pipelines, RAG stacks, and evaluation harnesses work out of the box with zero code changes.
+**oFoundry** is a local-first LLM inference toolkit designed for AI developers and engineers who need to run models on their own hardware — no cloud, no API keys, no data leaving your machine. It exposes an **OpenAI-compatible API** so your existing agent pipelines, RAG stacks, and evaluation harnesses work out of the box with zero code changes.
 
 > 中文说明请见 [README.zh-cn.md](README.zh-cn.md)
 
@@ -14,10 +14,10 @@
 
 ## Table of Contents
 
-- [ofoundry](#ofoundry)
+- [oFoundry](#ofoundry)
   - [Table of Contents](#table-of-contents)
   - [Key Features](#key-features)
-  - [Why ofoundry?](#why-ofoundry)
+  - [Why oFoundry?](#why-ofoundry)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
     - [Common](#common)
@@ -93,9 +93,9 @@
 
 ---
 
-## Why ofoundry?
+## Why oFoundry?
 
-| Pain point | How ofoundry solves it |
+| Pain point | How oFoundry solves it |
 |---|---|
 | **Cloud costs & latency** | Run inference locally on CPU, GPU, or NPU — zero network round-trips. |
 | **Data privacy** | Models run on-device. Nothing leaves your machine. |
@@ -108,7 +108,7 @@
 
 # Getting Started
 
-This section walks you through everything needed to get ofoundry up and running on your machine.
+This section walks you through everything needed to get oFoundry up and running on your machine.
 
 ## Requirements
 
@@ -184,7 +184,7 @@ This scans the `foundrylocal/` and `ort/` sub-folders and shows each model's nam
 
 ## Getting Models
 
-Before using ofoundry, you need models. Choose based on your engine:
+Before using oFoundry, you need models. Choose based on your engine:
 
 ### Foundry Local catalog (macOS/Windows)
 
@@ -243,7 +243,7 @@ hf download onnx-community/Qwen3-Embedding-0.6B \
 
 # Basic Usage
 
-Now that you have ofoundry installed and models ready, here are the core ways to use it.
+Now that you have oFoundry installed and models ready, here are the core ways to use it.
 
 ## Chat Locally (Terminal)
 
@@ -341,7 +341,7 @@ The dashboard includes:
 - **CPU Memory** — total, used, available, and real-time utilisation gauge
 - **GPU Memory** — detected GPU device and memory (NVIDIA, AMD, Intel, Qualcomm Adreno)
 - **NPU Memory** — detected NPU device and memory (Intel Meteor Lake, Qualcomm Hexagon)
-- **Process Memory** — resident and virtual memory of the ofoundry server process
+- **Process Memory** — resident and virtual memory of the oFoundry server process
 - **Inference Parameters** — temperature, top-p, top-k, max tokens, repetition penalty with Creative/Balanced/Precise presets
 - **Chat Interface** — send messages to the loaded model directly from the browser with streaming response and performance stats (TTFT, tok/s, token count)
 - **Conversation History** — sidebar with saved conversations and system prompt configuration
@@ -771,7 +771,7 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ## Acknowledgements
 
-ofoundry is inspired by and builds upon the ideas from the following excellent projects:
+oFoundry is inspired by and builds upon the ideas from the following excellent projects:
 
 | Project | Description |
 |---------|-------------|
