@@ -224,7 +224,7 @@ ARG PYTHON_VERSION=3.12
 LABEL org.opencontainers.image.title="ofoundry CPU"
 LABEL org.opencontainers.image.description="ONNX Runtime GenAI inference engine for CPU — chat & serve"
 LABEL org.opencontainers.image.vendor="kinfey"
-LABEL org.opencontainers.image.source="https://github.com/kinfey/ofoundry"
+LABEL org.opencontainers.image.source="https://github.com/microsoft/ofoundry"
 LABEL ai.ofoundry.build.python-version="${PYTHON_VERSION}"
 LABEL ai.ofoundry.build.target="cpu"
 

@@ -126,7 +126,7 @@ This section walks you through everything needed to get ofoundry up and running 
 ## Installation
 
 ```bash
-git clone https://github.com/kinfey/ofoundry.git
+git clone https://github.com/microsoft/ofoundry.git
 cd ofoundry
 pip install -e .
 ```

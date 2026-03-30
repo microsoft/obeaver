@@ -93,7 +93,7 @@
 ## 安装
 
 ```bash
-git clone https://github.com/kinfey/ofoundry.git
+git clone https://github.com/microsoft/ofoundry.git
 cd ofoundry
 pip install -e .
 ```
