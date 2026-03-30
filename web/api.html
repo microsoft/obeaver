@@ -60,17 +60,17 @@
     <h2 id="chat-server"><span data-en>Chat Server (<code>ofoundry serve</code>)</span><span data-zh>聊天服务 (<code>ofoundry serve</code>)</span></h2>
     <table>
       <thead>
-        <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+        <tr><th><span data-en>Method</span><span data-zh>方法</span></th><th><span data-en>Path</span><span data-zh>路径</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>GET</code></td><td><code>/</code></td><td>Redirect to the web dashboard</td></tr>
-        <tr><td><code>GET</code></td><td><code>/health</code></td><td>Health check (includes model name and engine label)</td></tr>
-        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td>List loaded model</td></tr>
-        <tr><td><code>POST</code></td><td><code>/v1/chat/completions</code></td><td>Chat completions (streaming + non-streaming)</td></tr>
-        <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td>CPU, GPU, NPU, and process memory statistics</td></tr>
-        <tr><td><code>GET</code></td><td><code>/api/models/available</code></td><td>List all cached models available for switching</td></tr>
-        <tr><td><code>POST</code></td><td><code>/api/models/load</code></td><td>Hot-swap the active model at runtime</td></tr>
-        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td>Web dashboard (served automatically)</td></tr>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>Redirect to the web dashboard</span><span data-zh>重定向到网页仪表盘</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/health</code></td><td><span data-en>Health check (includes model name and engine label)</span><span data-zh>健康检查（包含模型名称和引擎标识）</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td><span data-en>List loaded model</span><span data-zh>列出已加载模型</span></td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/chat/completions</code></td><td><span data-en>Chat completions (streaming + non-streaming)</span><span data-zh>对话补全（支持流式与非流式）</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td><span data-en>CPU, GPU, NPU, and process memory statistics</span><span data-zh>CPU、GPU、NPU 及进程内存统计</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/models/available</code></td><td><span data-en>List all cached models available for switching</span><span data-zh>列出所有可切换的已缓存模型</span></td></tr>
+        <tr><td><code>POST</code></td><td><code>/api/models/load</code></td><td><span data-en>Hot-swap the active model at runtime</span><span data-zh>运行时热切换活跃模型</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td><span data-en>Web dashboard (served automatically)</span><span data-zh>网页仪表盘（自动提供）</span></td></tr>
       </tbody>
     </table>
 
@@ -78,15 +78,15 @@
     <h2 id="embedding-server"><span data-en>Embedding Server (<code>ofoundry serve-embed</code>)</span><span data-zh>嵌入服务 (<code>ofoundry serve-embed</code>)</span></h2>
     <table>
       <thead>
-        <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+        <tr><th><span data-en>Method</span><span data-zh>方法</span></th><th><span data-en>Path</span><span data-zh>路径</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>GET</code></td><td><code>/</code></td><td>Redirect to the web dashboard</td></tr>
-        <tr><td><code>GET</code></td><td><code>/health</code></td><td>Health check</td></tr>
-        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td>List loaded model</td></tr>
-        <tr><td><code>POST</code></td><td><code>/v1/embeddings</code></td><td>Compute text embeddings</td></tr>
-        <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td>CPU, GPU, NPU, and process memory statistics</td></tr>
-        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td>Web dashboard (served automatically)</td></tr>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>Redirect to the web dashboard</span><span data-zh>重定向到网页仪表盘</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/health</code></td><td><span data-en>Health check</span><span data-zh>健康检查</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td><span data-en>List loaded model</span><span data-zh>列出已加载模型</span></td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/embeddings</code></td><td><span data-en>Compute text embeddings</span><span data-zh>计算文本嵌入向量</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td><span data-en>CPU, GPU, NPU, and process memory statistics</span><span data-zh>CPU、GPU、NPU 及进程内存统计</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td><span data-en>Web dashboard (served automatically)</span><span data-zh>网页仪表盘（自动提供）</span></td></tr>
       </tbody>
     </table>
 
@@ -97,19 +97,19 @@
     <h3 id="request-params"><span data-en>Request Parameters</span><span data-zh>请求参数</span></h3>
     <table>
       <thead>
-        <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        <tr><th><span data-en>Parameter</span><span data-zh>参数</span></th><th><span data-en>Type</span><span data-zh>类型</span></th><th><span data-en>Default</span><span data-zh>默认值</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>model</code></td><td><code>string</code></td><td><code>""</code></td><td>Model identifier (informational)</td></tr>
-        <tr><td><code>messages</code></td><td><code>array</code></td><td><em>(required)</em></td><td>OpenAI message array (<code>role</code> + <code>content</code>)</td></tr>
-        <tr><td><code>stream</code></td><td><code>bool</code></td><td><code>false</code></td><td>Enable SSE streaming</td></tr>
-        <tr><td><code>max_tokens</code></td><td><code>int</code></td><td><code>1024</code></td><td>Max tokens to generate</td></tr>
-        <tr><td><code>temperature</code></td><td><code>float</code></td><td><code>1.0</code></td><td>Sampling temperature</td></tr>
-        <tr><td><code>top_p</code></td><td><code>float</code></td><td><code>1.0</code></td><td>Nucleus sampling</td></tr>
-        <tr><td><code>top_k</code></td><td><code>int</code></td><td><code>50</code></td><td>Top-k sampling</td></tr>
-        <tr><td><code>repetition_penalty</code></td><td><code>float</code></td><td><code>1.0</code></td><td>Repetition penalty (1.0 = off)</td></tr>
-        <tr><td><code>tools</code></td><td><code>array</code></td><td><code>null</code></td><td>OpenAI function definitions</td></tr>
-        <tr><td><code>tool_choice</code></td><td><code>string|object</code></td><td><code>null</code></td><td>Tool selection strategy</td></tr>
+        <tr><td><code>model</code></td><td><code>string</code></td><td><code>""</code></td><td><span data-en>Model identifier (informational)</span><span data-zh>模型标识符（信息性）</span></td></tr>
+        <tr><td><code>messages</code></td><td><code>array</code></td><td><em><span data-en>(required)</span><span data-zh>（必填）</span></em></td><td><span data-en>OpenAI message array (<code>role</code> + <code>content</code>)</span><span data-zh>OpenAI 消息数组（<code>role</code> + <code>content</code>）</span></td></tr>
+        <tr><td><code>stream</code></td><td><code>bool</code></td><td><code>false</code></td><td><span data-en>Enable SSE streaming</span><span data-zh>启用 SSE 流式传输</span></td></tr>
+        <tr><td><code>max_tokens</code></td><td><code>int</code></td><td><code>1024</code></td><td><span data-en>Max tokens to generate</span><span data-zh>最大生成 token 数</span></td></tr>
+        <tr><td><code>temperature</code></td><td><code>float</code></td><td><code>1.0</code></td><td><span data-en>Sampling temperature</span><span data-zh>采样温度</span></td></tr>
+        <tr><td><code>top_p</code></td><td><code>float</code></td><td><code>1.0</code></td><td><span data-en>Nucleus sampling</span><span data-zh>核采样</span></td></tr>
+        <tr><td><code>top_k</code></td><td><code>int</code></td><td><code>50</code></td><td><span data-en>Top-k sampling</span><span data-zh>Top-k 采样</span></td></tr>
+        <tr><td><code>repetition_penalty</code></td><td><code>float</code></td><td><code>1.0</code></td><td><span data-en>Repetition penalty (1.0 = off)</span><span data-zh>重复惩罚（1.0 = 关闭）</span></td></tr>
+        <tr><td><code>tools</code></td><td><code>array</code></td><td><code>null</code></td><td><span data-en>OpenAI function definitions</span><span data-zh>OpenAI 函数定义</span></td></tr>
+        <tr><td><code>tool_choice</code></td><td><code>string|object</code></td><td><code>null</code></td><td><span data-en>Tool selection strategy</span><span data-zh>工具选择策略</span></td></tr>
       </tbody>
     </table>
 
@@ -213,11 +213,11 @@
     <h3><span data-en>Request Body</span><span data-zh>请求体</span></h3>
     <table>
       <thead>
-        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+        <tr><th><span data-en>Parameter</span><span data-zh>参数</span></th><th><span data-en>Type</span><span data-zh>类型</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>model</code></td><td><code>string</code></td><td>Model identifier (informational)</td></tr>
-        <tr><td><code>input</code></td><td><code>string | array</code></td><td>Text string or array of strings to embed</td></tr>
+        <tr><td><code>model</code></td><td><code>string</code></td><td><span data-en>Model identifier (informational)</span><span data-zh>模型标识符（信息性）</span></td></tr>
+        <tr><td><code>input</code></td><td><code>string | array</code></td><td><span data-en>Text string or array of strings to embed</span><span data-zh>要嵌入的文本字符串或字符串数组</span></td></tr>
       </tbody>
     </table>
 

@@ -62,30 +62,30 @@
 
     <table>
       <thead>
-        <tr><th>Engine</th><th>Platform</th><th>Description</th></tr>
+        <tr><th><span data-en>Engine</span><span data-zh>引擎</span></th><th><span data-en>Platform</span><span data-zh>平台</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Foundry Local</strong></td>
           <td>macOS, Windows</td>
-          <td>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU &gt; GPU &gt; CPU), launched via catalog alias.</td>
+          <td><span data-en>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU &gt; GPU &gt; CPU), launched via catalog alias.</span><span data-zh>由 Microsoft Foundry Local 驱动。自动下载模型、硬件加速（NPU &gt; GPU &gt; CPU），通过 catalog alias 启动。</span></td>
         </tr>
         <tr>
           <td><strong>ORT</strong></td>
           <td>macOS, Windows, Linux</td>
-          <td>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline, zero cloud dependency.</td>
+          <td><span data-en>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline, zero cloud dependency.</span><span data-zh>由 ONNX Runtime GenAI 驱动。加载本地 <code>.onnx</code> 模型目录——完全离线、零云端依赖。</span></td>
         </tr>
       </tbody>
     </table>
 
     <table>
       <thead>
-        <tr><th>Condition</th><th>Engine</th><th>Model argument</th></tr>
+        <tr><th><span data-en>Condition</span><span data-zh>条件</span></th><th><span data-en>Engine</span><span data-zh>引擎</span></th><th><span data-en>Model argument</span><span data-zh>模型参数</span></th></tr>
       </thead>
       <tbody>
-        <tr><td>macOS / Windows (default)</td><td>Foundry Local</td><td>Catalog alias (e.g. <code>Phi-4-mini-instruct-generic-cpu:5</code>)</td></tr>
-        <tr><td><code>--engine ort</code> or Linux (default)</td><td>ONNX Runtime GenAI</td><td>Local directory path</td></tr>
-        <tr><td><code>embed</code> / <code>serve-embed</code> commands</td><td>Embedding Engine (ONNX)</td><td>Local model directory</td></tr>
+        <tr><td><span data-en>macOS / Windows (default)</span><span data-zh>macOS / Windows（默认）</span></td><td>Foundry Local</td><td><span data-en>Catalog alias (e.g. <code>Phi-4-mini-instruct-generic-cpu:5</code>)</span><span data-zh>Catalog alias（如 <code>Phi-4-mini-instruct-generic-cpu:5</code>）</span></td></tr>
+        <tr><td><span data-en><code>--engine ort</code> or Linux (default)</span><span data-zh><code>--engine ort</code> 或 Linux（默认）</span></td><td>ONNX Runtime GenAI</td><td><span data-en>Local directory path</span><span data-zh>本地目录路径</span></td></tr>
+        <tr><td><code>embed</code> / <code>serve-embed</code></td><td><span data-en>Embedding Engine (ONNX)</span><span data-zh>嵌入引擎（ONNX）</span></td><td><span data-en>Local model directory</span><span data-zh>本地模型目录</span></td></tr>
       </tbody>
     </table>
 
@@ -157,16 +157,16 @@ for item in response.data:
     <h3><span data-en>How It Works</span><span data-zh>工作原理</span></h3>
     <table>
       <thead>
-        <tr><th>Engine</th><th>Strategy</th></tr>
+        <tr><th><span data-en>Engine</span><span data-zh>引擎</span></th><th><span data-en>Strategy</span><span data-zh>策略</span></th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Foundry Local</strong></td>
-          <td>Tools forwarded natively via the standard OpenAI <code>tools</code> parameter. Response may carry native <code>tool_calls</code> or <code>functools[...]</code> format — both normalised automatically.</td>
+          <td><span data-en>Tools forwarded natively via the standard OpenAI <code>tools</code> parameter. Response may carry native <code>tool_calls</code> or <code>functools[...]</code> format — both normalised automatically.</span><span data-zh>工具定义通过标准 OpenAI <code>tools</code> 参数原生转发。响应可能携带原生 <code>tool_calls</code> 字段或 <code>functools[...]</code> 格式——两种格式均自动归一化。</span></td>
         </tr>
         <tr>
           <td><strong>ORT</strong></td>
-          <td>Tools serialised as JSON Schema inside the system prompt. Model replies with a <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> block; <code>parse_tool_call()</code> extracts and validates it.</td>
+          <td><span data-en>Tools serialised as JSON Schema inside the system prompt. Model replies with a <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> block; <code>parse_tool_call()</code> extracts and validates it.</span><span data-zh>工具以 JSON Schema 形式注入系统提示词。模型以 <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> 块回复，<code>parse_tool_call()</code> 负责提取和验证。</span></td>
         </tr>
       </tbody>
     </table>
@@ -174,15 +174,15 @@ for item in response.data:
     <h3><span data-en>Supported Output Formats (auto-detected)</span><span data-zh>支持的输出格式（自动检测）</span></h3>
     <table>
       <thead>
-        <tr><th>Format</th><th>Example</th></tr>
+        <tr><th><span data-en>Format</span><span data-zh>格式</span></th><th><span data-en>Example</span><span data-zh>示例</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>&lt;tool_call&gt;</code> block</td><td><code>&lt;tool_call&gt;{"name": "get_weather", "arguments": {"city": "Paris"}}&lt;/tool_call&gt;</code></td></tr>
-        <tr><td>Phi-3 native</td><td><code>&lt;|function_calls|&gt;{...}&lt;|/function_calls|&gt;</code></td></tr>
-        <tr><td>Mistral-style</td><td><code>&lt;functioncall&gt;{...}&lt;/functioncall&gt;</code></td></tr>
-        <tr><td>Markdown code block</td><td><code>```json {...} ```</code></td></tr>
-        <tr><td>OpenAI-legacy wrapper</td><td><code>{"function_call": {"name": ..., "arguments": ...}}</code></td></tr>
-        <tr><td>Bare JSON</td><td><code>{"name": "...", "arguments": {...}}</code></td></tr>
+        <tr><td><code>&lt;tool_call&gt;</code> <span data-en>block</span><span data-zh>块</span></td><td><code>&lt;tool_call&gt;{"name": "get_weather", "arguments": {"city": "Paris"}}&lt;/tool_call&gt;</code></td></tr>
+        <tr><td><span data-en>Phi-3 native</span><span data-zh>Phi-3 原生格式</span></td><td><code>&lt;|function_calls|&gt;{...}&lt;|/function_calls|&gt;</code></td></tr>
+        <tr><td><span data-en>Mistral-style</span><span data-zh>Mistral 风格</span></td><td><code>&lt;functioncall&gt;{...}&lt;/functioncall&gt;</code></td></tr>
+        <tr><td><span data-en>Markdown code block</span><span data-zh>Markdown 代码块</span></td><td><code>```json {...} ```</code></td></tr>
+        <tr><td><span data-en>OpenAI-legacy wrapper</span><span data-zh>OpenAI 旧版包装</span></td><td><code>{"function_call": {"name": ..., "arguments": ...}}</code></td></tr>
+        <tr><td><span data-en>Bare JSON</span><span data-zh>裸 JSON</span></td><td><code>{"name": "...", "arguments": {...}}</code></td></tr>
       </tbody>
     </table>
 
