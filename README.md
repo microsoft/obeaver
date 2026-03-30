@@ -8,7 +8,7 @@
 
 > 中文说明请见 [README.zh-cn.md](README.zh-cn.md)
 
-📖 **Documentation:** <https://kinfey.github.io/ofoundry/>
+📖 **Documentation:** <https://microsoft.github.io/ofoundry>
 
 ---
 

@@ -8,7 +8,7 @@
 
 > English version: [README.md](README.md)
 
-📖 **在线文档：** <https://kinfey.github.io/ofoundry/>
+📖 **在线文档：** <https://microsoft.github.io/ofoundry>
 
 ---
 
