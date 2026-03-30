@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry function tools — build agentic workflows with OpenAI-compatible tool calling on local models.">
+  <title>Function Tools — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo"><span class="logo-text">oFoundry</span></a>
+    </div>
+    <div class="header-right">
+      <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search docs..." autocomplete="off"><div class="search-results" id="search-results"></div></div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link active"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<div class="docs-layout">
+  <main class="main-content content">
+
+    <h1><span data-en>Function Tools</span><span data-zh>函数工具（Tool Calling）</span></h1>
+    <p><span data-en>Build agentic workflows with OpenAI-compatible tool calling — entirely on-device. Both the Foundry Local and ORT engines support the OpenAI <code>tools</code> + <code>tool_choice</code> interface.</span><span data-zh>使用 OpenAI 兼容的工具调用接口构建 Agentic 工作流——完全在设备上运行。Foundry Local 和 ORT 引擎均支持 OpenAI <code>tools</code> + <code>tool_choice</code> 接口。</span></p>
+
+    <!-- How It Works -->
+    <h2 id="how-it-works"><span data-en>How It Works</span><span data-zh>工作原理</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span data-en>Engine</span><span data-zh>引擎</span></th>
+          <th><span data-en>Strategy</span><span data-zh>策略</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Foundry Local</strong></td>
+          <td><span data-en>Tools forwarded natively via the standard OpenAI <code>tools</code> parameter. Response may carry native <code>tool_calls</code> or <code>functools[...]</code> format — both normalised automatically.</span><span data-zh>工具定义通过标准 OpenAI <code>tools</code> 参数原生转发。响应可能携带原生 <code>tool_calls</code> 字段或 <code>functools[...]</code> 格式——两种格式均自动归一化。</span></td>
+        </tr>
+        <tr>
+          <td><strong>ORT</strong></td>
+          <td><span data-en>Tools serialised as JSON Schema inside the system prompt. Model replies with a <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> block; <code>parse_tool_call()</code> extracts and validates it.</span><span data-zh>工具以 JSON Schema 形式注入系统提示词。模型以 <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> 块回复，<code>parse_tool_call()</code> 负责提取和验证。</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p><span data-en>Both engines return the same <code>ChatResponse</code> structure — your application code is engine-agnostic.</span><span data-zh>两个引擎返回相同的 <code>ChatResponse</code> 结构——你的应用代码与引擎无关。</span></p>
+
+    <!-- Supported Output Formats -->
+    <h2 id="supported-formats"><span data-en>Supported Output Formats (auto-detected)</span><span data-zh>支持的输出格式（自动检测）</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span data-en>Format</span><span data-zh>格式</span></th>
+          <th><span data-en>Example</span><span data-zh>示例</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>&lt;tool_call&gt;</code> block</td><td><code>&lt;tool_call&gt;{"name": "get_weather", "arguments": {"city": "Paris"}}&lt;/tool_call&gt;</code></td></tr>
+        <tr><td>Phi-3 native</td><td><code>&lt;|function_calls|&gt;{...}&lt;|/function_calls|&gt;</code></td></tr>
+        <tr><td>Mistral-style</td><td><code>&lt;functioncall&gt;{...}&lt;/functioncall&gt;</code></td></tr>
+        <tr><td>Markdown code block</td><td><code>```json {...} ```</code></td></tr>
+        <tr><td>OpenAI-legacy wrapper</td><td><code>{"function_call": {"name": ..., "arguments": ...}}</code></td></tr>
+        <tr><td>Bare JSON</td><td><code>{"name": "...", "arguments": {...}}</code></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Example: Two-turn Tool-Calling Agent -->
+    <h2 id="example-agent"><span data-en>Example: Two-turn Tool-Calling Agent</span><span data-zh>示例：两轮工具调用 Agent</span></h2>
+    <p><span data-en>This example demonstrates a complete tool-calling workflow: the model decides to call a function, your code executes it, then the model generates a final response using the tool result.</span><span data-zh>此示例演示完整的工具调用工作流：模型决定调用函数，你的代码执行该函数，然后模型使用工具返回的结果生成最终响应。</span></p>
+
+    <h3><span data-en>Step 1: Start the server</span><span data-zh>第 1 步：启动服务</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+      </div>
+      <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
+    </div>
+
+    <h3><span data-en>Step 2: Python client with tool calling</span><span data-zh>第 2 步：Python 客户端调用工具</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from openai import OpenAI
+import json
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+# Define tools
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    },
+}]
+
+messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
+
+# Turn 1 — model decides to call a tool
+resp = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=messages,
+    tools=tools
+)
+choice = resp.choices[0]
+
+if choice.finish_reason == "tool_calls":
+    tool_call = choice.message.tool_calls[0]
+    args = json.loads(tool_call.function.arguments)
+
+    # Execute your function (replace with real implementation)
+    weather_result = {"city": args["city"], "temperature": "18°C", "condition": "Sunny"}
+
+    # Turn 2 — send tool result back to model
+    messages += [
+        choice.message,
+        {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
+    ]
+    final = client.chat.completions.create(
+        model="Phi-4-mini-instruct-generic-cpu:5",
+        messages=messages
+    )
+    print(final.choices[0].message.content)'>Copy</button>
+      </div>
+      <pre><code>from openai import OpenAI
+import json
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+# Define tools
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    },
+}]
+
+messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
+
+# Turn 1 — model decides to call a tool
+resp = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=messages,
+    tools=tools
+)
+choice = resp.choices[0]
+
+if choice.finish_reason == "tool_calls":
+    tool_call = choice.message.tool_calls[0]
+    args = json.loads(tool_call.function.arguments)
+
+    # Execute your function (replace with real implementation)
+    weather_result = {"city": args["city"], "temperature": "18°C", "condition": "Sunny"}
+
+    # Turn 2 — send tool result back to model
+    messages += [
+        choice.message,
+        {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
+    ]
+    final = client.chat.completions.create(
+        model="Phi-4-mini-instruct-generic-cpu:5",
+        messages=messages
+    )
+    print(final.choices[0].message.content)</code></pre>
+    </div>
+
+    <!-- curl Examples -->
+    <h2 id="curl-examples"><span data-en>curl Examples</span><span data-zh>curl 示例</span></h2>
+
+    <h3>Foundry Local</h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -d @tests/tool_foundrylocal_request.json">Copy</button>
+      </div>
+      <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d @tests/tool_foundrylocal_request.json</code></pre>
+    </div>
+
+    <h3>ORT</h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry serve --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -d @tests/tool_ort_request.json">Copy</button>
+      </div>
+      <pre><code>ofoundry serve --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d @tests/tool_ort_request.json</code></pre>
+    </div>
+
+    <!-- Internals -->
+    <h2 id="internals"><span data-en>Tool-Calling Internals</span><span data-zh>工具调用内部实现</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span data-en>Component</span><span data-zh>组件</span></th>
+          <th><span data-en>Role</span><span data-zh>作用</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>ToolCall</code></td><td><span data-en>Dataclass: <code>id</code>, <code>name</code>, <code>arguments</code> → <code>.to_openai_dict()</code></span><span data-zh>数据类：<code>id</code>、<code>name</code>、<code>arguments</code> → <code>.to_openai_dict()</code></span></td></tr>
+        <tr><td><code>ChatResponse</code></td><td><span data-en>Unified engine response: <code>content</code>, <code>tool_calls</code>, <code>finish_reason</code></span><span data-zh>引擎统一响应结构：<code>content</code>、<code>tool_calls</code>、<code>finish_reason</code></span></td></tr>
+        <tr><td><code>inject_tools_into_messages()</code></td><td><span data-en>Appends JSON Schema tool definitions to system prompt (ORT path)</span><span data-zh>将 JSON Schema 工具定义追加到系统提示词（ORT 路径）</span></td></tr>
+        <tr><td><code>parse_tool_call()</code></td><td><span data-en>Extracts <code>ToolCall</code> from raw model output; handles 6 format variants</span><span data-zh>从模型原始输出中提取 <code>ToolCall</code>；处理 6 种格式变体</span></td></tr>
+        <tr><td><code>build_tool_result_message()</code></td><td><span data-en>Builds the <code>role: tool</code> message for turn-2 follow-up</span><span data-zh>构建第二轮对话中发回的 <code>role: tool</code> 消息</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span data-en>Data Flow</span><span data-zh>数据流</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">text</span>
+      </div>
+      <pre><code>User request + tools
+  → inject_tools_into_messages() [ORT] / pass tools natively [Foundry]
+  → Engine generates response
+  → parse_tool_call() extracts ToolCall
+  → Application executes the function
+  → build_tool_result_message() creates turn-2 message
+  → Engine generates final response with tool result context</code></pre>
+    </div>
+
+    <nav class="page-nav">
+      <a href="features.html">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Features</span><span data-zh>← 功能特性</span></span>
+      </a>
+      <a href="api.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>API Reference →</span><span data-zh>API 参考 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+# Dockerfile.cpu — ofoundry CPU-only inference image
+#
+#
+# Supported platforms:
+#   - linux/amd64 (x86_64)  — onnxruntime-genai installed from PyPI / Microsoft feed
+#   - linux/arm64 (aarch64) — onnxruntime-genai compiled from source
+#                             ref: https://onnxruntime.ai/docs/genai/howto/build-from-source.html\#linux-build
+#
+# Build context MUST be the project root (the directory containing pyproject.toml):
+#   cd /Users/lokinfey/Desktop/SLM/ofoundry
+#   docker buildx build --platform=linux/amd64 -f docker/Dockerfile.cpu -t ofoundry-cpu .
+#   docker buildx build --platform=linux/arm64 -f docker/Dockerfile.cpu -t ofoundry-cpu .
+#
+# Build arguments:
+#   PYTHON_VERSION=3.12 (default)
+#   ORT_GENAI_REF=v0.6.0 (git tag/branch for source build on arm64)
+#
+# Typical usage:
+#   # Interactive chat session
+#   docker run -it --rm \
+#     -v ./models/phi3-mini-int4:/models \
+#     ofoundry-cpu run -m /models -E ort
+#
+#   # OpenAI-compatible HTTP server
+#   # NOTE: --host 0.0.0.0 is required so uvicorn binds to all interfaces,
+#   #       not just 127.0.0.1 (loopback-only inside the container).
+#   docker run -d --rm \
+#     -p 1573:1573 \
+#     -v ./models/phi3-mini-int4:/models \
+#     ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
+
+ARG PYTHON_VERSION=3.12
+ARG ORT_GENAI_REF=v0.6.0
+
+# ==========================================================================
+# STAGE: ort-genai-builder
+# Build onnxruntime-genai from source for arm64 (aarch64).
+# This stage is only materialised when TARGETARCH=arm64; BuildKit skips it
+# entirely for amd64 builds because deps-amd64 does not depend on it.
+# Ref: https://onnxruntime.ai/docs/genai/howto/build-from-source.html\#linux-build
+# ==========================================================================
+FROM python:${PYTHON_VERSION} AS ort-genai-builder
+
+ARG ORT_GENAI_REF=v0.6.0
+
+# Build tools required by onnxruntime-genai's cmake / build.py
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        cmake \
+        ninja-build \
+        gcc \
+        g++ \
+        git \
+        curl \
+        ca-certificates \
+        python3-dev \
+        libssl-dev \
+        patch \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip setuptools wheel requests
+
+WORKDIR /ort-genai-src
+
+# Clone the repo at the requested tag; fall back to HEAD if the tag is missing
+RUN git clone --depth 1 --branch ${ORT_GENAI_REF} \
+        https://github.com/microsoft/onnxruntime-genai . \
+    || git clone --depth 1 https://github.com/microsoft/onnxruntime-genai .
+
+# Install build.py's own Python dependencies before invoking it
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install requests
+
+# CPU-only Release build — three-phase approach so we can patch a
+# missing #include <algorithm> in onnxruntime_extensions before compilation.
+# See: https://github.com/microsoft/onnxruntime-extensions/issues (decode_image.hpp)
+
+# Phase 1: cmake configure only — fetches & configures all dependencies
+RUN python build.py --config Release --update
+
+# Phase 2: patch decode_image.hpp — add missing <algorithm> include
+# (std::transform is used without the header on GCC 12+)
+RUN HEADER="build/Linux/Release/_deps/onnxruntime_extensions-src/operators/vision/decode_image.hpp" && \
+    if [ -f "$HEADER" ]; then \
+        grep -q '#include <algorithm>' "$HEADER" || \
+        sed -i '1i #include <algorithm>' "$HEADER"; \
+    fi
+
+# Phase 3: compile and produce the Python wheel
+RUN python build.py --config Release --build --skip_tests
+
+# ==========================================================================
+# STAGE: deps-amd64
+# Install Python deps for x86_64.
+# onnxruntime-genai is pulled from PyPI / Microsoft ORT feed.
+# ==========================================================================
+FROM python:${PYTHON_VERSION}-slim AS deps-amd64
+
+ARG PYTHON_VERSION=3.12
+ARG PIP_EXTRA_INDEX_URL="https://download.pytorch.org/whl/cpu"
+
+WORKDIR /install
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        gcc g++ git curl ca-certificates libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV VIRTUAL_ENV="/opt/venv"
+RUN python -m venv ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip setuptools wheel
+
+# CPU-only torch wheel (much smaller than the default CUDA bundle)
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install "torch>=2.10.0" \
+        --index-url https://download.pytorch.org/whl/cpu
+
+# Core inference deps
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
+        "onnxruntime>=1.18.0" \
+        "transformers>=4.40.0" \
+        "numpy>=1.24.0" \
+        "huggingface-hub>=0.23.0"
+
+# onnxruntime-genai — x86_64 manylinux wheel available on PyPI;
+# Microsoft ORT feed carries additional/newer builds.
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install "onnxruntime-genai>=0.6.0" \
+        --extra-index-url \
+        https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/OnnxRuntime/pypi/simple/
+
+# Server & CLI runtime deps
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
+        "fastapi>=0.111.0" \
+        "uvicorn[standard]>=0.29.0" \
+        "pydantic>=2.0.0" \
+        "openai>=1.0.0" \
+        "typer>=0.12.0" \
+        "rich>=13.0.0" \
+        "pyfiglet>=1.0.2"
+
+# ==========================================================================
+# STAGE: deps-arm64
+# Install Python deps for aarch64.
+# onnxruntime-genai is installed from the wheel built in ort-genai-builder.
+# ==========================================================================
+FROM python:${PYTHON_VERSION}-slim AS deps-arm64
+
+ARG PYTHON_VERSION=3.12
+ARG PIP_EXTRA_INDEX_URL="https://download.pytorch.org/whl/cpu"
+
+WORKDIR /install
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        gcc g++ git curl ca-certificates libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV VIRTUAL_ENV="/opt/venv"
+RUN python -m venv ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip setuptools wheel
+
+# CPU-only torch wheel
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install "torch>=2.10.0" \
+        --index-url https://download.pytorch.org/whl/cpu
+
+# Core inference deps
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
+        "onnxruntime>=1.18.0" \
+        "transformers>=4.40.0" \
+        "numpy>=1.24.0" \
+        "huggingface-hub>=0.23.0"
+
+# onnxruntime-genai — installed from the wheel compiled from source for arm64
+COPY --from=ort-genai-builder /ort-genai-src/build/Linux/Release/wheel/ /tmp/ort-genai-wheels/
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install /tmp/ort-genai-wheels/*.whl && \
+    rm -rf /tmp/ort-genai-wheels
+
+# Server & CLI runtime deps
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
+        "fastapi>=0.111.0" \
+        "uvicorn[standard]>=0.29.0" \
+        "pydantic>=2.0.0" \
+        "openai>=1.0.0" \
+        "typer>=0.12.0" \
+        "rich>=13.0.0" \
+        "pyfiglet>=1.0.2"
+
+# ==========================================================================
+# STAGE: deps
+# Selects the correct platform-specific deps stage via TARGETARCH.
+# BuildKit evaluates TARGETARCH from --platform and resolves the name:
+#   amd64 -> deps-amd64  (ort-genai-builder is never built)
+#   arm64 -> deps-arm64  (ort-genai-builder is built from source)
+# ==========================================================================
+FROM deps-${TARGETARCH} AS deps
+
+# ==========================================================================
+# STAGE: runtime  (final image)
+# ==========================================================================
+FROM python:${PYTHON_VERSION}-slim AS runtime
+
+ARG PYTHON_VERSION=3.12
+
+LABEL org.opencontainers.image.title="ofoundry CPU"
+LABEL org.opencontainers.image.description="ONNX Runtime GenAI inference engine for CPU — chat & serve"
+LABEL org.opencontainers.image.vendor="kinfey"
+LABEL org.opencontainers.image.source="https://github.com/kinfey/ofoundry"
+LABEL ai.ofoundry.build.python-version="${PYTHON_VERSION}"
+LABEL ai.ofoundry.build.target="cpu"
+
+WORKDIR /app
+
+# Minimal runtime libraries only (no build tools)
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        libgomp1 \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the populated virtual-env from the appropriate deps stage
+ENV VIRTUAL_ENV="/opt/venv"
+COPY --from=deps ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+
+# ------------------------------------------------------------------
+# Copy ofoundry source from the local project root (build context).
+# No git clone — source is taken directly from the host machine.
+# Build context = /Users/lokinfey/Desktop/SLM/ofoundry
+# ------------------------------------------------------------------
+COPY pyproject.toml README.md ./
+COPY ofoundry/ ./ofoundry/
+
+# Install the package itself (no heavy dependency rebuild — already in venv)
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-build-isolation --no-deps -e .
+
+# Model volume — mount your ONNX GenAI model directory here
+VOLUME ["/models"]
+
+# OpenAI-compatible server port
+EXPOSE 1573
+
+# CPU thread limits — override at runtime with -e OMP_NUM_THREADS=N
+ENV OMP_NUM_THREADS=4
+ENV MKL_NUM_THREADS=4
+ENV TOKENIZERS_PARALLELISM=false
+
+# On Linux the ORT engine is used by default (no Foundry daemon needed)
+ENV OFOUNDRY_DEFAULT_ENGINE=ort
+
+# Entrypoint delegates to the ofoundry CLI.
+# Examples:
+#   docker run -it ofoundry-cpu run -m /models/phi3-mini-int4 -E ort
+#   docker run    ofoundry-cpu serve -m /models/phi3-mini-int4 -E ort --port 1573
+ENTRYPOINT ["ofoundry"]
+CMD ["--help"]

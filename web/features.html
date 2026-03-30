@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry features — embeddings, tool calling, vision-language models, model conversion.">
+  <title>Features — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo"><span class="logo-text">oFoundry</span></a>
+    </div>
+    <div class="header-right">
+      <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search docs..." autocomplete="off"><div class="search-results" id="search-results"></div></div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link active"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<div class="docs-layout">
+  <main class="main-content content">
+
+    <h1><span data-en>Features</span><span data-zh>功能特性</span></h1>
+    <p><span data-en>ofoundry goes beyond simple chat — it supports embeddings, tool calling, vision-language models, and model conversion to cover the full spectrum of local AI development.</span><span data-zh>ofoundry 不止于简单对话——支持嵌入、工具调用、视觉语言模型和模型转换，覆盖本地 AI 开发的全部场景。</span></p>
+
+    <!-- Dual Engine -->
+    <h2 id="dual-engine"><span data-en>Dual Inference Engine</span><span data-zh>双推理引擎</span></h2>
+    <p>ofoundry supports two inference backends, automatically selecting the right one for your platform:</p>
+
+    <table>
+      <thead>
+        <tr><th>Engine</th><th>Platform</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Foundry Local</strong></td>
+          <td>macOS, Windows</td>
+          <td>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU &gt; GPU &gt; CPU), launched via catalog alias.</td>
+        </tr>
+        <tr>
+          <td><strong>ORT</strong></td>
+          <td>macOS, Windows, Linux</td>
+          <td>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline, zero cloud dependency.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr><th>Condition</th><th>Engine</th><th>Model argument</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>macOS / Windows (default)</td><td>Foundry Local</td><td>Catalog alias (e.g. <code>Phi-4-mini-instruct-generic-cpu:5</code>)</td></tr>
+        <tr><td><code>--engine ort</code> or Linux (default)</td><td>ONNX Runtime GenAI</td><td>Local directory path</td></tr>
+        <tr><td><code>embed</code> / <code>serve-embed</code> commands</td><td>Embedding Engine (ONNX)</td><td>Local model directory</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warning">
+      <p><strong>Linux note:</strong> Foundry Local is not available on Linux. The engine is fixed to <code>ort</code>; passing <code>--engine foundry</code> will exit with an error.</p>
+    </div>
+
+    <!-- Embeddings -->
+    <h2 id="embeddings"><span data-en>Text Embeddings</span><span data-zh>文本嵌入</span></h2>
+    <p>The embedding engine is ONNX-only — no <code>--engine</code> flag needed. Perfect for RAG &amp; retrieval pipelines.</p>
+
+    <h3><span data-en>CLI — One-shot Embedding</span><span data-zh>CLI — 单次嵌入</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code='ofoundry embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
+
+# Interactive loop
+ofoundry embed ./models/embeddinggemma-300m-ONNX'>Copy</button>
+      </div>
+      <pre><code>ofoundry embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
+
+# Interactive loop
+ofoundry embed ./models/embeddinggemma-300m-ONNX</code></pre>
+    </div>
+
+    <h3><span data-en>Embedding Server</span><span data-zh>嵌入服务</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry serve-embed ./models/Qwen3-Embedding-0.6B           # default port 18001
+ofoundry serve-embed ./models/embeddinggemma-300m-ONNX -p 8002">Copy</button>
+      </div>
+      <pre><code>ofoundry serve-embed ./models/Qwen3-Embedding-0.6B           # default port 18001
+ofoundry serve-embed ./models/embeddinggemma-300m-ONNX -p 8002</code></pre>
+    </div>
+
+    <h3><span data-en>Use with OpenAI SDK</span><span data-zh>使用 OpenAI SDK</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18001/v1", api_key="unused")
+
+response = client.embeddings.create(
+    model="Qwen3-Embedding-0.6B",
+    input=["Hello, world!", "Embeddings are useful."],
+)
+for item in response.data:
+    print(f"index={item.index}  dim={len(item.embedding)}")'>Copy</button>
+      </div>
+      <pre><code>from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18001/v1", api_key="unused")
+
+response = client.embeddings.create(
+    model="Qwen3-Embedding-0.6B",
+    input=["Hello, world!", "Embeddings are useful."],
+)
+for item in response.data:
+    print(f"index={item.index}  dim={len(item.embedding)}")</code></pre>
+    </div>
+
+    <!-- Tool Calling -->
+    <h2 id="tool-calling"><span data-en>Tool Calling (Agentic Workflows)</span><span data-zh>工具调用（Agentic 工作流）</span></h2>
+    <p>Both engines support the OpenAI function-calling interface — build agents that plan, call tools, and reason entirely on-device.</p>
+
+    <h3><span data-en>How It Works</span><span data-zh>工作原理</span></h3>
+    <table>
+      <thead>
+        <tr><th>Engine</th><th>Strategy</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Foundry Local</strong></td>
+          <td>Tools forwarded natively via the standard OpenAI <code>tools</code> parameter. Response may carry native <code>tool_calls</code> or <code>functools[...]</code> format — both normalised automatically.</td>
+        </tr>
+        <tr>
+          <td><strong>ORT</strong></td>
+          <td>Tools serialised as JSON Schema inside the system prompt. Model replies with a <code>&lt;tool_call&gt;{...}&lt;/tool_call&gt;</code> block; <code>parse_tool_call()</code> extracts and validates it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3><span data-en>Supported Output Formats (auto-detected)</span><span data-zh>支持的输出格式（自动检测）</span></h3>
+    <table>
+      <thead>
+        <tr><th>Format</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>&lt;tool_call&gt;</code> block</td><td><code>&lt;tool_call&gt;{"name": "get_weather", "arguments": {"city": "Paris"}}&lt;/tool_call&gt;</code></td></tr>
+        <tr><td>Phi-3 native</td><td><code>&lt;|function_calls|&gt;{...}&lt;|/function_calls|&gt;</code></td></tr>
+        <tr><td>Mistral-style</td><td><code>&lt;functioncall&gt;{...}&lt;/functioncall&gt;</code></td></tr>
+        <tr><td>Markdown code block</td><td><code>```json {...} ```</code></td></tr>
+        <tr><td>OpenAI-legacy wrapper</td><td><code>{"function_call": {"name": ..., "arguments": ...}}</code></td></tr>
+        <tr><td>Bare JSON</td><td><code>{"name": "...", "arguments": {...}}</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span data-en>Example: Two-turn Tool-Calling Agent</span><span data-zh>示例：两轮工具调用 Agent</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from openai import OpenAI
+import json
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    },
+}]
+
+messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
+
+# Turn 1 — model decides to call a tool
+resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+choice = resp.choices[0]
+
+if choice.finish_reason == "tool_calls":
+    tool_call = choice.message.tool_calls[0]
+    args = json.loads(tool_call.function.arguments)
+
+    # Execute your function
+    weather_result = {"city": args["city"], "temperature": "18°C", "condition": "Sunny"}
+
+    # Turn 2 — send result back
+    messages += [
+        choice.message,
+        {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
+    ]
+    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    print(final.choices[0].message.content)'>Copy</button>
+      </div>
+      <pre><code>from openai import OpenAI
+import json
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    },
+}]
+
+messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
+
+# Turn 1 — model decides to call a tool
+resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+choice = resp.choices[0]
+
+if choice.finish_reason == "tool_calls":
+    tool_call = choice.message.tool_calls[0]
+    args = json.loads(tool_call.function.arguments)
+
+    # Execute your function
+    weather_result = {"city": args["city"], "temperature": "18°C", "condition": "Sunny"}
+
+    # Turn 2 — send result back
+    messages += [
+        choice.message,
+        {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
+    ]
+    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    print(final.choices[0].message.content)</code></pre>
+    </div>
+
+    <!-- Vision-Language -->
+    <h2 id="vision"><span data-en>Vision-Language Models</span><span data-zh>视觉语言模型</span></h2>
+    <p>VL models auto-switch to the ORT engine when detected. Send images (local or remote) alongside text:</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="# Launch VL model (auto-detected)
+ofoundry serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU">Copy</button>
+      </div>
+      <pre><code># Launch VL model (auto-detected)
+ofoundry serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code='# Send a local image
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d &apos;{
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "image_url", "image_url": {"url": "./cat.jpg"}},
+        {"type": "text", "text": "Describe this image"}
+      ]
+    }]
+  }&apos;'>Copy</button>
+      </div>
+      <pre><code># Send a local image
+curl -s http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "image_url", "image_url": {"url": "./cat.jpg"}},
+        {"type": "text", "text": "Describe this image"}
+      ]
+    }]
+  }'</code></pre>
+    </div>
+
+    <!-- Web Dashboard -->
+    <h2 id="dashboard"><span data-en>Web Dashboard</span><span data-zh>Web 仪表盘</span></h2>
+    <p>Run <code>ofoundry dashboard</code> to launch a real-time monitoring dashboard at <code>http://127.0.0.1:1573/</code>:</p>
+    <ul>
+      <li><strong>Model Selector</strong> — switch between cached models at runtime; NPU-accelerated models are marked with ⚡</li>
+      <li><strong>System Info Bar</strong> — model name, engine type, platform, Python version, live health</li>
+      <li><strong>Memory Gauges</strong> — CPU, GPU, NPU, and process memory in real-time</li>
+      <li><strong>Inference Parameters</strong> — temperature, top-p, top-k, max tokens with presets</li>
+      <li><strong>Chat Interface</strong> — send messages with streaming response and performance stats (TTFT, tok/s)</li>
+      <li><strong>Conversation History</strong> — saved conversations and system prompt configuration</li>
+      <li><strong>Server Logs</strong> — live request log with method, path, status, and timing</li>
+      <li><strong>Export</strong> — export conversations as JSON or Markdown</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a href="models.html">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Models</span><span data-zh>← 模型</span></span>
+      </a>
+      <a href="api.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>API Reference →</span><span data-zh>API 参考 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

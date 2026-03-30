@@ -1,0 +1,2 @@
+[console_scripts]
+ofoundry = ofoundry.cli:app

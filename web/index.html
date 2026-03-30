@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency.">
+  <title>ofoundry — Documentation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo">
+        <span class="logo-text">oFoundry</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search docs..." autocomplete="off">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Sidebar ============ -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link active"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ============ Main Content ============ -->
+<div class="docs-layout">
+  <main class="main-content">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>ofoundry</h1>
+      <p><span data-en>Local-first LLM inference toolkit. Run models on your own hardware with an OpenAI-compatible API — no cloud, no API keys, no data leaving your machine.</span><span data-zh>本地优先的 LLM 推理工具包。在自有硬件上运行模型，提供 OpenAI 兼容 API——无需云端、无需 API Key、数据不离开本机。</span></p>
+      <div class="hero-buttons">
+        <a href="quickstart.html" class="btn btn-primary"><span data-en>Get Started →</span><span data-zh>快速开始 →</span></a>
+        <a href="https://github.com/kinfey/ofoundry" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </section>
+
+    <!-- Quick Install -->
+    <section class="content">
+      <h2 id="install"><span data-en>Quick Install</span><span data-zh>快速安装</span></h2>
+      <p><span data-en>Requires <strong>Python 3.12+</strong>. Clone the repo and install — all dependencies are included:</span><span data-zh>需要 <strong>Python 3.12+</strong>。克隆仓库并安装——所有依赖已包含：</span></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+          <button class="copy-btn" data-code="git clone https://github.com/kinfey/ofoundry.git
+cd ofoundry
+pip install -e .">Copy</button>
+        </div>
+        <pre><code>git clone https://github.com/kinfey/ofoundry.git
+cd ofoundry
+pip install -e .</code></pre>
+      </div>
+      <p><span data-en>Then set up the default model directory and verify your environment:</span><span data-zh>然后设置默认模型目录并验证环境：</span></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+          <button class="copy-btn" data-code="# View ofoundry banner and configuration info
+ofoundry
+
+# Set the default model save location
+ofoundry init
+
+# Check environment and dependencies
+ofoundry check">Copy</button>
+        </div>
+        <pre><code># View ofoundry banner and configuration info
+ofoundry
+
+# Set the default model save location
+ofoundry init
+
+# Check environment and dependencies
+ofoundry check</code></pre>
+      </div>
+      <div class="callout info">
+        <p><span data-en><strong>💡 Tip:</strong> Running <code>ofoundry</code> with no arguments displays the welcome banner showing your current model directory paths. Use <code>ofoundry init</code> to configure where models are saved — all sub-folders (ORT, Foundry Local, HF cache) are created automatically. Use <code>ofoundry models</code> to list all local models.</span><span data-zh><strong>💡 提示：</strong>直接运行 <code>ofoundry</code> 不带参数会显示欢迎横幅，包含当前模型目录路径。使用 <code>ofoundry init</code> 配置模型保存位置——所有子目录（ORT、Foundry Local、HF cache）会自动创建。使用 <code>ofoundry models</code> 列出所有本地模型。</span></p>
+      </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="content">
+      <h2 id="features"><span data-en>Why ofoundry?</span><span data-zh>为什么选择 ofoundry？</span></h2>
+      <div class="features-grid">
+
+        <a href="features.html#dual-engine" class="feature-card">
+          <div class="card-icon">⚙️</div>
+          <h3><span data-en>Dual Inference Engine</span><span data-zh>双推理引擎</span></h3>
+          <p><span data-en>Foundry Local for macOS/Windows with NPU acceleration, or ONNX Runtime GenAI for Linux — choose the right backend for your platform.</span><span data-zh>macOS/Windows 使用 Foundry Local（含 NPU 加速），Linux 使用 ONNX Runtime GenAI——为你的平台选择合适的后端。</span></p>
+        </a>
+
+        <a href="api.html" class="feature-card">
+          <div class="card-icon">📡</div>
+          <h3><span data-en>OpenAI-Compatible API</span><span data-zh>OpenAI 兼容 API</span></h3>
+          <p><span data-en>Drop-in <code>/v1/chat/completions</code> and <code>/v1/embeddings</code> endpoints. Switch between local and cloud by changing one URL.</span><span data-zh>即插即用的 <code>/v1/chat/completions</code> 和 <code>/v1/embeddings</code> 端点。只需修改一个 URL 即可在本地与云端间切换。</span></p>
+        </a>
+
+        <a href="features.html#tool-calling" class="feature-card">
+          <div class="card-icon">🛠️</div>
+          <h3><span data-en>Tool Calling</span><span data-zh>工具调用</span></h3>
+          <p><span data-en>Full OpenAI function-calling support for building agentic workflows that run entirely on-device.</span><span data-zh>完整的 OpenAI 函数调用支持，构建完全在本机运行的 Agentic 工作流。</span></p>
+        </a>
+
+        <a href="features.html#embeddings" class="feature-card">
+          <div class="card-icon">🔢</div>
+          <h3><span data-en>Text Embeddings</span><span data-zh>文本嵌入</span></h3>
+          <p><span data-en>Dedicated ONNX embedding engine with Qwen3-Embedding and EmbeddingGemma for RAG pipelines.</span><span data-zh>专用 ONNX 嵌入引擎，支持 Qwen3-Embedding 和 EmbeddingGemma，适用于 RAG 管线。</span></p>
+        </a>
+
+        <a href="features.html#vision" class="feature-card">
+          <div class="card-icon">👁️</div>
+          <h3><span data-en>Vision-Language Models</span><span data-zh>视觉语言模型</span></h3>
+          <p><span data-en>Auto-detected VL models — send images alongside text for multimodal understanding with Qwen VL.</span><span data-zh>自动检测 VL 模型——通过 Qwen VL 同时发送图片和文本进行多模态理解。</span></p>
+        </a>
+
+        <a href="docker.html" class="feature-card">
+          <div class="card-icon">🐳</div>
+          <h3><span data-en>Docker Ready</span><span data-zh>Docker 就绪</span></h3>
+          <p><span data-en>CPU container for linux/amd64 and linux/arm64 — deploy locally, in CI, or on headless servers.</span><span data-zh>支持 linux/amd64 和 linux/arm64 的 CPU 容器——在本地、CI 或无头服务器上部署。</span></p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Engines Overview -->
+    <section class="content">
+      <h2 id="engines"><span data-en>Dual Engine Architecture</span><span data-zh>双引擎架构</span></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Engine</th>
+            <th>Platform</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Foundry Local</strong></td>
+            <td>macOS, Windows</td>
+            <td>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU > GPU > CPU).</td>
+          </tr>
+          <tr>
+            <td><strong>ORT</strong></td>
+            <td>macOS, Windows, Linux</td>
+            <td>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline.</td>
+          </tr>
+          <tr>
+            <td><strong>Embedding</strong></td>
+            <td>All platforms</td>
+            <td>ONNX-only text embeddings for RAG & retrieval pipelines.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Quick Example -->
+    <section class="content">
+      <h2 id="example"><span data-en>Quick Example</span><span data-zh>快速示例</span></h2>
+      <h3><span data-en>Chat in the terminal</span><span data-zh>在终端中聊天</span></h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+          <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+        </div>
+        <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5</code></pre>
+      </div>
+
+      <h3><span data-en>Serve an OpenAI-compatible API</span><span data-zh>启动 OpenAI 兼容 API 服务</span></h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+          <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+        </div>
+        <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
+      </div>
+
+      <h3><span data-en>Use with the OpenAI Python SDK</span><span data-zh>使用 OpenAI Python SDK</span></h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">python</span>
+          <button class="copy-btn" data-code='from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)'>Copy</button>
+        </div>
+        <pre><code>from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)</code></pre>
+      </div>
+      <div class="callout info">
+        <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="page-nav">
+      <div></div>
+      <a href="quickstart.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>Quickstart →</span><span data-zh>快速开始 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>

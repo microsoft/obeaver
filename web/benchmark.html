@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Benchmark and performance monitoring for ofoundry — TTFT, tok/s, memory tracking, and real-time system resource gauges.">
+  <title>Benchmark — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+  <style>
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .screenshot-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-secondary);
+      transition: box-shadow 0.2s;
+    }
+    .screenshot-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .screenshot-card figcaption {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+    .metric-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .metric-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .metric-card .metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .metric-card .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .screenshot-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 768px) {
+      .screenshot-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo">
+        <span class="logo-text">oFoundry</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search docs..." autocomplete="off">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Sidebar ============ -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link active"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ============ Main Content ============ -->
+<div class="content-wrapper">
+  <main class="main-content">
+
+    <h1><span data-en>Benchmark &amp; Performance</span><span data-zh>性能基准</span></h1>
+    <p class="lead">ofoundry provides built-in performance metrics and real-time resource monitoring so you can measure inference speed, memory usage, and system health — all from the CLI or the web dashboard.</p>
+
+    <!-- ============================================ -->
+    <h2 id="cli-timing-stats"><span data-en>CLI Timing Stats</span><span data-zh>CLI 计时统计</span></h2>
+
+    <p>Add the <code>--timings</code> flag to any <code>ofoundry run</code> command to display per-response performance metrics directly in the terminal:</p>
+
+    <pre><code class="language-bash"># Foundry Local engine with timing stats
+ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings
+
+# ORT engine with timing stats
+ofoundry run --engine ort ./models/phi3-mini-int4 --timings
+
+# VL (Vision-Language) model with timing stats
+ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pre>
+
+    <p>After each response, the CLI prints a summary line:</p>
+
+    <div class="metric-cards">
+      <div class="metric-card">
+        <span class="metric-value">TTFT</span>
+        <span class="metric-label">Time to First Token (ms)</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-value">tok/s</span>
+        <span class="metric-label">Tokens per second</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-value">tokens</span>
+        <span class="metric-label">Total tokens generated</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Example output:</strong> After asking a question, the CLI will show stats like<br>
+      <code>TTFT 1398ms · 5.7 tok/s · 26 tokens</code>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="web-dashboard-monitoring"><span data-en>Web Dashboard Monitoring</span><span data-zh>Web 仪表盘监控</span></h2>
+
+    <p><span data-en>Launch the monitoring dashboard to browse and test models interactively:</span><span data-zh>启动监控仪表盘，交互式浏览和测试模型：</span></p>
+
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-block-lang">bash</span></div>
+      <pre><code># Foundry Local engine (default on macOS/Windows) — lists cached Foundry models
+ofoundry dashboard
+
+# ORT engine — scans ./models for local ONNX GenAI models
+ofoundry dashboard -e ort</code></pre>
+    </div>
+
+    <p><span data-en>Then open <code>http://127.0.0.1:1573/</code> in your browser. Select a model from the dropdown and start chatting — the dashboard loads the model in-process and provides real-time system resource tracking alongside an integrated chat interface.</span><span data-zh>然后在浏览器中打开 <code>http://127.0.0.1:1573/</code>。从下拉列表中选择模型即可开始对话——仪表盘会在进程内加载模型，并提供实时系统资源监控和集成聊天界面。</span></p>
+
+    <figure class="screenshot-card">
+      <img src="imgs/01_fullpage_hd.png" alt="oFoundry Dashboard — full view showing model selector, memory cards, inference parameters, and chat interface" loading="lazy">
+      <figcaption>Full dashboard view: model selector, memory gauges, inference parameters, chat interface, and server logs.</figcaption>
+    </figure>
+
+    <!-- ============================================ -->
+    <h2 id="system-resource-gauges"><span data-en>System Resource Gauges</span><span data-zh>系统资源仪表</span></h2>
+
+    <p>The dashboard tracks resource utilisation across all available compute hardware with real-time gauges that refresh every 3 seconds:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Metrics Shown</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CPU Memory</strong></td>
+          <td>Total, Used, Available, % gauge</td>
+          <td>System RAM utilisation with processor identification (e.g. ARMv8 Qualcomm, Apple M-series, Intel/AMD)</td>
+        </tr>
+        <tr>
+          <td><strong>GPU Memory</strong></td>
+          <td>Total, Used, Available, Active/Idle</td>
+          <td>Detected GPU device memory (NVIDIA, AMD, Intel, Qualcomm Adreno)</td>
+        </tr>
+        <tr>
+          <td><strong>NPU Memory</strong></td>
+          <td>Total, Used, Available, Active/Idle</td>
+          <td>Neural Processing Unit if available (Intel Meteor Lake, Qualcomm Hexagon)</td>
+        </tr>
+        <tr>
+          <td><strong>Process Memory</strong></td>
+          <td>PID, Resident, Virtual</td>
+          <td>Memory consumed by the ofoundry server process itself</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <figure class="screenshot-card">
+      <img src="imgs/03_memory_cards_hd.png" alt="CPU, GPU, and NPU memory cards with real-time gauges" loading="lazy">
+      <figcaption>CPU Memory (87% — 31.6 GB total), GPU Memory (Qualcomm Adreno X1-85), NPU Memory (Snapdragon X Elite Hexagon), and process info (PID, Resident 118 MB, Virtual 87 MB).</figcaption>
+    </figure>
+
+    <div class="screenshot-pair">
+      <figure class="screenshot-card">
+        <img src="imgs/02_top_viewport_hd.png" alt="Dashboard top viewport: model selector, system info bar, memory cards, chat, and inference parameters" loading="lazy">
+        <figcaption>Top viewport showing model selector, system info bar, and full dashboard layout.</figcaption>
+      </figure>
+      <figure class="screenshot-card">
+        <img src="imgs/02_dashboard_fullpage_hd.png" alt="Dashboard close-up: CPU memory gauge and system info" loading="lazy">
+        <figcaption>Close-up of CPU memory gauge (83% utilisation) with processor and model info.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="inference-parameters"><span data-en>Inference Parameters</span><span data-zh>推理参数</span></h2>
+
+    <p>The dashboard sidebar provides real-time tuneable inference parameters with three presets:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Range</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Temperature</strong></td>
+          <td>0 – 2</td>
+          <td>Controls randomness of output. Lower = more deterministic</td>
+        </tr>
+        <tr>
+          <td><strong>Top P</strong></td>
+          <td>0 – 1</td>
+          <td>Nucleus sampling probability threshold</td>
+        </tr>
+        <tr>
+          <td><strong>Top K</strong></td>
+          <td>1 – 100</td>
+          <td>Top-K sampling — limits token choices</td>
+        </tr>
+        <tr>
+          <td><strong>Max Tokens</strong></td>
+          <td>1 – 4096</td>
+          <td>Maximum number of tokens to generate</td>
+        </tr>
+        <tr>
+          <td><strong>Repetition Penalty</strong></td>
+          <td>1.0 – 2.0</td>
+          <td>Penalises repeated tokens</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Presets:</strong> <code>Creative</code> (high temperature, high top-k) · <code>Balanced</code> (default) · <code>Precise</code> (low temperature, greedy)
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="chat-performance-metrics"><span data-en>Chat Performance Metrics</span><span data-zh>对话性能指标</span></h2>
+
+    <p>The built-in chat interface shows real-time performance stats for every model response:</p>
+
+    <figure class="screenshot-card">
+      <img src="imgs/05_chat_response_hd.png" alt="Chat interface showing streaming response with TTFT, tok/s stats" loading="lazy">
+      <figcaption>Chat response to "Explain quantum computing in one sentence" — showing TTFT 1398 ms, 5.7 tok/s, 26 tokens.</figcaption>
+    </figure>
+
+    <p>Each message displays three key metrics:</p>
+
+    <ul>
+      <li><strong>TTFT (Time to First Token)</strong> — how quickly the model begins generating after receiving the prompt. Lower is better; strongly influenced by model size and available hardware acceleration.</li>
+      <li><strong>tok/s (Tokens per Second)</strong> — the sustained generation speed. Higher is better; CPU-only inference typically ranges 3-15 tok/s for small models.</li>
+      <li><strong>Token Count</strong> — total tokens generated in the response.</li>
+    </ul>
+
+    <figure class="screenshot-card">
+      <img src="imgs/04_chat_section_hd.png" alt="Chat section with conversation history sidebar and inference parameters" loading="lazy">
+      <figcaption>Chat section with conversation history sidebar and tuneable inference parameters panel.</figcaption>
+    </figure>
+
+    <!-- ============================================ -->
+    <h2 id="full-dashboard-overview"><span data-en>Full Dashboard Overview</span><span data-zh>仪表盘完整概览</span></h2>
+
+    <p>The complete dashboard brings together system monitoring, a chat interface, inference parameter controls, conversation history, server logs, and export functionality in a single view:</p>
+
+    <figure class="screenshot-card">
+      <img src="imgs/06_full_overview_hd.png" alt="Full overview of oFoundry dashboard with all sections visible" loading="lazy">
+      <figcaption>Full dashboard overview: model selector, memory gauges, process info, API reference, chat, server logs, and export buttons.</figcaption>
+    </figure>
+
+    <h3><span data-en>Dashboard Features Summary</span><span data-zh>仪表盘功能摘要</span></h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Model Selector</td>
+          <td>Switch between cached models at runtime; NPU-accelerated models are marked with ⚡</td>
+        </tr>
+        <tr>
+          <td>System Info Bar</td>
+          <td>Model name, engine type, platform, Python version, live health status</td>
+        </tr>
+        <tr>
+          <td>Memory Gauges</td>
+          <td>CPU / GPU / NPU utilisation with auto-refresh every 3 seconds</td>
+        </tr>
+        <tr>
+          <td>Inference Parameters</td>
+          <td>Temperature, Top P, Top K, Max Tokens, Repetition Penalty with presets</td>
+        </tr>
+        <tr>
+          <td>Chat Interface</td>
+          <td>Streaming responses with TTFT, tok/s, and token count per message</td>
+        </tr>
+        <tr>
+          <td>Conversation History</td>
+          <td>Saved conversations sidebar with system prompt configuration</td>
+        </tr>
+        <tr>
+          <td>Server Logs</td>
+          <td>Live request log with method, path, status code, and timing</td>
+        </tr>
+        <tr>
+          <td>Export</td>
+          <td>Export conversations as JSON or Markdown</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ============================================ -->
+    <h2 id="tips"><span data-en>Performance Tips</span><span data-zh>性能优化建议</span></h2>
+
+    <ul>
+      <li><strong>Choose smaller models for faster TTFT</strong> — run <code>foundry model list</code> to see available models; models like <code>Phi-4-mini-instruct-generic-cpu:5</code> start generating in under a second on modern hardware.</li>
+      <li><strong>Use Foundry Local on macOS/Windows</strong> — it automatically selects the best available accelerator (NPU &gt; GPU &gt; CPU).</li>
+      <li><strong>INT4 quantised ONNX models</strong> — provide the best balance of quality and speed for on-device inference.</li>
+      <li><strong>Close other memory-heavy applications</strong> — inference speed is directly affected by available RAM; monitor the CPU Memory gauge in the dashboard.</li>
+      <li><strong>Monitor the dashboard</strong> — run <code>ofoundry dashboard</code> (Foundry Local) or <code>ofoundry dashboard -e ort</code> (ONNX Runtime GenAI) and keep <code>http://127.0.0.1:1573/</code> open while benchmarking to track resource utilisation in real time.</li>
+    </ul>
+
+    <!-- Bottom Navigation -->
+    <nav class="page-nav">
+      <a href="integrations.html" class="prev">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Integrations</span><span data-zh>← 集成方案</span></span>
+      </a>
+      <a href="docker.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>Docker →</span><span data-zh>Docker →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>

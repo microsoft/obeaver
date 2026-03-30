@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry model conversion — convert Hugging Face models to optimised ONNX INT4/FP16 format for text and vision-language models.">
+  <title>Model Conversion — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+  <style>
+    .flow-steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    .flow-steps li {
+      counter-increment: step;
+      position: relative;
+      padding: 1rem 1rem 1rem 3.5rem;
+      margin-bottom: 0.75rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    .flow-steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0.85rem;
+      top: 1rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flow-steps li strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .engine-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .engine-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .engine-card h4 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    @media (max-width: 768px) {
+      .engine-comparison { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo">
+        <span class="logo-text">oFoundry</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search docs..." autocomplete="off">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Sidebar ============ -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+      <a href="convert.html" class="sidebar-link active"><span class="nav-icon">🔄</span> <span data-en>Model Conversion</span><span data-zh>模型转换</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ============ Main Content ============ -->
+<div class="content-wrapper">
+  <main class="main-content">
+
+    <h1><span data-en>Model Conversion</span><span data-zh>模型转换</span></h1>
+    <p class="lead"><span data-en>Convert Hugging Face models to optimised ONNX format directly from the CLI. This step is <strong>required</strong> when using the ORT engine with models downloaded from Hugging Face.</span><span data-zh>通过 CLI 直接将 Hugging Face 模型转换为优化的 ONNX 格式。使用 ORT 引擎运行从 Hugging Face 下载的模型时，此步骤是<strong>必需的</strong>。</span></p>
+
+    <div class="callout warning">
+      <p><span data-en><strong>Why convert?</strong> The ORT engine requires models in ONNX GenAI format (containing <code>genai_config.json</code> + <code>.onnx</code> files). Raw Hugging Face model weights (PyTorch / SafeTensors) cannot be loaded directly. Use <code>ofoundry convert</code> to transform them into the correct format.</span><span data-zh><strong>为什么需要转换？</strong> ORT 引擎要求模型为 ONNX GenAI 格式（包含 <code>genai_config.json</code> + <code>.onnx</code> 文件）。原始的 Hugging Face 模型权重（PyTorch / SafeTensors）无法直接加载。使用 <code>ofoundry convert</code> 将其转换为正确的格式。</span></p>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="when-to-convert"><span data-en>When Do You Need to Convert?</span><span data-zh>何时需要转换？</span></h2>
+
+    <div class="engine-comparison">
+      <div class="engine-card">
+        <h4><span data-en>🟢 Foundry Local Engine</span><span data-zh>🟢 Foundry Local 引擎</span></h4>
+        <p><span data-en><strong>No conversion needed.</strong> Foundry Local downloads pre-optimised models from the Microsoft catalog automatically. Just pass a catalog alias:</span><span data-zh><strong>无需转换。</strong> Foundry Local 会自动从 Microsoft 目录下载预优化模型。只需传入 catalog alias：</span></p>
+        <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5</code></pre>
+        <p style="margin-bottom:0;color:var(--text-secondary);font-size:0.9rem;"><span data-en>First run will download the model — please wait for it to complete. Run <code>foundry model list</code> to see all available aliases.</span><span data-zh>首次运行会下载模型——请等待下载完成。运行 <code>foundry model list</code> 查看所有可用的模型别名。</span></p>
+      </div>
+      <div class="engine-card">
+        <h4><span data-en>🔶 ORT Engine</span><span data-zh>🔶 ORT 引擎</span></h4>
+        <p><span data-en><strong>Conversion required.</strong> If you download a model from Hugging Face (not a pre-converted ONNX repo), you must convert it before using <code>ofoundry run</code>:</span><span data-zh><strong>需要转换。</strong> 如果从 Hugging Face 下载模型（非预转换的 ONNX 仓库），必须先转换后才能使用 <code>ofoundry run</code>：</span></p>
+        <pre><code>ofoundry convert Qwen/Qwen3-0.6B
+ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="text-models"><span data-en>Text Model Conversion</span><span data-zh>文本模型转换</span></h2>
+
+    <p><span data-en>For standard text generation models (Qwen, Phi, Llama, etc.), use the default <code>text</code> type. The conversion uses <code>onnxruntime-genai</code> model builder under the hood.</span><span data-zh>对于标准文本生成模型（Qwen、Phi、Llama 等），使用默认的 <code>text</code> 类型。转换底层使用 <code>onnxruntime-genai</code> model builder。</span></p>
+
+    <h3><span data-en>Step-by-step Workflow</span><span data-zh>分步工作流</span></h3>
+
+    <ol class="flow-steps">
+      <li>
+        <strong><span data-en>Convert the model</span><span data-zh>转换模型</span></strong>
+        <span data-en>Run the convert command with the Hugging Face model name:</span><span data-zh>使用 Hugging Face 模型名称运行转换命令：</span>
+        <pre><code># INT4 quantized (smallest, fastest on CPU — recommended)
+ofoundry convert Qwen/Qwen3-0.6B
+
+# FP16 precision
+ofoundry convert Qwen/Qwen3-0.6B -p fp16
+
+# Custom output directory + extra options
+ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'</code></pre>
+        <span data-en>The model will be downloaded from Hugging Face, converted, and saved to the output directory (default: <code>./models/&lt;model&gt;_ONNX_&lt;PRECISION&gt;_&lt;EP&gt;</code>).</span><span data-zh>模型将从 Hugging Face 下载、转换并保存到输出目录（默认：<code>./models/&lt;model&gt;_ONNX_&lt;PRECISION&gt;_&lt;EP&gt;</code>）。</span>
+      </li>
+      <li>
+        <strong><span data-en>Verify the output</span><span data-zh>验证输出</span></strong>
+        <span data-en>Check that the output directory contains <code>genai_config.json</code> and <code>.onnx</code> files:</span><span data-zh>检查输出目录是否包含 <code>genai_config.json</code> 和 <code>.onnx</code> 文件：</span>
+        <pre><code>ls ./models/Qwen3-0.6B_ONNX_INT4_CPU/
+# → genai_config.json  model.onnx  tokenizer.json  ...</code></pre>
+      </li>
+      <li>
+        <strong><span data-en>Run with ORT engine</span><span data-zh>使用 ORT 引擎运行</span></strong>
+        <span data-en>Point ofoundry to the converted model directory:</span><span data-zh>将 ofoundry 指向转换后的模型目录：</span>
+        <pre><code>ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+      </li>
+    </ol>
+
+    <h3><span data-en>Complete Example: Qwen3-0.6B</span><span data-zh>完整示例：Qwen3-0.6B</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="# 1) Convert from Hugging Face to ONNX INT4
+ofoundry convert Qwen/Qwen3-0.6B
+
+# 2) Chat with the converted model
+ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU --timings
+
+# 3) Or serve as API
+ofoundry serve --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU">Copy</button>
+      </div>
+      <pre><code># 1) Convert from Hugging Face to ONNX INT4
+ofoundry convert Qwen/Qwen3-0.6B
+
+# 2) Chat with the converted model
+ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU --timings
+
+# 3) Or serve as API
+ofoundry serve --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="vl-models"><span data-en>Vision-Language (VL) Model Conversion</span><span data-zh>视觉语言 (VL) 模型转换</span></h2>
+
+    <p><span data-en>VL model conversion uses the <a href="https://github.com/microsoft/Olive" target="_blank" rel="noopener noreferrer">Olive</a> optimization pipeline from <a href="https://github.com/microsoft/olive-recipes" target="_blank" rel="noopener noreferrer">olive-recipes</a>. It exports three sub-models (text decoder, vision encoder, text embedding) and quantizes them to INT4.</span><span data-zh>VL 模型转换使用 <a href="https://github.com/microsoft/Olive" target="_blank" rel="noopener noreferrer">Olive</a> 优化管道（参考 <a href="https://github.com/microsoft/olive-recipes" target="_blank" rel="noopener noreferrer">olive-recipes</a>）。它会导出三个子模型（文本解码器、视觉编码器、文本嵌入）并将其量化为 INT4。</span></p>
+
+    <div class="callout info">
+      <p><span data-en><strong>VL models always use the ORT engine.</strong> When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code> — you never need to specify <code>--engine ort</code> manually.</span><span data-zh><strong>VL 模型始终使用 ORT 引擎。</strong> 当检测到 VL 模型目录（包含 <code>vision.onnx</code>）时，引擎会自动设置为 <code>ort</code>——无需手动指定 <code>--engine ort</code>。</span></p>
+    </div>
+
+    <h3><span data-en>Supported VL Models</span><span data-zh>支持的 VL 模型</span></h3>
+    <table>
+      <thead>
+        <tr><th><span data-en>Model</span><span data-zh>模型</span></th><th><span data-en>HF Source</span><span data-zh>HF 源</span></th><th><span data-en>Build from Source?</span><span data-zh>需要源码构建？</span></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Qwen 2.5 VL 3B</td><td><code>Qwen/Qwen2.5-VL-3B-Instruct</code></td><td><span data-en>No</span><span data-zh>否</span></td></tr>
+        <tr><td>Qwen 3 VL 2B</td><td><code>Qwen/Qwen3-VL-2B-Instruct</code></td><td><span data-en>Yes</span><span data-zh>是</span> (<code>--build-from-source</code>)</td></tr>
+      </tbody>
+    </table>
+
+    <h3><span data-en>Step-by-step: Qwen 2.5 VL</span><span data-zh>分步操作：Qwen 2.5 VL</span></h3>
+
+    <ol class="flow-steps">
+      <li>
+        <strong><span data-en>Run the convert command with <code>--type vl</code></span><span data-zh>使用 <code>--type vl</code> 运行转换命令</span></strong>
+        <pre><code>ofoundry convert Qwen/Qwen2.5-VL-3B-Instruct --type vl</code></pre>
+        <span data-en>This downloads the model, runs the Olive optimization pipeline, and saves the result to <code>./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU</code>.</span><span data-zh>这会下载模型、运行 Olive 优化管道，并将结果保存到 <code>./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU</code>。</span>
+      </li>
+      <li>
+        <strong><span data-en>Verify the output</span><span data-zh>验证输出</span></strong>
+        <span data-en>The directory should contain <code>vision.onnx</code>, <code>text.onnx</code>, <code>embedding.onnx</code>, plus config files:</span><span data-zh>目录应包含 <code>vision.onnx</code>、<code>text.onnx</code>、<code>embedding.onnx</code> 以及配置文件：</span>
+        <pre><code>ls ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU/
+# → vision.onnx  text.onnx  embedding.onnx  genai_config.json  ...</code></pre>
+      </li>
+      <li>
+        <strong><span data-en>Run the VL model</span><span data-zh>运行 VL 模型</span></strong>
+        <pre><code>ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU</code></pre>
+      </li>
+    </ol>
+
+    <h3><span data-en>Step-by-step: Qwen 3 VL</span><span data-zh>分步操作：Qwen 3 VL</span></h3>
+
+    <div class="callout warning">
+      <p><span data-en><strong>Qwen 3 VL requires <code>--build-from-source</code></strong> to ensure compatibility with the latest Olive and onnxruntime-genai features. The build process automatically detects your OS and device to select the correct configuration.</span><span data-zh><strong>Qwen 3 VL 需要 <code>--build-from-source</code></strong> 以确保与最新的 Olive 和 onnxruntime-genai 功能兼容。构建过程会自动检测你的操作系统和设备以选择正确的配置。</span></p>
+    </div>
+
+    <ol class="flow-steps">
+      <li>
+        <strong><span data-en>Run the convert command with <code>--build-from-source</code></span><span data-zh>使用 <code>--build-from-source</code> 运行转换命令</span></strong>
+        <pre><code>ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></pre>
+        <span data-en>This first builds onnxruntime-genai from source, then runs the Olive pipeline.</span><span data-zh>这会先从源码构建 onnxruntime-genai，然后运行 Olive 管道。</span>
+      </li>
+      <li>
+        <strong><span data-en>Verify the output</span><span data-zh>验证输出</span></strong>
+        <pre><code>ls ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU/
+# → vision.onnx  text.onnx  embedding.onnx  genai_config.json  ...</code></pre>
+      </li>
+      <li>
+        <strong><span data-en>Run the VL model</span><span data-zh>运行 VL 模型</span></strong>
+        <pre><code>ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
+      </li>
+    </ol>
+
+    <!-- ============================================ -->
+    <h2 id="flags-reference"><span data-en>Conversion Flags Reference</span><span data-zh>转换参数参考</span></h2>
+
+    <table>
+      <thead>
+        <tr><th><span data-en>Flag</span><span data-zh>参数</span></th><th><span data-en>Default</span><span data-zh>默认值</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>-m</code> / <code>--model</code></td><td><em><span data-en>(required)</span><span data-zh>（必填）</span></em></td><td><span data-en>Hugging Face model name or local path (e.g. <code>Qwen/Qwen3-0.6B</code>)</span><span data-zh>Hugging Face 模型名称或本地路径（如 <code>Qwen/Qwen3-0.6B</code>）</span></td></tr>
+        <tr><td><code>-t</code> / <code>--type</code></td><td><code>text</code></td><td><span data-en>Model type: <code>text</code> (text-only) or <code>vl</code> (vision-language)</span><span data-zh>模型类型：<code>text</code>（纯文本）或 <code>vl</code>（视觉语言）</span></td></tr>
+        <tr><td><code>-o</code> / <code>--output</code></td><td>Auto</td><td><span data-en>Output directory. Default: <code>./models/&lt;model&gt;_ONNX_&lt;PRECISION&gt;_&lt;EP&gt;</code></span><span data-zh>输出目录。默认：<code>./models/&lt;model&gt;_ONNX_&lt;PRECISION&gt;_&lt;EP&gt;</code></span></td></tr>
+        <tr><td><code>-p</code> / <code>--precision</code></td><td><code>int4</code></td><td><span data-en>Quantization precision: <code>fp32</code>, <code>fp16</code>, <code>int4</code></span><span data-zh>量化精度：<code>fp32</code>、<code>fp16</code>、<code>int4</code></span></td></tr>
+        <tr><td><code>-e</code> / <code>--ep</code></td><td><code>cpu</code></td><td><span data-en>Execution provider: <code>cpu</code> or <code>cuda</code> (GPU)</span><span data-zh>执行提供程序：<code>cpu</code> 或 <code>cuda</code>（GPU）</span></td></tr>
+        <tr><td><code>-c</code> / <code>--cache-dir</code></td><td><code>./models/cache_dir</code></td><td><span data-en>Cache directory for downloaded Hugging Face files</span><span data-zh>下载的 Hugging Face 文件缓存目录</span></td></tr>
+        <tr><td><code>--extra-options</code></td><td>—</td><td><span data-en><code>KEY=VALUE</code> pairs for onnxruntime-genai model builder (text only)</span><span data-zh><code>KEY=VALUE</code> 键值对，传递给 onnxruntime-genai model builder（仅文本模型）</span></td></tr>
+        <tr><td><code>--build-from-source</code></td><td><code>false</code></td><td><span data-en>Build onnxruntime-genai from source before VL conversion (VL only)</span><span data-zh>在 VL 转换前从源码构建 onnxruntime-genai（仅 VL 模型）</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============================================ -->
+    <h2 id="pre-converted-models"><span data-en>Using Pre-converted Models</span><span data-zh>使用预转换模型</span></h2>
+
+    <p><span data-en>Some models on Hugging Face are already in ONNX GenAI format — no conversion needed. Look for repos tagged <code>onnxruntime-genai</code>:</span><span data-zh>Hugging Face 上的部分模型已经是 ONNX GenAI 格式——无需转换。查找带有 <code>onnxruntime-genai</code> 标签的仓库：</span></p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code='# Download a pre-converted ONNX model (no conversion needed)
+hf download microsoft/Phi-3-mini-4k-instruct-onnx \
+  --include "cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4/*" \
+  --local-dir ./models/phi3-mini-int4
+
+# Run directly
+ofoundry run --engine ort ./models/phi3-mini-int4'>Copy</button>
+      </div>
+      <pre><code># Download a pre-converted ONNX model (no conversion needed)
+hf download microsoft/Phi-3-mini-4k-instruct-onnx \
+  --include "cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4/*" \
+  --local-dir ./models/phi3-mini-int4
+
+# Run directly
+ofoundry run --engine ort ./models/phi3-mini-int4</code></pre>
+    </div>
+
+    <div class="callout info">
+      <p><span data-en><strong>How to tell if conversion is needed:</strong> Check if the downloaded directory contains <code>genai_config.json</code> and <code>.onnx</code> files. If it contains <code>*.safetensors</code> or <code>pytorch_model.bin</code> instead, you need to convert it first.</span><span data-zh><strong>如何判断是否需要转换：</strong>检查下载的目录是否包含 <code>genai_config.json</code> 和 <code>.onnx</code> 文件。如果包含的是 <code>*.safetensors</code> 或 <code>pytorch_model.bin</code>，则需要先转换。</span></p>
+    </div>
+
+    <!-- ============================================ -->
+    <h2 id="troubleshooting"><span data-en>Troubleshooting</span><span data-zh>故障排除</span></h2>
+
+    <table>
+      <thead>
+        <tr><th><span data-en>Problem</span><span data-zh>问题</span></th><th><span data-en>Solution</span><span data-zh>解决方案</span></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>ModuleNotFoundError: onnxruntime_genai</code></td>
+          <td><span data-en>Re-run <code>pip install -e .</code> from the ofoundry project root to install all dependencies.</span><span data-zh>在 ofoundry 项目根目录重新运行 <code>pip install -e .</code> 安装所有依赖。</span></td>
+        </tr>
+        <tr>
+          <td><span data-en>VL conversion fails with <code>olive</code> not found</span><span data-zh>VL 转换失败，提示 <code>olive</code> 未找到</span></td>
+          <td><span data-en>Re-run <code>pip install -e .</code> from the ofoundry project root. If the issue persists, try <code>pip install olive-ai</code> manually.</span><span data-zh>在项目根目录重新运行 <code>pip install -e .</code>。如问题仍存在，尝试手动安装 <code>pip install olive-ai</code>。</span></td>
+        </tr>
+        <tr>
+          <td><span data-en>Qwen 3 VL conversion fails without <code>--build-from-source</code></span><span data-zh>Qwen 3 VL 转换失败（未使用 <code>--build-from-source</code>）</span></td>
+          <td><span data-en>Add the flag: <code>ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span><span data-zh>添加参数：<code>ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span></td>
+        </tr>
+        <tr>
+          <td><span data-en>Out of memory during conversion</span><span data-zh>转换过程中内存不足</span></td>
+          <td><span data-en>Close other applications. INT4 quantization requires significant RAM during the conversion process.</span><span data-zh>关闭其他应用程序。INT4 量化在转换过程中需要大量内存。</span></td>
+        </tr>
+        <tr>
+          <td><span data-en>Model loads but can't generate</span><span data-zh>模型加载成功但无法生成</span></td>
+          <td><span data-en>Verify the output directory contains both <code>genai_config.json</code> and <code>.onnx</code> files. Re-run conversion if incomplete.</span><span data-zh>确认输出目录同时包含 <code>genai_config.json</code> 和 <code>.onnx</code> 文件。如不完整，请重新运行转换。</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Bottom Navigation -->
+    <nav class="page-nav">
+      <a href="models.html" class="prev">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Models</span><span data-zh>← 模型</span></span>
+      </a>
+      <a href="features.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>Features →</span><span data-zh>功能特性 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>

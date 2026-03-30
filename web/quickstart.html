@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry quickstart guide — install, get models, and start chatting in minutes.">
+  <title>Quickstart — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo">
+        <span class="logo-text">oFoundry</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search docs..." autocomplete="off">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link active"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<div class="docs-layout">
+  <main class="main-content content">
+
+    <h1><span data-en>Quickstart</span><span data-zh>快速开始</span></h1>
+    <p><span data-en>Get ofoundry up and running in minutes. This guide covers installation, getting models, and your first chat.</span><span data-zh>几分钟即可启动 ofoundry。本指南涵盖安装、获取模型及首次对话。</span></p>
+
+    <!-- Requirements -->
+    <h2 id="requirements"><span data-en>Requirements</span><span data-zh>系统要求</span></h2>
+    <ul>
+      <li><strong>Python 3.12+</strong></li>
+      <li>Foundry Local system daemon (macOS / Windows only, for Foundry Local engine):</li>
+    </ul>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="brew install microsoft/foundrylocal/foundrylocal   # macOS
+winget install Microsoft.FoundryLocal              # Windows">Copy</button>
+      </div>
+      <pre><code>brew install microsoft/foundrylocal/foundrylocal   # macOS
+winget install Microsoft.FoundryLocal              # Windows</code></pre>
+    </div>
+    <div class="callout info">
+      <p><strong>Note:</strong> On Linux, Foundry Local is not available. The engine defaults to ORT.</p>
+    </div>
+
+    <!-- Installation -->
+    <h2 id="installation"><span data-en>Installation</span><span data-zh>安装</span></h2>
+    <p><span data-en>Clone the repository and install ofoundry — all Python dependencies are included:</span><span data-zh>克隆仓库并安装 ofoundry——所有 Python 依赖已包含：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="git clone https://github.com/kinfey/ofoundry.git
+cd ofoundry
+pip install -e .">Copy</button>
+      </div>
+      <pre><code>git clone https://github.com/kinfey/ofoundry.git
+cd ofoundry
+pip install -e .</code></pre>
+    </div>
+
+    <!-- Initialise Model Directory -->
+    <h2 id="init"><span data-en>Initialise Model Directory</span><span data-zh>初始化模型目录</span></h2>
+    <p><span data-en>After installation, configure the default model save location. This creates the required sub-folders (<code>ort/</code>, <code>foundrylocal/</code>, <code>cache_dir/</code>) automatically:</span><span data-zh>安装完成后，配置默认模型保存位置。这会自动创建所需的子目录（<code>ort/</code>、<code>foundrylocal/</code>、<code>cache_dir/</code>）：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry init">Copy</button>
+      </div>
+      <pre><code>ofoundry init</code></pre>
+    </div>
+    <p><span data-en>You can also pass a path directly:</span><span data-zh>你也可以直接传入路径：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry init ~/my-models">Copy</button>
+      </div>
+      <pre><code>ofoundry init ~/my-models</code></pre>
+    </div>
+    <div class="callout info">
+      <p><span data-en><strong>💡 Tip:</strong> The configuration is saved to <code>~/.ofoundry/config.json</code>. Run <code>ofoundry</code> with no arguments to view the current model directory paths at any time.</span><span data-zh><strong>💡 提示：</strong>配置保存在 <code>~/.ofoundry/config.json</code>。随时运行 <code>ofoundry</code> （不带参数）即可查看当前模型目录路径。</span></p>
+    </div>
+
+    <!-- Environment Check -->
+    <h2 id="environment-check"><span data-en>Environment Check</span><span data-zh>环境检查</span></h2>
+    <p><span data-en>After installation, verify your setup:</span><span data-zh>安装后，验证环境：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry check">Copy</button>
+      </div>
+      <pre><code>ofoundry check</code></pre>
+    </div>
+    <p><span data-en>Expected output:</span><span data-zh>预期输出：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">text</span>
+      </div>
+      <pre><code>────────────────── ofoundry environment check ──────────────────
+Platform: macOS
+
+✓  Foundry Local CLI found: /usr/local/bin/foundry
+   Version: 0.8.119
+✓  foundry-local-sdk (Python) is installed.
+   SDK version: 0.5.1
+────────────────────────────────────────────────────────────────</code></pre>
+    </div>
+
+    <!-- Getting Models -->
+    <h2 id="getting-models"><span data-en>Getting Models</span><span data-zh>获取模型</span></h2>
+    <p><span data-en>Before using ofoundry, you need models. Choose based on your engine:</span><span data-zh>使用 ofoundry 前，你需要模型。根据引擎选择：</span></p>
+
+    <h3 id="foundry-catalog"><span data-en>Foundry Local Catalog (macOS / Windows)</span><span data-zh>Foundry Local 目录（macOS / Windows）</span></h3>
+    <p><span data-en>No manual download needed — pass a catalog alias and Foundry handles it:</span><span data-zh>无需手动下载——传入目录别名，Foundry 自动处理：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use">Copy</button>
+      </div>
+      <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use</code></pre>
+    </div>
+    <div class="callout info">
+      <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
+    </div>
+    <div class="callout warning">
+      <p><strong>⏳ First run requires download:</strong> When you run a Foundry Local model for the first time, the model will be downloaded from the Microsoft Foundry catalog. Please wait for the download to complete before the chat session starts — this may take several minutes depending on network speed and model size. Subsequent runs will use the cached version instantly.</p>
+    </div>
+
+    <h3 id="onnx-models"><span data-en>ONNX GenAI Models (all platforms)</span><span data-zh>ONNX GenAI 模型（全平台）</span></h3>
+    <p><span data-en>For the ORT engine, you need to download a model from Hugging Face, convert it to ONNX format, then run it:</span><span data-zh>使用 ORT 引擎时，需从 Hugging Face 下载模型，转换为 ONNX 格式后运行：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code='# Step 1: Download model from Hugging Face
+hf download Qwen/Qwen3-0.6B --local-dir ./models/cache_dir/models--Qwen--Qwen3-0.6B
+
+# Step 2: Convert to ONNX INT4
+ofoundry convert Qwen/Qwen3-0.6B
+# → output: ./models/Qwen3-0.6B_ONNX_INT4_CPU
+
+# Step 3: Run with the converted model
+ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU'>Copy</button>
+      </div>
+      <pre><code># Step 1: Download model from Hugging Face
+hf download Qwen/Qwen3-0.6B --local-dir ./models/cache_dir/models--Qwen--Qwen3-0.6B
+
+# Step 2: Convert to ONNX INT4
+ofoundry convert Qwen/Qwen3-0.6B
+# → output: ./models/Qwen3-0.6B_ONNX_INT4_CPU
+
+# Step 3: Run with the converted model
+ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+    </div>
+    <div class="callout warning">
+      <p><span data-en><strong>⚠️ ORT engine requires ONNX format:</strong> Models downloaded from Hugging Face in raw format (PyTorch / SafeTensors) <strong>cannot be loaded directly</strong>. You must first run <code>ofoundry convert</code> to transform them to ONNX GenAI format. See the <a href="models.html#conversion">Model Conversion</a> section for detailed instructions on text models and VL models.</span><span data-zh><strong>⚠️ ORT 引擎需要 ONNX 格式：</strong>从 Hugging Face 下载的原始格式模型（PyTorch / SafeTensors）<strong>无法直接加载</strong>。必须先运行 <code>ofoundry convert</code> 将其转换为 ONNX GenAI 格式。请参阅<a href="models.html#conversion">模型转换</a>章节了解文本模型和 VL 模型的详细说明。</span></p>
+    </div>
+
+    <!-- First Chat -->
+    <h2 id="first-chat"><span data-en>Your First Chat</span><span data-zh>第一次对话</span></h2>
+    <p><span data-en>Start an interactive multi-turn chat in your terminal:</span><span data-zh>在终端中启动交互式多轮对话：</span></p>
+
+    <h3>Foundry Local (macOS / Windows)</h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5
+ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s">Copy</button>
+      </div>
+      <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5
+ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s</code></pre>
+    </div>
+    <div class="callout info">
+      <p><strong>First run:</strong> Foundry Local will automatically download the model on first use. Please wait for the download to complete — subsequent runs will be instant.</p>
+    </div>
+
+    <h3>ORT Engine (all platforms)</h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry run --engine ort ./models/phi3-mini-int4">Copy</button>
+      </div>
+      <pre><code>ofoundry run --engine ort ./models/phi3-mini-int4</code></pre>
+    </div>
+    <div class="callout info">
+      <p><span data-en><strong>Reminder:</strong> The ORT engine requires models in ONNX format. If your model is not pre-converted, run <code>ofoundry convert</code> first. See <a href="models.html#conversion">Model Conversion</a> for details.</span><span data-zh><strong>提醒：</strong>ORT 引擎需要 ONNX 格式的模型。如果模型未预转换，请先运行 <code>ofoundry convert</code>。请参阅<a href="models.html#conversion">模型转换</a>。</span></p>
+    </div>
+
+    <h3><span data-en>Vision-Language Models</span><span data-zh>视觉语言模型</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU">Copy</button>
+      </div>
+      <pre><code>ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
+    </div>
+    <div class="callout info">
+      <p><strong>Note:</strong> VL models require the ORT engine. When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code>.</p>
+    </div>
+
+    <!-- Start the API Server -->
+    <h2 id="serve"><span data-en>Start the API Server</span><span data-zh>启动 API 服务</span></h2>
+    <p><span data-en>Launch a local HTTP server with OpenAI-compatible endpoints:</span><span data-zh>启动带有 OpenAI 兼容端点的本地 HTTP 服务：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT">Copy</button>
+      </div>
+      <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
+    </div>
+    <p>Once running, any OpenAI-compatible client can connect to <code>http://127.0.0.1:18000/v1</code>.</p>
+
+    <h3><span data-en>Test with curl</span><span data-zh>使用 curl 测试</span></h3>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code='curl http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d &apos;{
+    "model": "Phi-4-mini-instruct-generic-cpu:5",
+    "messages": [{"role": "user", "content": "Hello!"}],
+    "stream": false
+  }&apos;'>Copy</button>
+      </div>
+      <pre><code>curl http://127.0.0.1:18000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "Phi-4-mini-instruct-generic-cpu:5",
+    "messages": [{"role": "user", "content": "Hello!"}],
+    "stream": false
+  }'</code></pre>
+    </div>
+
+    <!-- Web Dashboard -->
+    <h2 id="dashboard"><span data-en>Web Dashboard</span><span data-zh>Web 仪表盘</span></h2>
+    <p><span data-en>Launch the monitoring dashboard with:</span><span data-zh>使用以下命令启动监控仪表盘：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+      </div>
+      <pre><code>ofoundry dashboard               # Foundry Local engine
+ofoundry dashboard -e ort         # ORT engine (scans ./models)</code></pre>
+    </div>
+    <p><span data-en>Then open</span><span data-zh>然后打开</span> <code>http://127.0.0.1:1573/</code></p>
+    <p><span data-en>The dashboard includes model selector, system memory monitoring, inference parameters, a chat interface, and server logs.</span><span data-zh>仪表盘包含模型选择器、系统内存监控、推理参数、聊天界面和服务器日志。</span></p>
+
+    <!-- Next Steps -->
+    <h2 id="next-steps"><span data-en>Next Steps</span><span data-zh>后续步骤</span></h2>
+    <ul>
+      <li><a href="models.html">Browse available models</a> — Foundry catalog, ONNX GenAI, and embedding models</li>
+      <li><a href="models.html#conversion"><span data-en>Model Conversion</span><span data-zh>模型转换</span></a> — <span data-en>convert HF models to ONNX for the ORT engine (text &amp; VL)</span><span data-zh>将 HF 模型转换为 ONNX 格式供 ORT 引擎使用（文本 &amp; VL）</span></li>
+      <li><a href="features.html">Explore features</a> — embeddings, tool calling, VL models</li>
+      <li><a href="api.html">API reference</a> — full endpoint documentation</li>
+      <li><a href="integrations.html">Integrations</a> — LangChain, LlamaIndex, CI pipelines</li>
+    </ul>
+
+    <!-- Bottom Nav -->
+    <nav class="page-nav">
+      <a href="index.html">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Home</span><span data-zh>← 首页</span></span>
+      </a>
+      <a href="models.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>Models →</span><span data-zh>模型 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

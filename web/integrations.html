@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ofoundry integrations — use with OpenAI SDK, LangChain, LlamaIndex, CI pipelines.">
+  <title>Integrations — ofoundry</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="../img/logo.png" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo"><span class="logo-text">oFoundry</span></a>
+    </div>
+    <div class="header-right">
+      <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search docs..." autocomplete="off"><div class="search-results" id="search-results"></div></div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/kinfey/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link active"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+  </nav>
+</aside>
+
+<div class="docs-layout">
+  <main class="main-content content">
+
+    <h1><span data-en>Integrations</span><span data-zh>集成方案</span></h1>
+    <p><span data-en>ofoundry exposes an OpenAI-compatible API, so it works seamlessly with any framework that supports the OpenAI protocol. Just change the <code>base_url</code> to your local server.</span><span data-zh>ofoundry 提供 OpenAI 兼容 API，可与任何支持 OpenAI 协议的框架无缝配合。只需将 <code>base_url</code> 指向本地服务器。</span></p>
+
+    <!-- OpenAI SDK -->
+    <h2 id="openai-sdk">OpenAI Python SDK</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)'>Copy</button>
+      </div>
+      <pre><code>from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)</code></pre>
+    </div>
+
+    <div class="callout info">
+      <p><strong>Tip:</strong> Point any OpenAI-compatible framework at <code>http://127.0.0.1:18000/v1</code> and it just works. The <code>api_key</code> can be any non-empty string.</p>
+    </div>
+
+    <!-- LangChain -->
+    <h2 id="langchain">LangChain</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    base_url="http://127.0.0.1:18000/v1",
+    api_key="unused",
+    model="Phi-4-mini-instruct-generic-cpu:5",
+)
+response = llm.invoke("Explain ONNX Runtime in one sentence.")'>Copy</button>
+      </div>
+      <pre><code>from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    base_url="http://127.0.0.1:18000/v1",
+    api_key="unused",
+    model="Phi-4-mini-instruct-generic-cpu:5",
+)
+response = llm.invoke("Explain ONNX Runtime in one sentence.")</code></pre>
+    </div>
+
+    <!-- LlamaIndex -->
+    <h2 id="llamaindex">LlamaIndex</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from llama_index.llms.openai_like import OpenAILike
+
+llm = OpenAILike(
+    api_base="http://127.0.0.1:18000/v1",
+    api_key="unused",
+    model="Phi-4-mini-instruct-generic-cpu:5",
+)'>Copy</button>
+      </div>
+      <pre><code>from llama_index.llms.openai_like import OpenAILike
+
+llm = OpenAILike(
+    api_base="http://127.0.0.1:18000/v1",
+    api_key="unused",
+    model="Phi-4-mini-instruct-generic-cpu:5",
+)</code></pre>
+    </div>
+
+    <!-- Microsoft Agent Framework -->
+    <h2 id="agent-framework">Microsoft Agent Framework</h2>
+    <p>ofoundry works with the Microsoft Agent Framework for building agentic AI applications:</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='# Point Microsoft Agent Framework at your local ofoundry server
+# The OpenAI-compatible endpoint works out of the box
+from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+# Use with tool calling for agentic workflows
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "Plan my tasks for today"}],
+    tools=[...],
+)'>Copy</button>
+      </div>
+      <pre><code># Point Microsoft Agent Framework at your local ofoundry server
+# The OpenAI-compatible endpoint works out of the box
+from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
+
+# Use with tool calling for agentic workflows
+response = client.chat.completions.create(
+    model="Phi-4-mini-instruct-generic-cpu:5",
+    messages=[{"role": "user", "content": "Plan my tasks for today"}],
+    tools=[...],
+)</code></pre>
+    </div>
+
+    <!-- CI / Evaluation -->
+    <h2 id="ci"><span data-en>CI / Automated Evaluation</span><span data-zh>CI / 自动化评估</span></h2>
+    <p>Use ofoundry in CI pipelines for offline model evaluation:</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="# Start server in background
+ofoundry serve --engine ort ./models/phi3-mini-int4 &
+sleep 5
+
+# Run your evaluation script against the local endpoint
+python eval.py --api-base http://127.0.0.1:18000/v1
+
+# Cleanup
+kill %1">Copy</button>
+      </div>
+      <pre><code># Start server in background
+ofoundry serve --engine ort ./models/phi3-mini-int4 &amp;
+sleep 5
+
+# Run your evaluation script against the local endpoint
+python eval.py --api-base http://127.0.0.1:18000/v1
+
+# Cleanup
+kill %1</code></pre>
+    </div>
+
+    <!-- Embeddings -->
+    <h2 id="embedding-integration"><span data-en>Embedding Integrations</span><span data-zh>嵌入集成</span></h2>
+    <p>The embedding server (<code>ofoundry serve-embed</code>) also follows the OpenAI API and works with any framework that supports custom embedding endpoints:</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">python</span>
+        <button class="copy-btn" data-code='from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18001/v1", api_key="unused")
+
+response = client.embeddings.create(
+    model="Qwen3-Embedding-0.6B",
+    input=["search query", "document text to match against"],
+)
+for item in response.data:
+    print(f"index={item.index}  dim={len(item.embedding)}")'>Copy</button>
+      </div>
+      <pre><code>from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:18001/v1", api_key="unused")
+
+response = client.embeddings.create(
+    model="Qwen3-Embedding-0.6B",
+    input=["search query", "document text to match against"],
+)
+for item in response.data:
+    print(f"index={item.index}  dim={len(item.embedding)}")</code></pre>
+    </div>
+
+    <!-- Supported Frameworks -->
+    <h2 id="supported"><span data-en>Compatible Frameworks</span><span data-zh>兼容框架</span></h2>
+    <p>Any framework that supports the OpenAI API protocol works with ofoundry:</p>
+    <table>
+      <thead>
+        <tr><th>Framework</th><th>Type</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>OpenAI Python SDK</strong></td><td>Base SDK</td><td>Direct support. Change <code>base_url</code> only.</td></tr>
+        <tr><td><strong>LangChain</strong></td><td>Orchestration</td><td>Via <code>ChatOpenAI</code> with custom <code>base_url</code></td></tr>
+        <tr><td><strong>LlamaIndex</strong></td><td>RAG Framework</td><td>Via <code>OpenAILike</code> with custom <code>api_base</code></td></tr>
+        <tr><td><strong>Microsoft Agent Framework</strong></td><td>Agentic AI</td><td>Full tool-calling support</td></tr>
+        <tr><td><strong>CrewAI</strong></td><td>Multi-agent</td><td>Via OpenAI-compatible endpoint</td></tr>
+        <tr><td><strong>Semantic Kernel</strong></td><td>AI Orchestration</td><td>Via OpenAI connector</td></tr>
+        <tr><td><strong>AutoGen</strong></td><td>Multi-agent</td><td>Via OpenAI configuration</td></tr>
+      </tbody>
+    </table>
+
+    <nav class="page-nav">
+      <a href="api.html">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← API Reference</span><span data-zh>← API 参考</span></span>
+      </a>
+      <a href="benchmark.html" class="next">
+        <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
+        <span class="nav-title"><span data-en>Benchmark →</span><span data-zh>性能基准 →</span></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 ofoundry · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/kinfey/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://pypi.org/project/ofoundry/" target="_blank" rel="noopener noreferrer">PyPI</a>
+  </div>
+</footer>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>
