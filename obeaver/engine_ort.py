@@ -80,23 +80,48 @@ class OrtEngine:
         "qwen3_vl": "qwen2_5_vl",
     }
 
+    # Fields in model.vision that older onnxruntime-genai versions
+    # do not recognise.  They are safe to remove — they are only used by
+    # newer builds or by the Python pre-/post-processing, not by the C++
+    # runtime itself.
+    _UNSUPPORTED_VISION_FIELDS: set[str] = {
+        "patch_size",
+        "tokens_per_second",
+    }
+
     @staticmethod
     def _patch_model_type(model_dir: Path) -> None:
         """Rewrite ``model.type`` in genai_config.json when the value is not
-        supported by the installed onnxruntime-genai.
+        supported by the installed onnxruntime-genai, and strip vision
+        config fields that the current runtime does not understand.
 
         This is non-destructive: we only patch types we have an explicit
-        alias for, and we leave all other fields untouched.
+        alias for, and we only remove fields we know are safe to drop.
         """
         config_path = model_dir / "genai_config.json"
         if not config_path.exists():
             return
         with open(config_path) as f:
             data = json.load(f)
+
+        dirty = False
+
+        # --- Patch unsupported model type ---
         current_type = data.get("model", {}).get("type", "")
         replacement = OrtEngine._MODEL_TYPE_ALIASES.get(current_type)
         if replacement and current_type != replacement:
             data["model"]["type"] = replacement
+            dirty = True
+
+        # --- Strip unsupported vision fields ---
+        vision_cfg = data.get("model", {}).get("vision")
+        if isinstance(vision_cfg, dict):
+            for field_name in OrtEngine._UNSUPPORTED_VISION_FIELDS:
+                if field_name in vision_cfg:
+                    del vision_cfg[field_name]
+                    dirty = True
+
+        if dirty:
             with open(config_path, "w") as f:
                 json.dump(data, f, indent=4)
 

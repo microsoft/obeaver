@@ -4,26 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>oBeaver Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,800;1,9..144,300&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== Theme Variables ===== */
+    /* ===== Theme Variables — oBeaver Brand ===== */
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface-alt: #232736;
-      --surface-hover: #2a2e42;
-      --border: #2d3148;
-      --text: #e4e6f0;
-      --text-dim: #8b8fa3;
-      --text-muted: #5a5e73;
-      --accent: #06b6d4;
-      --accent-dim: #0e7490;
-      --accent-hover: #0891b2;
+      --ob-bark: #1A0F05;
+      --ob-brown: #6B3D1A;
+      --ob-amber: #E8A828;
+      --ob-birch: #FDF5E6;
+      --ob-river: #2DD4A0;
+      --ob-belly: #C8A474;
+      --ob-outline: #2A1205;
+      --ob-tail: #4A2810;
+
+      --bg: #0f0a05;
+      --surface: #1a1208;
+      --surface-alt: #241a10;
+      --surface-hover: #2e2218;
+      --border: #3a2e20;
+      --text: #f0e8dc;
+      --text-dim: #a89880;
+      --text-muted: #6b5d4a;
+      --accent: var(--ob-amber);
+      --accent-dim: #8B5E1A;
+      --accent-hover: #f0bc4c;
       --cpu-colour: #3b82f6;
       --gpu-colour: #8b5cf6;
-      --npu-colour: #10b981;
+      --npu-colour: var(--ob-river);
       --danger: #ef4444;
       --warning: #f59e0b;
-      --success: #10b981;
+      --success: var(--ob-river);
       --radius: 12px;
       --radius-sm: 8px;
       --sidebar-w: 250px;
@@ -31,23 +44,23 @@
       --header-h: 52px;
     }
     [data-theme="light"] {
-      --bg: #f1f5f9;
+      --bg: #faf6ee;
       --surface: #ffffff;
-      --surface-alt: #f8fafc;
-      --surface-hover: #e2e8f0;
-      --border: #cbd5e1;
-      --text: #1e293b;
-      --text-dim: #64748b;
-      --text-muted: #94a3b8;
-      --accent: #0891b2;
-      --accent-dim: #0e7490;
-      --accent-hover: #06b6d4;
+      --surface-alt: var(--ob-birch);
+      --surface-hover: #f0e8d8;
+      --border: #e5ddd0;
+      --text: var(--ob-bark);
+      --text-dim: #6b5d4a;
+      --text-muted: #a89880;
+      --accent: #B07A20;
+      --accent-dim: #d4a240;
+      --accent-hover: var(--ob-amber);
     }
 
     /* ===== Reset & Base ===== */
     *{margin:0;padding:0;box-sizing:border-box;}
     body{
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+      font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       background:var(--bg);color:var(--text);line-height:1.6;
       height:100vh;overflow:hidden;
     }
@@ -60,9 +73,20 @@
     }
     .header-left{display:flex;align-items:center;gap:0.75rem;}
     .header h1{
-      font-size:1.2rem;font-weight:700;
-      background:linear-gradient(135deg,var(--accent),#a855f7);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      font-family:'Fraunces',Georgia,serif;
+      font-size:1.25rem;font-weight:800;
+      letter-spacing:-1.5px;
+      display:flex;align-items:center;gap:0.5rem;
+    }
+    .header h1 .logo-icon{
+      height:28px;width:auto;
+      image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;
+    }
+    .header h1 .wm-o{
+      font-style:italic;font-weight:300;color:var(--ob-amber);
+    }
+    .header h1 .wm-b{
+      font-weight:800;color:var(--text);
     }
     .header-right{display:flex;align-items:center;gap:0.5rem;}
     .status-badge{
@@ -264,7 +288,7 @@
       background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
       padding:0.6rem 1rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
     }
-    .process-bar h3{font-size:0.8rem;color:var(--accent);font-weight:600;white-space:nowrap;}
+    .process-bar h3{font-size:0.8rem;color:var(--ob-amber);font-weight:600;white-space:nowrap;}
 
     /* ===== Collapsible Panels ===== */
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
@@ -284,7 +308,7 @@
       background:var(--surface-alt);border-radius:var(--radius-sm);padding:0.5rem 0.75rem;
       margin-bottom:0.4rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
     }
-    .api-item code{font-size:0.75rem;color:var(--accent);font-family:'SF Mono',Consolas,monospace;word-break:break-all;}
+    .api-item code{font-size:0.75rem;color:var(--accent);font-family:'Space Mono',Consolas,monospace;word-break:break-all;}
     .api-item .copy-btn{
       background:none;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;
       padding:0.15rem 0.4rem;font-size:0.68rem;cursor:pointer;white-space:nowrap;flex-shrink:0;
@@ -323,7 +347,7 @@
       padding:0.6rem 0.85rem;border-radius:12px;font-size:0.85rem;
       line-height:1.6;word-wrap:break-word;overflow-wrap:break-word;position:relative;
     }
-    .message.user{background:var(--accent-dim);color:white;border-bottom-right-radius:4px;}
+    .message.user{background:var(--ob-amber);color:var(--ob-bark);border-bottom-right-radius:4px;}
     .message.assistant{background:var(--surface-alt);border-bottom-left-radius:4px;}
     .message.system{background:transparent;color:var(--text-dim);font-size:0.78rem;font-style:italic;}
 
@@ -349,11 +373,11 @@
     .message.assistant th,.message.assistant td{border:1px solid var(--border);padding:0.3rem 0.5rem;text-align:left;}
     .message.assistant th{background:var(--surface);font-weight:600;}
     .inline-code{
-      background:rgba(6,182,212,0.15);color:var(--accent);padding:0.1rem 0.35rem;
-      border-radius:4px;font-family:'SF Mono',Consolas,'Liberation Mono',monospace;font-size:0.8rem;
+      background:rgba(232,168,40,0.15);color:var(--ob-amber);padding:0.1rem 0.35rem;
+      border-radius:4px;font-family:'Space Mono','SF Mono',Consolas,monospace;font-size:0.8rem;
     }
-    .code-block{background:#1e1e2e;border-radius:var(--radius-sm);margin:0.4rem 0;overflow:hidden;}
-    [data-theme="light"] .code-block{background:#1e293b;}
+    .code-block{background:#1a0f05;border-radius:var(--radius-sm);margin:0.4rem 0;overflow:hidden;}
+    [data-theme="light"] .code-block{background:#2a1e10;}
     .code-block-header{
       display:flex;justify-content:space-between;align-items:center;
       padding:0.3rem 0.6rem;background:rgba(0,0,0,0.2);font-size:0.68rem;
@@ -366,26 +390,26 @@
     .copy-code-btn:hover{background:rgba(255,255,255,0.2);color:white;}
     .code-block pre{margin:0;padding:0.6rem;overflow-x:auto;}
     .code-block code{
-      font-family:'SF Mono',Consolas,'Liberation Mono',monospace;
+      font-family:'Space Mono','SF Mono',Consolas,monospace;
       font-size:0.8rem;color:#e2e8f0;line-height:1.5;
     }
 
     /* Tool call blocks */
     .tool-call-block{
-      background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);
+      background:rgba(107,61,26,0.15);border:1px solid rgba(232,168,40,0.3);
       border-radius:var(--radius-sm);padding:0.6rem;margin:0.4rem 0;
     }
     .tc-header{
       display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:600;
-      color:var(--gpu-colour);margin-bottom:0.3rem;
+      color:var(--ob-amber);margin-bottom:0.3rem;
     }
-    .tc-name{font-family:'SF Mono',Consolas,monospace;}
+    .tc-name{font-family:'Space Mono',Consolas,monospace;}
     .tc-args{
       background:rgba(0,0,0,0.15);border-radius:4px;padding:0.4rem;font-size:0.75rem;
-      font-family:'SF Mono',Consolas,monospace;color:var(--text-dim);overflow-x:auto;white-space:pre-wrap;
+      font-family:'Space Mono',Consolas,monospace;color:var(--text-dim);overflow-x:auto;white-space:pre-wrap;
     }
     .tool-result-block{
-      background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);
+      background:rgba(45,212,160,0.1);border:1px solid rgba(45,212,160,0.3);
       border-radius:var(--radius-sm);padding:0.6rem;margin:0.4rem 0;
     }
     .tr-header{font-size:0.78rem;font-weight:600;color:var(--success);margin-bottom:0.3rem;}
@@ -448,7 +472,7 @@
 
     /* ===== Log Panel ===== */
     .log-entry{
-      padding:0.3rem 1rem;font-size:0.72rem;font-family:'SF Mono',Consolas,monospace;
+      padding:0.3rem 1rem;font-size:0.72rem;font-family:'Space Mono',Consolas,monospace;
       border-bottom:1px solid var(--border);display:flex;gap:0.6rem;
     }
     .log-entry .lt{color:var(--text-muted);white-space:nowrap;}
@@ -461,6 +485,79 @@
     .log-entry .ls.err{color:var(--danger);}
     .log-entry .ll{color:var(--text-muted);}
     .refresh-info{text-align:center;padding:0.2rem;font-size:0.68rem;color:var(--text-muted);}
+
+    /* ===== VL (Vision-Language) Panel ===== */
+    .vl-section{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      display:none;flex-direction:column;min-height:400px;flex:1;
+    }
+    .vl-section.active{display:flex;}
+    .vl-header{
+      padding:0.6rem 1rem;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .vl-header h3{font-size:0.9rem;font-weight:600;}
+    .vl-badge{
+      background:rgba(232,168,40,0.15);color:var(--ob-amber);
+      padding:0.15rem 0.5rem;border-radius:12px;font-size:0.7rem;font-weight:600;
+    }
+    .vl-body{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;}
+    .vl-input-group{display:flex;flex-direction:column;gap:0.5rem;}
+    .vl-input-group label{font-size:0.8rem;font-weight:600;color:var(--text-dim);}
+    .vl-input-group input[type="text"],
+    .vl-input-group textarea{
+      width:100%;background:var(--surface-alt);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:0.5rem 0.6rem;color:var(--text);
+      font-size:0.85rem;font-family:inherit;outline:none;
+    }
+    .vl-input-group input:focus,.vl-input-group textarea:focus{border-color:var(--accent);}
+    .vl-input-group textarea{min-height:60px;max-height:120px;resize:vertical;}
+    .vl-preview{
+      text-align:center;padding:0.5rem;
+    }
+    .vl-preview img{
+      max-width:100%;max-height:240px;border-radius:var(--radius-sm);
+      border:1px solid var(--border);
+    }
+    .vl-preview .vl-no-img{color:var(--text-muted);font-size:0.8rem;font-style:italic;}
+    .vl-actions{
+      display:flex;gap:0.4rem;align-items:center;
+    }
+    .vl-send-btn{
+      background:var(--accent);color:white;border:none;border-radius:var(--radius-sm);
+      padding:0.45rem 0.85rem;font-weight:600;cursor:pointer;font-size:0.82rem;
+      display:flex;align-items:center;gap:0.3rem;transition:background 0.2s;
+    }
+    .vl-send-btn:hover{background:var(--accent-hover);}
+    .vl-send-btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .vl-stop-btn{
+      background:var(--danger);color:white;border:none;border-radius:var(--radius-sm);
+      padding:0.45rem 0.85rem;font-weight:600;cursor:pointer;font-size:0.82rem;
+      display:none;align-items:center;gap:0.3rem;
+    }
+    .vl-stop-btn:hover{background:#dc2626;}
+    .vl-result{
+      background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1rem;min-height:80px;
+    }
+    .vl-result-header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;
+    }
+    .vl-result-header h4{font-size:0.85rem;font-weight:600;}
+    .vl-result-stats{
+      display:flex;gap:0.6rem;font-size:0.72rem;color:var(--text-muted);
+      font-variant-numeric:tabular-nums;
+    }
+    .vl-result-stats .vl-stat{display:flex;align-items:center;gap:0.2rem;}
+    .vl-result-stats .vl-stat-val{color:var(--accent);font-weight:600;}
+    .vl-result-content{
+      font-size:0.85rem;line-height:1.6;color:var(--text);word-wrap:break-word;
+    }
+    .vl-result-content .streaming-cursor{
+      display:inline-block;width:2px;height:1em;background:var(--accent);
+      margin-left:2px;animation:blink 0.8s step-end infinite;vertical-align:text-bottom;
+    }
+    .vl-result-empty{color:var(--text-muted);font-size:0.82rem;font-style:italic;}
 
     /* ===== Scrollbar ===== */
     ::-webkit-scrollbar{width:5px;}
@@ -483,7 +580,10 @@
   <header class="header">
     <div class="header-left">
       <button class="icon-btn" id="toggleLeftBtn" title="Conversations" onclick="toggleSidebar('left')">&#x2630;</button>
-      <h1>oBeaver</h1>
+      <h1>
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442 306" shape-rendering="crispEdges" width="28" height="19"><rect x="51" y="0" width="17" height="17" fill="#2A1205"/><rect x="68" y="0" width="17" height="17" fill="#2A1205"/><rect x="85" y="0" width="17" height="17" fill="#2A1205"/><rect x="102" y="0" width="17" height="17" fill="#2A1205"/><rect x="34" y="17" width="17" height="17" fill="#2A1205"/><rect x="51" y="17" width="17" height="17" fill="#6B3D1A"/><rect x="68" y="17" width="17" height="17" fill="#6B3D1A"/><rect x="85" y="17" width="17" height="17" fill="#6B3D1A"/><rect x="102" y="17" width="17" height="17" fill="#6B3D1A"/><rect x="119" y="17" width="17" height="17" fill="#2A1205"/><rect x="34" y="34" width="17" height="17" fill="#2A1205"/><rect x="51" y="34" width="17" height="17" fill="#6B3D1A"/><rect x="68" y="34" width="17" height="17" fill="#0A0400"/><rect x="85" y="34" width="17" height="17" fill="#6B3D1A"/><rect x="102" y="34" width="17" height="17" fill="#6B3D1A"/><rect x="119" y="34" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="34" width="17" height="17" fill="#2A1205"/><rect x="34" y="51" width="17" height="17" fill="#2A1205"/><rect x="51" y="51" width="17" height="17" fill="#6B3D1A"/><rect x="68" y="51" width="17" height="17" fill="#FFF"/><rect x="85" y="51" width="17" height="17" fill="#6B3D1A"/><rect x="102" y="51" width="17" height="17" fill="#6B3D1A"/><rect x="119" y="51" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="51" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="51" width="17" height="17" fill="#2A1205"/><rect x="34" y="68" width="17" height="17" fill="#2A1205"/><rect x="51" y="68" width="17" height="17" fill="#C8A474"/><rect x="68" y="68" width="17" height="17" fill="#C8A474"/><rect x="85" y="68" width="17" height="17" fill="#6B3D1A"/><rect x="102" y="68" width="17" height="17" fill="#6B3D1A"/><rect x="119" y="68" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="68" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="68" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="68" width="17" height="17" fill="#2A1205"/><rect x="34" y="85" width="17" height="17" fill="#2A1205"/><rect x="51" y="85" width="17" height="17" fill="#1A0A02"/><rect x="68" y="85" width="17" height="17" fill="#C8A474"/><rect x="85" y="85" width="17" height="17" fill="#C8A474"/><rect x="102" y="85" width="17" height="17" fill="#6B3D1A"/><rect x="119" y="85" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="85" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="85" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="85" width="17" height="17" fill="#6B3D1A"/><rect x="187" y="85" width="17" height="17" fill="#2A1205"/><rect x="17" y="102" width="17" height="17" fill="#2A1205"/><rect x="34" y="102" width="17" height="17" fill="#E8A828"/><rect x="51" y="102" width="17" height="17" fill="#E8A828"/><rect x="68" y="102" width="17" height="17" fill="#C8A474"/><rect x="85" y="102" width="17" height="17" fill="#C8A474"/><rect x="102" y="102" width="17" height="17" fill="#C8A474"/><rect x="119" y="102" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="102" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="102" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="102" width="17" height="17" fill="#6B3D1A"/><rect x="187" y="102" width="17" height="17" fill="#6B3D1A"/><rect x="204" y="102" width="17" height="17" fill="#2A1205"/><rect x="17" y="119" width="17" height="17" fill="#2A1205"/><rect x="34" y="119" width="17" height="17" fill="#E8A828"/><rect x="51" y="119" width="17" height="17" fill="#E8A828"/><rect x="68" y="119" width="17" height="17" fill="#C8A474"/><rect x="85" y="119" width="17" height="17" fill="#C8A474"/><rect x="102" y="119" width="17" height="17" fill="#C8A474"/><rect x="119" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="187" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="204" y="119" width="17" height="17" fill="#6B3D1A"/><rect x="221" y="119" width="17" height="17" fill="#2A1205"/><rect x="34" y="136" width="17" height="17" fill="#2A1205"/><rect x="51" y="136" width="17" height="17" fill="#C8A474"/><rect x="68" y="136" width="17" height="17" fill="#C8A474"/><rect x="85" y="136" width="17" height="17" fill="#C8A474"/><rect x="102" y="136" width="17" height="17" fill="#C8A474"/><rect x="119" y="136" width="17" height="17" fill="#C8A474"/><rect x="136" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="187" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="204" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="221" y="136" width="17" height="17" fill="#6B3D1A"/><rect x="238" y="136" width="17" height="17" fill="#2A1205"/><rect x="51" y="153" width="17" height="17" fill="#2A1205"/><rect x="68" y="153" width="17" height="17" fill="#C8A474"/><rect x="85" y="153" width="17" height="17" fill="#C8A474"/><rect x="102" y="153" width="17" height="17" fill="#C8A474"/><rect x="119" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="136" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="153" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="170" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="187" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="204" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="221" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="238" y="153" width="17" height="17" fill="#6B3D1A"/><rect x="255" y="153" width="17" height="17" fill="#2A1205"/></svg>
+        <span class="wm-o">o</span><span class="wm-b">Beaver</span>
+      </h1>
     </div>
     <div class="header-right">
       <div id="serverStatus" class="status-badge offline">
@@ -637,7 +737,7 @@
       </div>
 
       <!-- Chat Section -->
-      <div class="chat-section">
+      <div class="chat-section" id="chatSection">
         <div class="chat-header">
           <div class="chat-header-left">
             <h3>Chat</h3>
@@ -656,6 +756,40 @@
           <div class="btn-group">
             <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
             <button class="stop-btn" id="stopBtn" onclick="stopGeneration()">&#x25A0; Stop</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VL (Vision-Language) Section -->
+      <div class="vl-section" id="vlSection">
+        <div class="vl-header">
+          <h3>&#x1F441; Vision-Language</h3>
+          <span class="vl-badge">VL Model</span>
+        </div>
+        <div class="vl-body">
+          <div class="vl-input-group">
+            <label>Image URL (HTTP / HTTPS)</label>
+            <input type="text" id="vlImageUrl" placeholder="https://example.com/photo.jpg" oninput="vlPreviewImage()">
+          </div>
+          <div class="vl-preview" id="vlPreview">
+            <span class="vl-no-img">Enter an image URL above to preview</span>
+          </div>
+          <div class="vl-input-group">
+            <label>Question / Prompt</label>
+            <textarea id="vlPrompt" placeholder="Describe this image (default if empty)" rows="2"></textarea>
+          </div>
+          <div class="vl-actions">
+            <button class="vl-send-btn" id="vlSendBtn" onclick="vlSend()">&#x1F680; Analyze</button>
+            <button class="vl-stop-btn" id="vlStopBtn" onclick="vlStop()">&#x25A0; Stop</button>
+          </div>
+          <div class="vl-result" id="vlResult">
+            <div class="vl-result-header">
+              <h4>Response</h4>
+              <div class="vl-result-stats" id="vlStats"></div>
+            </div>
+            <div class="vl-result-content" id="vlResultContent">
+              <span class="vl-result-empty">Send an image + prompt to get a response.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1009,6 +1143,9 @@
           const d = await res.json();
           addLog('POST', '/api/models/load', 200, d.model);
           appendSystemMessage('Model loaded: ' + d.model);
+          // Toggle VL mode based on server response (authoritative) or alias fallback
+          const vlDetected = d.is_vl === true || isVLModel(alias);
+          setVLMode(vlDetected);
           // Refresh health to update engine info
           await checkHealth();
         } else {
@@ -1564,6 +1701,165 @@
         }
       });
     })();
+
+    /* ------------------------------------------------------------------ */
+    /*  VL (Vision-Language) Mode                                          */
+    /* ------------------------------------------------------------------ */
+    const VL_KEYWORDS = ['vl', 'vision', 'visual'];
+    let vlAbortController = null;
+    let vlIsGenerating = false;
+
+    function isVLModel(alias) {
+      if (!alias) return false;
+      const lower = alias.toLowerCase();
+      return VL_KEYWORDS.some(kw => lower.includes(kw));
+    }
+
+    function setVLMode(enabled) {
+      const chatEl = document.getElementById('chatSection');
+      const vlEl = document.getElementById('vlSection');
+      if (enabled) {
+        chatEl.style.display = 'none';
+        vlEl.classList.add('active');
+      } else {
+        chatEl.style.display = '';
+        vlEl.classList.remove('active');
+      }
+    }
+
+    function vlPreviewImage() {
+      const url = document.getElementById('vlImageUrl').value.trim();
+      const preview = document.getElementById('vlPreview');
+      if (!url) {
+        preview.innerHTML = '<span class="vl-no-img">Enter an image URL above to preview</span>';
+        return;
+      }
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        preview.innerHTML = '<span class="vl-no-img">Only HTTP/HTTPS image URLs are supported</span>';
+        return;
+      }
+      preview.innerHTML = '<img src="' + escapeHtml(url) + '" alt="Preview" onerror="this.outerHTML=\'<span class=vl-no-img>Failed to load image</span>\'">';
+    }
+
+    async function vlSend() {
+      const imgUrl = document.getElementById('vlImageUrl').value.trim();
+      const promptEl = document.getElementById('vlPrompt');
+      const prompt = promptEl.value.trim() || 'Describe this image';
+      if (!imgUrl || vlIsGenerating) return;
+      if (!imgUrl.startsWith('http://') && !imgUrl.startsWith('https://')) {
+        document.getElementById('vlResultContent').innerHTML = '<span class="vl-result-empty">Only HTTP/HTTPS image URLs are supported.</span>';
+        return;
+      }
+
+      vlIsGenerating = true;
+      vlAbortController = new AbortController();
+      document.getElementById('vlSendBtn').style.display = 'none';
+      document.getElementById('vlStopBtn').style.display = 'flex';
+      const contentEl = document.getElementById('vlResultContent');
+      const statsEl = document.getElementById('vlStats');
+      contentEl.innerHTML = '<span class="streaming-cursor"></span>';
+      statsEl.innerHTML = '';
+
+      const messages = [
+        { role: 'user', content: [
+          { type: 'image_url', image_url: { url: imgUrl } },
+          { type: 'text', text: prompt }
+        ]}
+      ];
+
+      const startTime = performance.now();
+      let firstTokenTime = null;
+      let tokenCount = 0;
+      let fullText = '';
+
+      try {
+        const res = await fetch(BASE + '/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: '',
+            messages: messages,
+            stream: true,
+            max_tokens: state.params.max_tokens,
+            temperature: state.params.temperature,
+            top_p: state.params.top_p,
+            top_k: state.params.top_k,
+            repetition_penalty: state.params.repetition_penalty,
+          }),
+          signal: vlAbortController.signal,
+          cache: 'no-store',
+        });
+
+        if (!res.ok) {
+          contentEl.innerHTML = '<span class="vl-result-empty">Error: Server returned ' + res.status + '</span>';
+          vlFinish();
+          return;
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || !trimmed.startsWith('data: ')) continue;
+            const payload = trimmed.slice(6);
+            if (payload === '[DONE]') continue;
+            try {
+              const parsed = JSON.parse(payload);
+              const delta = parsed.choices?.[0]?.delta;
+              if (!delta || !delta.content) continue;
+
+              if (firstTokenTime === null) firstTokenTime = performance.now();
+              tokenCount++;
+              fullText += delta.content;
+              contentEl.innerHTML = renderMarkdown(fullText) + '<span class="streaming-cursor"></span>';
+            } catch {}
+          }
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          contentEl.innerHTML = '<span class="vl-result-empty">Error: Could not reach the server.</span>';
+        }
+      }
+
+      const endTime = performance.now();
+      const elapsed = endTime - startTime;
+
+      // Final render
+      if (fullText) {
+        contentEl.innerHTML = renderMarkdown(fullText);
+      } else if (!fullText && contentEl.querySelector('.streaming-cursor')) {
+        contentEl.innerHTML = '<span class="vl-result-empty">No response received.</span>';
+      }
+
+      // Stats
+      const statParts = [];
+      if (firstTokenTime) statParts.push('<span class="vl-stat">TTFT <span class="vl-stat-val">' + Math.round(firstTokenTime - startTime) + 'ms</span></span>');
+      if (tokenCount > 0 && elapsed > 0) statParts.push('<span class="vl-stat"><span class="vl-stat-val">' + (tokenCount / (elapsed / 1000)).toFixed(1) + '</span> tok/s</span>');
+      if (tokenCount > 0) statParts.push('<span class="vl-stat"><span class="vl-stat-val">' + tokenCount + '</span> tokens</span>');
+      statsEl.innerHTML = statParts.join('<span>&middot;</span>');
+
+      vlFinish();
+    }
+
+    function vlFinish() {
+      vlIsGenerating = false;
+      vlAbortController = null;
+      document.getElementById('vlSendBtn').style.display = 'flex';
+      document.getElementById('vlStopBtn').style.display = 'none';
+    }
+
+    function vlStop() {
+      if (vlAbortController) vlAbortController.abort();
+    }
 
     /* ------------------------------------------------------------------ */
     /*  Init                                                               */

@@ -104,17 +104,17 @@ def _resolve_image_url(url: str) -> str:
     """Convert an image URL or local path into a local file path.
 
     - ``file:///path/to/img.jpg`` → ``/path/to/img.jpg``
-    - ``/absolute/path.jpg`` or ``./relative/path.jpg`` → returned as-is
+    - ``/absolute/path.jpg`` or ``./relative/path.jpg`` → resolved to absolute
     - ``https://...`` → downloaded to a temp file, path returned
     """
     if not url:
         return ""
     parsed = urlparse(url)
     if parsed.scheme == "file":
-        return parsed.path
+        return str(Path(parsed.path).resolve())
     if parsed.scheme in ("", "."):
-        # Local path
-        return url
+        # Local path — resolve to absolute so og.Images.open() can find it
+        return str(Path(url).resolve())
     if parsed.scheme in ("http", "https"):
         return _download_image(url)
     return url
@@ -230,16 +230,9 @@ def build_embed_app(
 
     app = FastAPI(title="obeaver-embed", version="0.1.0")
 
-    # ---- Static UI ----
-    _static_dir = Path(__file__).parent / "static"
-    if _static_dir.is_dir():
-        from fastapi.staticfiles import StaticFiles
-        app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
-
     @app.get("/")
-    async def ui_redirect():
-        from fastapi.responses import RedirectResponse
-        return RedirectResponse(url="/static/index.html")
+    async def root():
+        return {"status": "ok", "message": "obeaver embedding API server", "docs": "/docs"}
 
     @app.get("/health")
     async def health() -> dict:
@@ -320,6 +313,7 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
         "engine": None,          # loaded engine instance
         "engine_type": engine_type,
         "current_model": None,   # display name of loaded model
+        "is_vl": False,          # whether current model is VL
     }
 
     # ---- Foundry Local manager (only for foundry engine) ----
@@ -350,14 +344,32 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
             resp["model"] = _dash_state["current_model"]
         return resp
 
+    @app.get("/api/image-proxy")
+    async def image_proxy(path: str) -> "FileResponse":
+        """Serve a local image file so the browser can display it.
+
+        Only allows image file extensions to prevent arbitrary file reads.
+        """
+        from fastapi.responses import FileResponse
+
+        resolved = Path(path).expanduser().resolve()
+        if not resolved.is_file():
+            raise HTTPException(status_code=404, detail="File not found")
+        allowed_ext = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"}
+        if resolved.suffix.lower() not in allowed_ext:
+            raise HTTPException(status_code=400, detail="Not an image file")
+        return FileResponse(str(resolved))
+
     @app.get("/api/system/memory")
     async def system_memory() -> dict:
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, get_all_memory)
 
     def _scan_ort_models() -> list[dict]:
-        """Scan ./models for local ONNX model directories."""
-        models_dir = Path("./models")
+        """Scan the configured ORT models directory for local ONNX model directories."""
+        from obeaver.config import get_ort_models_dir
+
+        models_dir = get_ort_models_dir()
         if not models_dir.is_dir():
             return []
         skip_names = {"cache_dir", ".ds_store"}
@@ -379,6 +391,29 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
             })
         return results
 
+    def _scan_foundrylocal_models() -> list[dict]:
+        """Scan the configured Foundry Local models directory for local model directories."""
+        from obeaver.config import get_foundrylocal_models_dir
+
+        models_dir = get_foundrylocal_models_dir()
+        if not models_dir.is_dir():
+            return []
+        results = []
+        # Foundry Local models are stored as <vendor>/<model_name> (e.g. Microsoft/Phi-4-mini...)
+        for vendor in sorted(models_dir.iterdir()):
+            if not vendor.is_dir() or vendor.name.startswith("."):
+                continue
+            for child in sorted(vendor.iterdir()):
+                if not child.is_dir():
+                    continue
+                results.append({
+                    "alias": child.name,
+                    "id": str(child),
+                    "device": "cpu",
+                    "size_mb": 0,
+                })
+        return results
+
     @app.get("/api/models/available")
     async def available_models() -> dict:
         current = _dash_state["current_model"]
@@ -391,7 +426,10 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
 
         # Foundry mode
         if _dashboard_manager is None:
-            return {"current": current, "engine": engine_label, "models": []}
+            # No SDK available — scan foundrylocal subfolder directly
+            loop = asyncio.get_event_loop()
+            models = await loop.run_in_executor(None, _scan_foundrylocal_models)
+            return {"current": current, "engine": engine_label, "models": models}
 
         def _list() -> dict:
             try:
@@ -436,24 +474,25 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
 
     @app.post("/api/models/load")
     async def load_model(req: LoadModelRequest) -> dict:
-        """Load a model in-process."""
+        """Load a model in-process. VL models always use OrtEngine."""
         import concurrent.futures
 
         model_identifier = req.model_id or req.alias
 
+        # Detect VL model to force ORT engine
+        _is_vl = False
+        model_path = Path(model_identifier)
+        if model_path.is_dir():
+            _is_vl = (
+                (model_path / "vision.onnx").exists()
+                or any((c / "vision.onnx").exists() for c in model_path.iterdir() if c.is_dir())
+            )
+
         try:
             loop = asyncio.get_event_loop()
             with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                if engine_type == "foundry":
-                    from obeaver.engine_foundrylocal import FoundryEngine
-                    new_engine = await loop.run_in_executor(
-                        pool,
-                        lambda: FoundryEngine(
-                            model_alias=model_identifier,
-                            device=req.device if req.device and req.device.upper() != "CPU" else None,
-                        ),
-                    )
-                else:
+                if _is_vl or engine_type == "ort":
+                    # VL models always use ORT engine
                     from obeaver.engine_ort import OrtEngine
                     new_engine = await loop.run_in_executor(
                         pool,
@@ -462,9 +501,19 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
                             execution_provider="cpu",
                         ),
                     )
+                else:
+                    from obeaver.engine_foundrylocal import FoundryEngine
+                    new_engine = await loop.run_in_executor(
+                        pool,
+                        lambda: FoundryEngine(
+                            model_alias=model_identifier,
+                            device=req.device if req.device and req.device.upper() != "CPU" else None,
+                        ),
+                    )
             _dash_state["engine"] = new_engine
             _dash_state["current_model"] = req.alias
-            return {"status": "ok", "model": new_engine.model_name}
+            _dash_state["is_vl"] = _is_vl
+            return {"status": "ok", "model": new_engine.model_name, "is_vl": _is_vl}
         except Exception as exc:
             raise HTTPException(status_code=500, detail=str(exc))
 
@@ -485,6 +534,93 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
         completion_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
         model_name = request.model or eng.model_name
 
+        # ---- VL (Vision-Language) multimodal path ---------------------
+        if _messages_have_images(messages):
+            if not _dash_state.get("is_vl") or not getattr(eng, "supports_multimodal", False):
+                raise HTTPException(
+                    status_code=400,
+                    detail="Current model does not support image input. Load a VL model first.",
+                )
+            image_path = _extract_image_from_messages(messages)
+            vl_messages = _build_vl_messages(messages)
+
+            if request.stream:
+                async def _vl_stream() -> AsyncIterator[bytes]:
+                    created = int(time.time())
+                    import queue as _queue
+                    token_q: _queue.Queue[str | None] = _queue.Queue(maxsize=64)
+                    loop = asyncio.get_event_loop()
+
+                    def _produce() -> None:
+                        try:
+                            for frag in eng.stream_multimodal(
+                                messages=vl_messages,
+                                image_path=image_path,
+                                config=config,
+                            ):
+                                token_q.put(frag)
+                        finally:
+                            token_q.put(None)
+
+                    loop.run_in_executor(_stream_pool, _produce)
+                    while True:
+                        fragment = await loop.run_in_executor(
+                            None, lambda: token_q.get(timeout=300)
+                        )
+                        if fragment is None:
+                            break
+                        data = {
+                            "id": completion_id,
+                            "object": "chat.completion.chunk",
+                            "created": created,
+                            "model": model_name,
+                            "choices": [{
+                                "index": 0,
+                                "delta": {"role": "assistant", "content": fragment},
+                                "finish_reason": None,
+                            }],
+                        }
+                        yield f"data: {_json.dumps(data, separators=(',',':'))}\n\n".encode()
+                    done_data = {
+                        "id": completion_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": model_name,
+                        "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+                    }
+                    yield f"data: {_json.dumps(done_data, separators=(',',':'))}\n\n".encode()
+                    yield b"data: [DONE]\n\n"
+
+                return StreamingResponse(
+                    _vl_stream(),
+                    media_type="text/event-stream",
+                    headers={
+                        "Cache-Control": "no-cache, no-transform",
+                        "X-Accel-Buffering": "no",
+                        "Connection": "keep-alive",
+                    },
+                )
+
+            # Non-streaming VL
+            loop = asyncio.get_event_loop()
+            full_text = await loop.run_in_executor(
+                _stream_pool,
+                lambda: "".join(eng.stream_multimodal(
+                    messages=vl_messages,
+                    image_path=image_path,
+                    config=config,
+                )),
+            )
+            return JSONResponse({
+                "id": completion_id,
+                "object": "chat.completion",
+                "created": int(time.time()),
+                "model": model_name,
+                "choices": [{"index": 0, "message": {"role": "assistant", "content": full_text}, "finish_reason": "stop"}],
+                "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            })
+
+        # ---- Normal text chat path -----------------------------------
         if request.stream:
             async def _stream() -> AsyncIterator[bytes]:
                 created = int(time.time())

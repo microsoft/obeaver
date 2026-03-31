@@ -63,14 +63,13 @@
         <tr><th><span data-en>Method</span><span data-zh>方法</span></th><th><span data-en>Path</span><span data-zh>路径</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>Redirect to the web dashboard</span><span data-zh>重定向到网页仪表盘</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>API server info and documentation link</span><span data-zh>API 服务信息及文档链接</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/health</code></td><td><span data-en>Health check (includes model name and engine label)</span><span data-zh>健康检查（包含模型名称和引擎标识）</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td><span data-en>List loaded model</span><span data-zh>列出已加载模型</span></td></tr>
         <tr><td><code>POST</code></td><td><code>/v1/chat/completions</code></td><td><span data-en>Chat completions (streaming + non-streaming)</span><span data-zh>对话补全（支持流式与非流式）</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td><span data-en>CPU, GPU, NPU, and process memory statistics</span><span data-zh>CPU、GPU、NPU 及进程内存统计</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/api/models/available</code></td><td><span data-en>List all cached models available for switching</span><span data-zh>列出所有可切换的已缓存模型</span></td></tr>
         <tr><td><code>POST</code></td><td><code>/api/models/load</code></td><td><span data-en>Hot-swap the active model at runtime</span><span data-zh>运行时热切换活跃模型</span></td></tr>
-        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td><span data-en>Web dashboard (served automatically)</span><span data-zh>网页仪表盘（自动提供）</span></td></tr>
       </tbody>
     </table>
 
@@ -81,12 +80,30 @@
         <tr><th><span data-en>Method</span><span data-zh>方法</span></th><th><span data-en>Path</span><span data-zh>路径</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>Redirect to the web dashboard</span><span data-zh>重定向到网页仪表盘</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>API server info and documentation link</span><span data-zh>API 服务信息及文档链接</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/health</code></td><td><span data-en>Health check</span><span data-zh>健康检查</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td><span data-en>List loaded model</span><span data-zh>列出已加载模型</span></td></tr>
         <tr><td><code>POST</code></td><td><code>/v1/embeddings</code></td><td><span data-en>Compute text embeddings</span><span data-zh>计算文本嵌入向量</span></td></tr>
         <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td><span data-en>CPU, GPU, NPU, and process memory statistics</span><span data-zh>CPU、GPU、NPU 及进程内存统计</span></td></tr>
-        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td><span data-en>Web dashboard (served automatically)</span><span data-zh>网页仪表盘（自动提供）</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Dashboard Server -->
+    <h2 id="dashboard-server"><span data-en>Dashboard Server (<code>obeaver dashboard</code>)</span><span data-zh>仪表盘服务 (<code>obeaver dashboard</code>)</span></h2>
+    <p><span data-en>The web dashboard (chat UI + real-time memory gauges) is <strong>only</strong> available via <code>obeaver dashboard</code>. It is not served by <code>obeaver serve</code> or <code>obeaver serve-embed</code>.</span><span data-zh>网页仪表盘（聊天界面 + 实时内存仪表）<strong>仅</strong>通过 <code>obeaver dashboard</code> 提供，<code>obeaver serve</code> 和 <code>obeaver serve-embed</code> 不包含仪表盘。</span></p>
+    <table>
+      <thead>
+        <tr><th><span data-en>Method</span><span data-zh>方法</span></th><th><span data-en>Path</span><span data-zh>路径</span></th><th><span data-en>Description</span><span data-zh>说明</span></th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td><span data-en>Redirect to the web dashboard</span><span data-zh>重定向到网页仪表盘</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/health</code></td><td><span data-en>Health check (includes model name and engine label)</span><span data-zh>健康检查（包含模型名称和引擎标识）</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td><span data-en>List loaded model</span><span data-zh>列出已加载模型</span></td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/chat/completions</code></td><td><span data-en>Chat completions (streaming + non-streaming)</span><span data-zh>对话补全（支持流式与非流式）</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/system/memory</code></td><td><span data-en>CPU, GPU, NPU, and process memory statistics</span><span data-zh>CPU、GPU、NPU 及进程内存统计</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/models/available</code></td><td><span data-en>List all cached models available for switching</span><span data-zh>列出所有可切换的已缓存模型</span></td></tr>
+        <tr><td><code>POST</code></td><td><code>/api/models/load</code></td><td><span data-en>Hot-swap the active model at runtime</span><span data-zh>运行时热切换活跃模型</span></td></tr>
+        <tr><td><code>GET</code></td><td><code>/static/index.html</code></td><td><span data-en>Web dashboard UI with real-time memory gauges and chat</span><span data-zh>网页仪表盘 UI，含实时内存仪表和聊天界面</span></td></tr>
       </tbody>
     </table>
 
