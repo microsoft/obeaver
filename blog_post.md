@@ -1,10 +1,10 @@
-# Introducing oFoundry: Lightweight Local LLM Inference with a Built-in Dashboard
+# Introducing oBeaver: Lightweight Local LLM Inference with a Built-in Dashboard
 
-Running large language models locally has never been more accessible. With **oFoundry**, you can load, serve, and interact with ONNX and Foundry Local models on your own hardware, all through a unified CLI, an OpenAI-compatible API, and a real-time web dashboard that visualises memory usage across CPU, GPU, and NPU — plus a full-featured chat interface with live performance metrics.
+Running large language models locally has never been more accessible. With **oBeaver**, you can load, serve, and interact with ONNX and Foundry Local models on your own hardware, all through a unified CLI, an OpenAI-compatible API, and a real-time web dashboard that visualises memory usage across CPU, GPU, and NPU — plus a full-featured chat interface with live performance metrics.
 
-## What is oFoundry?
+## What is oBeaver?
 
-oFoundry is a lightweight, open-source framework for local LLM inference. It supports two backend engines:
+oBeaver is a lightweight, open-source framework for local LLM inference. It supports two backend engines:
 
 - **Foundry Local** (default on macOS and Windows): powered by [Microsoft Foundry Local](https://github.com/microsoft/foundry-local), with automatic model downloading and hardware acceleration across NPU, GPU, and CPU.
 - **ORT** (default on Linux, available everywhere): powered by [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai), loading models directly from a local directory with zero cloud dependency.
@@ -15,16 +15,16 @@ Both engines expose the same interface: a Typer CLI for interactive chat, a Fast
 
 Cloud-based LLM APIs are convenient, but they come with trade-offs: latency, cost, data privacy concerns, and a dependency on network connectivity. Local inference sidesteps all of these.
 
-With oFoundry, your data never leaves your machine. Inference runs entirely on local hardware, whether that is a CPU, a discrete GPU, or the growing family of Neural Processing Units (NPUs) found in modern laptops and desktops.
+With oBeaver, your data never leaves your machine. Inference runs entirely on local hardware, whether that is a CPU, a discrete GPU, or the growing family of Neural Processing Units (NPUs) found in modern laptops and desktops.
 
 ## The New Web Dashboard
 
-The headline feature in this release is the **built-in web dashboard**. When you start the oFoundry server, simply open your browser and navigate to the server address (e.g. `http://127.0.0.1:1573/`) to access it.
+The headline feature in this release is the **built-in web dashboard**. When you start the oBeaver server, simply open your browser and navigate to the server address (e.g. `http://127.0.0.1:1573/`) to access it.
 
 ### What the Dashboard Shows
 
 <p align="center">
-  <img src="Screenshots/01_fullpage_hd.png" alt="oFoundry Dashboard: full view showing model selector, memory cards, inference parameters, and chat" width="800"/>
+  <img src="Screenshots/01_fullpage_hd.png" alt="oBeaver Dashboard: full view showing model selector, memory cards, inference parameters, and chat" width="800"/>
 </p>
 
 **Model Selector**
@@ -54,7 +54,7 @@ The dashboard checks for Intel NPUs (including those marketed as "AI Boost" on I
 A dedicated panel on the right side lets you tune inference parameters in real time: temperature, top-p, top-k, max tokens, and repetition penalty. Quick presets (Creative, Balanced, Precise) are available for common use cases. A system prompt field lets you customise the model's behaviour without writing code.
 
 **Process Memory**
-A separate bar shows the memory footprint of the oFoundry process itself: resident set size (RSS) and virtual memory size (VMS). This helps you understand exactly how much memory the inference runtime is consuming.
+A separate bar shows the memory footprint of the oBeaver process itself: resident set size (RSS) and virtual memory size (VMS). This helps you understand exactly how much memory the inference runtime is consuming.
 
 **Chat Interface with Performance Metrics**
 The chat interface allows you to send messages to the loaded model directly from your browser. Responses stream in token by token with real-time rendering. Each response displays key performance metrics:
@@ -104,10 +104,10 @@ winget install Microsoft.FoundryLocal
 
 ```bash
 # Foundry Local engine (macOS/Windows)
-ofoundry serve phi-3.5-mini
+obeaver serve phi-3.5-mini
 
 # ORT engine (all platforms)
-ofoundry serve --engine ort ./models/phi3-mini-int4
+obeaver serve --engine ort ./models/phi3-mini-int4
 ```
 
 ### Open the Dashboard
@@ -119,20 +119,20 @@ Navigate to `http://127.0.0.1:1573/` in your browser. The dashboard loads automa
 If you prefer the command line:
 
 ```bash
-ofoundry run phi-3.5-mini
-ofoundry run --engine ort ./models/phi3-mini-int4
+obeaver run phi-3.5-mini
+obeaver run --engine ort ./models/phi3-mini-int4
 ```
 
 ## Embedding Support
 
-oFoundry also supports text embeddings via a dedicated ONNX-only engine. Supported models include Qwen3-Embedding (0.6B, 4B, 8B) and EmbeddingGemma (300M).
+oBeaver also supports text embeddings via a dedicated ONNX-only engine. Supported models include Qwen3-Embedding (0.6B, 4B, 8B) and EmbeddingGemma (300M).
 
 ```bash
 # One-shot embedding
-ofoundry embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
+obeaver embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
 
 # Embedding server
-ofoundry serve-embed ./models/Qwen3-Embedding-0.6B
+obeaver serve-embed ./models/Qwen3-Embedding-0.6B
 ```
 
 The embedding server exposes an OpenAI-compatible `/v1/embeddings` endpoint and includes the same dashboard with memory monitoring.
@@ -149,18 +149,18 @@ A CPU-only Docker image is provided for containerised deployments on both `linux
 
 ```bash
 docker buildx build --platform=linux/amd64 \
-  -f docker/Dockerfile.cpu -t ofoundry-cpu .
+  -f docker/Dockerfile.cpu -t obeaver-cpu .
 
 docker run -d --rm \
   -p 1573:1573 \
   -v /path/to/models/phi3-mini-int4:/models \
-  ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
+  obeaver-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
 ```
 
 ## Architecture Overview
 
 ```
-ofoundry/
+obeaver/
 ├── engine_foundrylocal.py  # FoundryEngine: wraps foundry-local-sdk
 ├── engine_ort.py           # OrtEngine: wraps onnxruntime-genai
 ├── engine_embedding.py     # EmbeddingEngine: ONNX-only
@@ -178,7 +178,7 @@ The monitoring module (`monitor.py`) detects available hardware using platform-n
 
 ## What is Next
 
-oFoundry is under active development. Recent additions and planned features include:
+oBeaver is under active development. Recent additions and planned features include:
 
 - ✅ Runtime model switching via dashboard dropdown
 - ✅ Inference parameter tuning (temperature, top-p, top-k) with presets
@@ -187,15 +187,15 @@ oFoundry is under active development. Recent additions and planned features incl
 - ✅ Conversation history with export (JSON/Markdown)
 - ✅ Server-side model warmup for faster first responses
 - ✅ Optimised streaming pipeline following [Foundry Local best practices](https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-local/reference/reference-best-practice)
-- Model conversion via `ofoundry convert` (wrapping the onnxruntime-genai model builder)
+- Model conversion via `obeaver convert` (wrapping the onnxruntime-genai model builder)
 - Additional execution providers (CUDA, DirectML)
 - Enhanced NPU memory reporting as driver tooling improves
 - Historical memory usage charts in the dashboard
 
 ## Contributing
 
-oFoundry is licensed under Apache 2.0. Contributions are welcome. Whether it is a bug fix, a new feature, or improved documentation, please open an issue or submit a pull request.
+oBeaver is licensed under Apache 2.0. Contributions are welcome. Whether it is a bug fix, a new feature, or improved documentation, please open an issue or submit a pull request.
 
 ---
 
-*oFoundry: local LLM inference, made simple.*
+*oBeaver: local LLM inference, made simple.*

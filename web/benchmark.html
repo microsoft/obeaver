@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Benchmark and performance monitoring for oFoundry — TTFT, tok/s, memory tracking, and real-time system resource gauges.">
-  <title>Benchmark — oFoundry</title>
+  <meta name="description" content="Benchmark and performance monitoring for oBeaver — TTFT, tok/s, memory tracking, and real-time system resource gauges.">
+  <title>Benchmark — oBeaver</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="../img/logo.png" type="image/png">
+  <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
   <style>
     .screenshot-grid {
       display: grid;
@@ -80,7 +80,8 @@
     <div class="header-left">
       <button class="menu-toggle" aria-label="Toggle menu">☰</button>
       <a href="index.html" class="logo">
-        <span class="logo-text">oFoundry</span>
+        <img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon">
+        <span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span>
       </a>
     </div>
     <div class="header-right">
@@ -91,7 +92,7 @@
       </div>
       <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-      <a href="https://github.com/microsoft/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </div>
@@ -129,21 +130,21 @@
   <main class="main-content content">
 
     <h1><span data-en>Benchmark &amp; Performance</span><span data-zh>性能基准</span></h1>
-    <p class="lead"><span data-en>oFoundry provides built-in performance metrics and real-time resource monitoring so you can measure inference speed, memory usage, and system health — all from the CLI or the web dashboard.</span><span data-zh>oFoundry 提供内置的性能指标和实时资源监控，你可以测量推理速度、内存使用和系统健康状态——全部可通过 CLI 或网页仪表盘完成。</span></p>
+    <p class="lead"><span data-en>oBeaver provides built-in performance metrics and real-time resource monitoring so you can measure inference speed, memory usage, and system health — all from the CLI or the web dashboard.</span><span data-zh>oBeaver 提供内置的性能指标和实时资源监控，你可以测量推理速度、内存使用和系统健康状态——全部可通过 CLI 或网页仪表盘完成。</span></p>
 
     <!-- ============================================ -->
     <h2 id="cli-timing-stats"><span data-en>CLI Timing Stats</span><span data-zh>CLI 计时统计</span></h2>
 
-    <p><span data-en>Add the <code>--timings</code> flag to any <code>ofoundry run</code> command to display per-response performance metrics directly in the terminal:</span><span data-zh>在任何 <code>ofoundry run</code> 命令中添加 <code>--timings</code> 参数，即可在终端直接显示每次响应的性能指标：</span></p>
+    <p><span data-en>Add the <code>--timings</code> flag to any <code>obeaver run</code> command to display per-response performance metrics directly in the terminal:</span><span data-zh>在任何 <code>obeaver run</code> 命令中添加 <code>--timings</code> 参数，即可在终端直接显示每次响应的性能指标：</span></p>
 
     <pre><code class="language-bash"># Foundry Local engine with timing stats
-ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings
+obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings
 
 # ORT engine with timing stats
-ofoundry run --engine ort ./models/phi3-mini-int4 --timings
+obeaver run --engine ort ./models/phi3-mini-int4 --timings
 
 # VL (Vision-Language) model with timing stats
-ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pre>
+obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pre>
 
     <p><span data-en>After each response, the CLI prints a summary line:</span><span data-zh>每次响应后，CLI 会打印一行摘要信息：</span></p>
 
@@ -175,16 +176,16 @@ ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pr
     <div class="code-block">
       <div class="code-block-header"><span class="code-block-lang">bash</span></div>
       <pre><code># Foundry Local engine (default on macOS/Windows) — lists cached Foundry models
-ofoundry dashboard
+obeaver dashboard
 
 # ORT engine — scans ./models for local ONNX GenAI models
-ofoundry dashboard -e ort</code></pre>
+obeaver dashboard -e ort</code></pre>
     </div>
 
     <p><span data-en>Then open <code>http://127.0.0.1:1573/</code> in your browser. Select a model from the dropdown and start chatting — the dashboard loads the model in-process and provides real-time system resource tracking alongside an integrated chat interface.</span><span data-zh>然后在浏览器中打开 <code>http://127.0.0.1:1573/</code>。从下拉列表中选择模型即可开始对话——仪表盘会在进程内加载模型，并提供实时系统资源监控和集成聊天界面。</span></p>
 
     <figure class="screenshot-card">
-      <img src="imgs/01_fullpage_hd.png" alt="oFoundry Dashboard — full view showing model selector, memory cards, inference parameters, and chat interface" loading="lazy">
+      <img src="imgs/01_fullpage_hd.png" alt="oBeaver Dashboard — full view showing model selector, memory cards, inference parameters, and chat interface" loading="lazy">
       <figcaption>Full dashboard view: model selector, memory gauges, inference parameters, chat interface, and server logs.</figcaption>
     </figure>
 
@@ -220,7 +221,7 @@ ofoundry dashboard -e ort</code></pre>
         <tr>
           <td><strong>Process Memory</strong></td>
           <td>PID, Resident, Virtual</td>
-          <td>Memory consumed by the oFoundry server process itself</td>
+          <td>Memory consumed by the oBeaver server process itself</td>
         </tr>
       </tbody>
     </table>
@@ -316,7 +317,7 @@ ofoundry dashboard -e ort</code></pre>
     <p><span data-en>The complete dashboard brings together system monitoring, a chat interface, inference parameter controls, conversation history, server logs, and export functionality in a single view:</span><span data-zh>完整的仪表盘将系统监控、聊天界面、推理参数控制、会话历史、服务器日志和导出功能集成在一个视图中：</span></p>
 
     <figure class="screenshot-card">
-      <img src="imgs/06_full_overview_hd.png" alt="Full overview of oFoundry dashboard with all sections visible" loading="lazy">
+      <img src="imgs/06_full_overview_hd.png" alt="Full overview of oBeaver dashboard with all sections visible" loading="lazy">
       <figcaption>Full dashboard overview: model selector, memory gauges, process info, API reference, chat, server logs, and export buttons.</figcaption>
     </figure>
 
@@ -372,7 +373,7 @@ ofoundry dashboard -e ort</code></pre>
       <li><strong><span data-en>Use Foundry Local on macOS/Windows</span><span data-zh>在 macOS/Windows 上使用 Foundry Local</span></strong> — <span data-en>it automatically selects the best available accelerator (NPU &gt; GPU &gt; CPU).</span><span data-zh>它会自动选择最佳可用加速器（NPU &gt; GPU &gt; CPU）。</span></li>
       <li><strong><span data-en>INT4 quantised ONNX models</span><span data-zh>INT4 量化的 ONNX 模型</span></strong> — <span data-en>provide the best balance of quality and speed for on-device inference.</span><span data-zh>在设备上推理时提供质量和速度的最佳平衡。</span></li>
       <li><strong><span data-en>Close other memory-heavy applications</span><span data-zh>关闭其他占用内存的应用</span></strong> — <span data-en>inference speed is directly affected by available RAM; monitor the CPU Memory gauge in the dashboard.</span><span data-zh>推理速度直接受可用内存影响；可在仪表盘中监控 CPU 内存仪表。</span></li>
-      <li><strong><span data-en>Monitor the dashboard</span><span data-zh>监控仪表盘</span></strong> — <span data-en>run <code>ofoundry dashboard</code> (Foundry Local) or <code>ofoundry dashboard -e ort</code> (ONNX Runtime GenAI) and keep <code>http://127.0.0.1:1573/</code> open while benchmarking to track resource utilisation in real time.</span><span data-zh>运行 <code>ofoundry dashboard</code>（Foundry Local）或 <code>ofoundry dashboard -e ort</code>（ONNX Runtime GenAI），并在基准测试时保持 <code>http://127.0.0.1:1573/</code> 打开以实时跟踪资源利用率。</span></li>
+      <li><strong><span data-en>Monitor the dashboard</span><span data-zh>监控仪表盘</span></strong> — <span data-en>run <code>obeaver dashboard</code> (Foundry Local) or <code>obeaver dashboard -e ort</code> (ONNX Runtime GenAI) and keep <code>http://127.0.0.1:1573/</code> open while benchmarking to track resource utilisation in real time.</span><span data-zh>运行 <code>obeaver dashboard</code>（Foundry Local）或 <code>obeaver dashboard -e ort</code>（ONNX Runtime GenAI），并在基准测试时保持 <code>http://127.0.0.1:1573/</code> 打开以实时跟踪资源利用率。</span></li>
     </ul>
 
     <!-- Bottom Navigation -->
@@ -392,9 +393,9 @@ ofoundry dashboard -e ort</code></pre>
 
 <!-- ============ Footer ============ -->
 <footer class="site-footer">
-  <span>© 2026 oFoundry · Apache 2.0 License</span>
+  <span>© 2026 oBeaver · Apache 2.0 License</span>
   <div class="footer-links">
-    <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>
 </footer>
 

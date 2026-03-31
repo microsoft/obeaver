@@ -1,5 +1,5 @@
 """
-OpenAI-compatible FastAPI server for ofoundry.
+OpenAI-compatible FastAPI server for obeaver.
 
 Endpoints:
   GET  /v1/models                — list loaded model
@@ -7,9 +7,9 @@ Endpoints:
   GET  /health                   — health check
 
 Launch via:
-  ofoundry serve ./path/to/model
+  obeaver serve ./path/to/model
   # or directly:
-  uvicorn ofoundry.server:build_app --factory --port 18000
+  uvicorn obeaver.server:build_app --factory --port 18000
 """
 
 from __future__ import annotations
@@ -29,8 +29,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
-from ofoundry.engine_ort import GenerationConfig
-from ofoundry.monitor import get_all_memory
+from obeaver.engine_ort import GenerationConfig
+from obeaver.monitor import get_all_memory
 
 # ---------------------------------------------------------------------------
 # Pydantic models (OpenAI schema subset)
@@ -126,7 +126,7 @@ def _download_image(url: str) -> str:
 
     parsed = urlparse(url)
     ext = Path(parsed.path).suffix or ".jpg"
-    fd, tmp_path = tempfile.mkstemp(suffix=ext, prefix="ofoundry_img_")
+    fd, tmp_path = tempfile.mkstemp(suffix=ext, prefix="obeaver_img_")
     os.close(fd)
     urllib.request.urlretrieve(url, tmp_path)  # noqa: S310 — user-controlled URL
     return tmp_path
@@ -221,14 +221,14 @@ def build_embed_app(
     """
     global _embed_engine
 
-    from ofoundry.engine_embedding import EmbeddingEngine
+    from obeaver.engine_embedding import EmbeddingEngine
 
     _embed_engine = EmbeddingEngine(
         model_path=model_path,
         execution_provider=execution_provider,
     )
 
-    app = FastAPI(title="ofoundry-embed", version="0.1.0")
+    app = FastAPI(title="obeaver-embed", version="0.1.0")
 
     # ---- Static UI ----
     _static_dir = Path(__file__).parent / "static"
@@ -260,7 +260,7 @@ def build_embed_app(
                     "id": model_id,
                     "object": "model",
                     "created": int(time.time()),
-                    "owned_by": "ofoundry",
+                    "owned_by": "obeaver",
                 }
             ],
         }
@@ -314,7 +314,7 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
     """
     import sys as _sys
 
-    app = FastAPI(title="ofoundry-dashboard", version="0.1.0")
+    app = FastAPI(title="obeaver-dashboard", version="0.1.0")
 
     _dash_state: dict = {
         "engine": None,          # loaded engine instance
@@ -430,7 +430,7 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
                 "id": model_id,
                 "object": "model",
                 "created": int(time.time()),
-                "owned_by": "ofoundry",
+                "owned_by": "obeaver",
             }],
         }
 
@@ -445,7 +445,7 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
             loop = asyncio.get_event_loop()
             with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
                 if engine_type == "foundry":
-                    from ofoundry.engine_foundrylocal import FoundryEngine
+                    from obeaver.engine_foundrylocal import FoundryEngine
                     new_engine = await loop.run_in_executor(
                         pool,
                         lambda: FoundryEngine(
@@ -454,7 +454,7 @@ def build_dashboard_app(engine_type: str = "foundry") -> FastAPI:
                         ),
                     )
                 else:
-                    from ofoundry.engine_ort import OrtEngine
+                    from obeaver.engine_ort import OrtEngine
                     new_engine = await loop.run_in_executor(
                         pool,
                         lambda: OrtEngine(
@@ -577,7 +577,7 @@ def build_app(
     _engine_type = engine_type
 
     if engine_type == "foundry":
-        from ofoundry.engine_foundrylocal import FoundryEngine
+        from obeaver.engine_foundrylocal import FoundryEngine
         _engine = FoundryEngine(
             model_alias=str(model_path),
             device=None if execution_provider == "cpu" else execution_provider,
@@ -591,16 +591,16 @@ def build_app(
         except Exception:
             _foundry_manager = None
     else:
-        from ofoundry.engine_ort import OrtEngine
+        from obeaver.engine_ort import OrtEngine
         _engine = OrtEngine(model_path=model_path, execution_provider=execution_provider)
 
-    app = FastAPI(title="ofoundry", version="0.1.0")
+    app = FastAPI(title="obeaver", version="0.1.0")
 
     # ---- Warm up the model on startup ----
     @app.on_event("startup")
     async def _warmup_model() -> None:
         import logging
-        log = logging.getLogger("ofoundry")
+        log = logging.getLogger("obeaver")
         log.info("Warming up model with a short inference...")
         try:
             loop = asyncio.get_event_loop()
@@ -620,7 +620,7 @@ def build_app(
 
     @app.get("/")
     async def root():
-        return {"status": "ok", "message": "ofoundry API server", "docs": "/docs"}
+        return {"status": "ok", "message": "obeaver API server", "docs": "/docs"}
 
     @app.get("/health")
     async def health() -> dict:
@@ -641,7 +641,7 @@ def build_app(
                     "id": model_id,
                     "object": "model",
                     "created": int(time.time()),
-                    "owned_by": "ofoundry",
+                    "owned_by": "obeaver",
                 }
             ],
         }
@@ -688,7 +688,7 @@ def build_app(
         if _foundry_manager is None:
             raise HTTPException(status_code=400, detail="Model switching is only supported with the Foundry engine.")
         try:
-            from ofoundry.engine_foundrylocal import FoundryEngine
+            from obeaver.engine_foundrylocal import FoundryEngine
             loop = asyncio.get_event_loop()
             import concurrent.futures
             with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oFoundry — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency.">
-  <title>oFoundry — Documentation</title>
+  <meta name="description" content="oBeaver — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency.">
+  <title>oBeaver — Documentation</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="../img/logo.png" type="image/png">
+  <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -16,7 +16,8 @@
     <div class="header-left">
       <button class="menu-toggle" aria-label="Toggle menu">☰</button>
       <a href="index.html" class="logo">
-        <span class="logo-text">oFoundry</span>
+        <img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon">
+        <span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span>
       </a>
     </div>
     <div class="header-right">
@@ -27,7 +28,7 @@
       </div>
       <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-      <a href="https://github.com/microsoft/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </div>
@@ -66,11 +67,13 @@
 
     <!-- Hero Section -->
     <section class="hero">
-      <h1>oFoundry</h1>
+      <img src="imgs/obeaver-logo.svg" alt="oBeaver pixel beaver" class="hero-logo">
+      <h1><span class="hero-o">o</span><span class="hero-beaver">Beaver</span></h1>
+      <p class="hero-slogan">Build local. Dam the cloud.</p>
       <p><span data-en>Local-first LLM inference toolkit. Run models on your own hardware with an OpenAI-compatible API — no cloud, no API keys, no data leaving your machine.</span><span data-zh>本地优先的 LLM 推理工具包。在自有硬件上运行模型，提供 OpenAI 兼容 API——无需云端、无需 API Key、数据不离开本机。</span></p>
       <div class="hero-buttons">
         <a href="quickstart.html" class="btn btn-primary"><span data-en>Get Started →</span><span data-zh>快速开始 →</span></a>
-        <a href="https://github.com/microsoft/ofoundry" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://github.com/microsoft/obeaver" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
     </section>
 
@@ -81,44 +84,44 @@
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+          <button class="copy-btn" data-code="git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .">Copy</button>
         </div>
-        <pre><code>git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+        <pre><code>git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .</code></pre>
       </div>
       <p><span data-en>Then set up the default model directory and verify your environment:</span><span data-zh>然后设置默认模型目录并验证环境：</span></p>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class=\"copy-btn\" data-code=\"# View oFoundry banner and configuration info
-ofoundry
+          <button class=\"copy-btn\" data-code=\"# View oBeaver banner and configuration info
+obeaver
 
 # Set the default model save location
-ofoundry init
+obeaver init
 
 # Check environment and dependencies
-ofoundry check">Copy</button>
+obeaver check">Copy</button>
         </div>
-        <pre><code># View oFoundry banner and configuration info
-ofoundry
+        <pre><code># View oBeaver banner and configuration info
+obeaver
 
 # Set the default model save location
-ofoundry init
+obeaver init
 
 # Check environment and dependencies
-ofoundry check</code></pre>
+obeaver check</code></pre>
       </div>
       <div class="callout info">
-        <p><span data-en><strong>💡 Tip:</strong> Running <code>ofoundry</code> with no arguments displays the welcome banner showing your current model directory paths. Use <code>ofoundry init</code> to configure where models are saved — all sub-folders (ORT, Foundry Local, HF cache) are created automatically. Use <code>ofoundry models</code> to list all local models.</span><span data-zh><strong>💡 提示：</strong>直接运行 <code>ofoundry</code> 不带参数会显示欢迎横幅，包含当前模型目录路径。使用 <code>ofoundry init</code> 配置模型保存位置——所有子目录（ORT、Foundry Local、HF cache）会自动创建。使用 <code>ofoundry models</code> 列出所有本地模型。</span></p>
+        <p><span data-en><strong>💡 Tip:</strong> Running <code>obeaver</code> with no arguments displays the welcome banner showing your current model directory paths. Use <code>obeaver init</code> to configure where models are saved — all sub-folders (ORT, Foundry Local, HF cache) are created automatically. Use <code>obeaver models</code> to list all local models.</span><span data-zh><strong>💡 提示：</strong>直接运行 <code>obeaver</code> 不带参数会显示欢迎横幅，包含当前模型目录路径。使用 <code>obeaver init</code> 配置模型保存位置——所有子目录（ORT、Foundry Local、HF cache）会自动创建。使用 <code>obeaver models</code> 列出所有本地模型。</span></p>
       </div>
     </section>
 
     <!-- Feature Cards -->
     <section class="content">
-      <h2 id="features"><span data-en>Why oFoundry?</span><span data-zh>为什么选择 oFoundry？</span></h2>
+      <h2 id="features"><span data-en>Why oBeaver?</span><span data-zh>为什么选择 oBeaver？</span></h2>
       <div class="features-grid">
 
         <a href="features.html#dual-engine" class="feature-card">
@@ -198,18 +201,18 @@ ofoundry check</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+          <button class="copy-btn" data-code="obeaver run Phi-4-mini-instruct-generic-cpu:5">Copy</button>
         </div>
-        <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5</code></pre>
+        <pre><code>obeaver run Phi-4-mini-instruct-generic-cpu:5</code></pre>
       </div>
 
       <h3><span data-en>Serve an OpenAI-compatible API</span><span data-zh>启动 OpenAI 兼容 API 服务</span></h3>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+          <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
         </div>
-        <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
+        <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
       </div>
 
       <h3><span data-en>Use with the OpenAI Python SDK</span><span data-zh>使用 OpenAI Python SDK</span></h3>
@@ -241,7 +244,7 @@ for chunk in response:
     print(chunk.choices[0].delta.content or "", end="", flush=True)</code></pre>
       </div>
       <div class="callout info">
-        <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
+        <p><span data-en><strong>💡 Tip:</strong> Run <code>obeaver models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>obeaver models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
       </div>
     </section>
 
@@ -259,9 +262,9 @@ for chunk in response:
 
 <!-- ============ Footer ============ -->
 <footer class="site-footer">
-  <span>© 2026 oFoundry · Apache 2.0 License</span>
+  <span>© 2026 oBeaver · Apache 2.0 License</span>
   <div class="footer-links">
-    <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>
 </footer>
 

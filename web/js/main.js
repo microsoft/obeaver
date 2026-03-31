@@ -1,5 +1,5 @@
 /**
- * ofoundry docs — JavaScript
+ * obeaver docs — JavaScript
  * Theme toggle, search, sidebar, copy buttons, scroll-to-top
  */
 (function () {
@@ -10,14 +10,14 @@
   const html = document.documentElement;
 
   function getPreferredTheme() {
-    const stored = localStorage.getItem('ofoundry-theme');
+    const stored = localStorage.getItem('obeaver-theme');
     if (stored) return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
   function setTheme(theme) {
     html.setAttribute('data-theme', theme);
-    localStorage.setItem('ofoundry-theme', theme);
+    localStorage.setItem('obeaver-theme', theme);
     if (themeToggle) {
       themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
     }
@@ -35,13 +35,13 @@
   // ── Language Toggle ────────────────────────────────────────
   var langToggle = document.getElementById('lang-toggle');
   function getPreferredLang() {
-    var stored = localStorage.getItem('ofoundry-lang');
+    var stored = localStorage.getItem('obeaver-lang');
     if (stored) return stored;
     return (navigator.language || '').startsWith('zh') ? 'zh' : 'en';
   }
   function setLang(lang) {
     html.setAttribute('data-lang', lang);
-    localStorage.setItem('ofoundry-lang', lang);
+    localStorage.setItem('obeaver-lang', lang);
     if (langToggle) {
       langToggle.textContent = lang === 'zh' ? 'EN' : '中文';
     }
@@ -118,7 +118,7 @@
 
   // Search index — maps keywords to pages
   var searchIndex = [
-    { title: 'Home', url: 'index.html', section: 'Getting Started', keywords: 'home welcome ofoundry local llm inference onnx openai api' },
+    { title: 'Home', url: 'index.html', section: 'Getting Started', keywords: 'home welcome obeaver local llm inference onnx openai api' },
     { title: 'Quickstart', url: 'quickstart.html', section: 'Getting Started', keywords: 'quickstart install setup requirements python pip foundry ort check environment' },
     { title: 'Models', url: 'models.html', section: 'Getting Started', keywords: 'models phi qwen gemma onnx foundry catalog download embedding vl vision huggingface' },
     { title: 'Model Conversion', url: 'convert.html', section: 'Getting Started', keywords: 'convert conversion onnx int4 fp16 olive ort vl vision-language model builder build-from-source' },

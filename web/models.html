@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oFoundry models — Foundry Local catalog, ONNX GenAI, embedding models, and model conversion.">
-  <title>Models — oFoundry</title>
+  <meta name="description" content="oBeaver models — Foundry Local catalog, ONNX GenAI, embedding models, and model conversion.">
+  <title>Models — oBeaver</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="../img/logo.png" type="image/png">
+  <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
   <style>
     .flow-steps {
       counter-reset: step;
@@ -71,13 +71,13 @@
   <div class="header-inner">
     <div class="header-left">
       <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-      <a href="index.html" class="logo"><span class="logo-text">oFoundry</span></a>
+      <a href="index.html" class="logo"><img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon"><span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span></a>
     </div>
     <div class="header-right">
       <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search docs..." autocomplete="off"><div class="search-results" id="search-results"></div></div>
       <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-      <a href="https://github.com/microsoft/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
     </div>
   </div>
 </header>
@@ -111,14 +111,14 @@
   <main class="main-content content">
 
     <h1><span data-en>Models</span><span data-zh>模型</span></h1>
-    <p><span data-en>oFoundry supports three model sources: the Foundry Local catalog, ONNX GenAI models, and dedicated embedding models. Use <code>ofoundry models</code> to list all local models at any time.</span><span data-zh>oFoundry 支持三种模型来源：Foundry Local 目录、ONNX GenAI 模型和专用嵌入模型。随时使用 <code>ofoundry models</code> 列出所有本地模型。</span></p>
+    <p><span data-en>oBeaver supports three model sources: the Foundry Local catalog, ONNX GenAI models, and dedicated embedding models. Use <code>obeaver models</code> to list all local models at any time.</span><span data-zh>oBeaver 支持三种模型来源：Foundry Local 目录、ONNX GenAI 模型和专用嵌入模型。随时使用 <code>obeaver models</code> 列出所有本地模型。</span></p>
 
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry models">Copy</button>
+        <button class="copy-btn" data-code="obeaver models">Copy</button>
       </div>
-      <pre><code>ofoundry models</code></pre>
+      <pre><code>obeaver models</code></pre>
     </div>
 
     <!-- ============================================ -->
@@ -129,9 +129,9 @@
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+        <button class="copy-btn" data-code="obeaver run Phi-4-mini-instruct-generic-cpu:5">Copy</button>
       </div>
-      <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5</code></pre>
+      <pre><code>obeaver run Phi-4-mini-instruct-generic-cpu:5</code></pre>
     </div>
 
     <h3><span data-en>Popular Catalog Models</span><span data-zh>热门目录模型</span></h3>
@@ -144,18 +144,18 @@
       </tbody>
     </table>
     <div class="callout info">
-      <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all locally cached models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog for more aliases.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地缓存的模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录获取更多别名。</span></p>
+      <p><span data-en><strong>💡 Tip:</strong> Run <code>obeaver models</code> to list all locally cached models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog for more aliases.</span><span data-zh><strong>💡 提示：</strong>运行 <code>obeaver models</code> 列出所有本地缓存的模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录获取更多别名。</span></p>
     </div>
 
     <!-- ============================================ -->
     <!-- ONNX GenAI Models -->
     <!-- ============================================ -->
     <h2 id="onnx-genai"><span data-en>ONNX GenAI Models</span><span data-zh>ONNX GenAI 模型</span></h2>
-    <p><span data-en>For all platforms (including Linux), you can download ONNX models from Hugging Face or convert them with <code>ofoundry convert</code>.</span><span data-zh>在所有平台（包括 Linux）上，你可以从 Hugging Face 下载 ONNX 模型，或使用 <code>ofoundry convert</code> 进行转换。</span></p>
+    <p><span data-en>For all platforms (including Linux), you can download ONNX models from Hugging Face or convert them with <code>obeaver convert</code>.</span><span data-zh>在所有平台（包括 Linux）上，你可以从 Hugging Face 下载 ONNX 模型，或使用 <code>obeaver convert</code> 进行转换。</span></p>
 
     <!-- HF Login Guidance -->
     <div class="callout warning">
-      <p><span data-en><strong>🔑 Hugging Face Authentication Required:</strong> Downloading models with <code>hf download</code> or <code>ofoundry convert</code> requires Hugging Face CLI authentication. If you haven't logged in yet, run:</span><span data-zh><strong>🔑 需要 Hugging Face 身份验证：</strong>使用 <code>hf download</code> 或 <code>ofoundry convert</code> 下载模型需要 Hugging Face CLI 身份验证。如果你还未登录，请运行：</span></p>
+      <p><span data-en><strong>🔑 Hugging Face Authentication Required:</strong> Downloading models with <code>hf download</code> or <code>obeaver convert</code> requires Hugging Face CLI authentication. If you haven't logged in yet, run:</span><span data-zh><strong>🔑 需要 Hugging Face 身份验证：</strong>使用 <code>hf download</code> 或 <code>obeaver convert</code> 下载模型需要 Hugging Face CLI 身份验证。如果你还未登录，请运行：</span></p>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
@@ -174,7 +174,7 @@ hf auth login</code></pre>
         </div>
         <pre><code>export HF_TOKEN='your_token_here'</code></pre>
       </div>
-      <p><span data-en>Run <code>ofoundry check</code> to verify your Hugging Face authentication status.</span><span data-zh>运行 <code>ofoundry check</code> 验证你的 Hugging Face 身份验证状态。</span></p>
+      <p><span data-en>Run <code>obeaver check</code> to verify your Hugging Face authentication status.</span><span data-zh>运行 <code>obeaver check</code> 验证你的 Hugging Face 身份验证状态。</span></p>
     </div>
 
     <p><span data-en>A valid ONNX model directory contains <code>genai_config.json</code> and one or more <code>.onnx</code> files.</span><span data-zh>有效的 ONNX 模型目录包含 <code>genai_config.json</code> 和一个或多个 <code>.onnx</code> 文件。</span></p>
@@ -231,7 +231,7 @@ hf auth login</code></pre>
     <p><span data-en>Convert Hugging Face models to optimised ONNX format directly from the CLI. This step is <strong>required</strong> when using the ORT engine with models downloaded from Hugging Face in raw format.</span><span data-zh>通过 CLI 直接将 Hugging Face 模型转换为优化的 ONNX 格式。使用 ORT 引擎运行从 Hugging Face 下载的原始格式模型时，此步骤是<strong>必需的</strong>。</span></p>
 
     <div class="callout warning">
-      <p><span data-en><strong>Why convert?</strong> The ORT engine requires models in ONNX GenAI format (containing <code>genai_config.json</code> + <code>.onnx</code> files). Raw Hugging Face model weights (PyTorch / SafeTensors) cannot be loaded directly. Use <code>ofoundry convert</code> to transform them into the correct format.</span><span data-zh><strong>为什么需要转换？</strong> ORT 引擎要求模型为 ONNX GenAI 格式（包含 <code>genai_config.json</code> + <code>.onnx</code> 文件）。原始的 Hugging Face 模型权重（PyTorch / SafeTensors）无法直接加载。使用 <code>ofoundry convert</code> 将其转换为正确的格式。</span></p>
+      <p><span data-en><strong>Why convert?</strong> The ORT engine requires models in ONNX GenAI format (containing <code>genai_config.json</code> + <code>.onnx</code> files). Raw Hugging Face model weights (PyTorch / SafeTensors) cannot be loaded directly. Use <code>obeaver convert</code> to transform them into the correct format.</span><span data-zh><strong>为什么需要转换？</strong> ORT 引擎要求模型为 ONNX GenAI 格式（包含 <code>genai_config.json</code> + <code>.onnx</code> 文件）。原始的 Hugging Face 模型权重（PyTorch / SafeTensors）无法直接加载。使用 <code>obeaver convert</code> 将其转换为正确的格式。</span></p>
     </div>
 
     <!-- When to convert -->
@@ -240,13 +240,13 @@ hf auth login</code></pre>
       <div class="engine-card">
         <h4><span data-en>🟢 Foundry Local Engine</span><span data-zh>🟢 Foundry Local 引擎</span></h4>
         <p><span data-en><strong>No conversion needed.</strong> Foundry Local downloads pre-optimised models from the Microsoft catalog automatically.</span><span data-zh><strong>无需转换。</strong> Foundry Local 会自动从 Microsoft 目录下载预优化模型。</span></p>
-        <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5</code></pre>
+        <pre><code>obeaver run Phi-4-mini-instruct-generic-cpu:5</code></pre>
       </div>
       <div class="engine-card">
         <h4><span data-en>🔶 ORT Engine</span><span data-zh>🔶 ORT 引擎</span></h4>
         <p><span data-en><strong>Conversion required</strong> if you download a raw model from Hugging Face.</span><span data-zh><strong>需要转换</strong>——如果从 Hugging Face 下载原始模型。</span></p>
-        <pre><code>ofoundry convert Qwen/Qwen3-0.6B
-ofoundry run --engine ort ./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+        <pre><code>obeaver convert Qwen/Qwen3-0.6B
+obeaver run --engine ort ./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
       </div>
     </div>
 
@@ -258,29 +258,29 @@ ofoundry run --engine ort ./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
         <button class="copy-btn" data-code="# INT4 quantized (smallest, fastest on CPU — recommended)
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 
 # FP16 precision
-ofoundry convert Qwen/Qwen3-0.6B -p fp16
+obeaver convert Qwen/Qwen3-0.6B -p fp16
 
 # Custom output + extra options
-ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'">Copy</button>
+obeaver convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'">Copy</button>
       </div>
       <pre><code># INT4 quantized (smallest, fastest on CPU — recommended)
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 
 # FP16 precision
-ofoundry convert Qwen/Qwen3-0.6B -p fp16
+obeaver convert Qwen/Qwen3-0.6B -p fp16
 
 # Custom output + extra options
-ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'</code></pre>
+obeaver convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'</code></pre>
     </div>
 
     <h4><span data-en>Complete Example: Qwen3-0.6B</span><span data-zh>完整示例：Qwen3-0.6B</span></h4>
     <ol class="flow-steps">
       <li>
         <strong><span data-en>Convert the model</span><span data-zh>转换模型</span></strong>
-        <pre><code>ofoundry convert Qwen/Qwen3-0.6B</code></pre>
+        <pre><code>obeaver convert Qwen/Qwen3-0.6B</code></pre>
         <span data-en>The model is downloaded, converted, and saved to <code>./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code>.</span><span data-zh>模型将被下载、转换并保存到 <code>./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code>。</span>
       </li>
       <li>
@@ -290,7 +290,7 @@ ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embedding
       </li>
       <li>
         <strong><span data-en>Run with ORT engine</span><span data-zh>使用 ORT 引擎运行</span></strong>
-        <pre><code>ofoundry run --engine ort ./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+        <pre><code>obeaver run --engine ort ./models/ort/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
       </li>
     </ol>
 
@@ -302,16 +302,16 @@ ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embedding
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
         <button class="copy-btn" data-code="# Qwen 2.5 VL
-ofoundry convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
+obeaver convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
 
 # Qwen 3 VL (requires building from source)
-ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source">Copy</button>
+obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source">Copy</button>
       </div>
       <pre><code># Qwen 2.5 VL
-ofoundry convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
+obeaver convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
 
 # Qwen 3 VL (requires building from source)
-ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></pre>
+obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></pre>
     </div>
 
     <div class="callout info">
@@ -331,7 +331,7 @@ hf download microsoft/Phi-3-mini-4k-instruct-onnx \
   --local-dir ./models/ort/phi3-mini-int4
 
 # Run directly
-ofoundry run --engine ort ./models/ort/phi3-mini-int4'>Copy</button>
+obeaver run --engine ort ./models/ort/phi3-mini-int4'>Copy</button>
       </div>
       <pre><code># Download a pre-converted ONNX model (no conversion needed)
 hf download microsoft/Phi-3-mini-4k-instruct-onnx \
@@ -339,7 +339,7 @@ hf download microsoft/Phi-3-mini-4k-instruct-onnx \
   --local-dir ./models/ort/phi3-mini-int4
 
 # Run directly
-ofoundry run --engine ort ./models/ort/phi3-mini-int4</code></pre>
+obeaver run --engine ort ./models/ort/phi3-mini-int4</code></pre>
     </div>
 
     <div class="callout info">
@@ -373,7 +373,7 @@ ofoundry run --engine ort ./models/ort/phi3-mini-int4</code></pre>
       <tbody>
         <tr>
           <td><code>ModuleNotFoundError: onnxruntime_genai</code></td>
-          <td><span data-en>Re-run <code>pip install -e .</code> from the oFoundry project root.</span><span data-zh>在 oFoundry 项目根目录重新运行 <code>pip install -e .</code>。</span></td>
+          <td><span data-en>Re-run <code>pip install -e .</code> from the oBeaver project root.</span><span data-zh>在 oBeaver 项目根目录重新运行 <code>pip install -e .</code>。</span></td>
         </tr>
         <tr>
           <td><span data-en>401 / authentication error on <code>hf download</code></span><span data-zh><code>hf download</code> 出现 401 / 身份验证错误</span></td>
@@ -381,7 +381,7 @@ ofoundry run --engine ort ./models/ort/phi3-mini-int4</code></pre>
         </tr>
         <tr>
           <td><span data-en>Qwen 3 VL conversion fails</span><span data-zh>Qwen 3 VL 转换失败</span></td>
-          <td><span data-en>Add <code>--build-from-source</code>: <code>ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span><span data-zh>添加 <code>--build-from-source</code>：<code>ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span></td>
+          <td><span data-en>Add <code>--build-from-source</code>: <code>obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span><span data-zh>添加 <code>--build-from-source</code>：<code>obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></span></td>
         </tr>
         <tr>
           <td><span data-en>Out of memory during conversion</span><span data-zh>转换过程中内存不足</span></td>
@@ -406,9 +406,9 @@ ofoundry run --engine ort ./models/ort/phi3-mini-int4</code></pre>
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 oFoundry · Apache 2.0 License</span>
+  <span>© 2026 oBeaver · Apache 2.0 License</span>
   <div class="footer-links">
-    <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>
 </footer>
 <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>

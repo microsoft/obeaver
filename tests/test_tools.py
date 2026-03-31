@@ -1,5 +1,5 @@
 """
-Unit tests for ofoundry tool-calling utilities (no model required).
+Unit tests for obeaver tool-calling utilities (no model required).
 
 Run with:
   pytest tests/test_tools.py -v
@@ -11,7 +11,7 @@ import json
 
 import pytest
 
-from ofoundry.tools import (
+from obeaver.tools import (
     ChatResponse,
     ToolCall,
     build_tool_result_message,

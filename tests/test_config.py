@@ -1,5 +1,5 @@
 """
-Unit tests for ofoundry.config (ServerConfig dataclass).
+Unit tests for obeaver.config (ServerConfig dataclass).
 
 Run with:
   pytest tests/test_config.py -v
@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from ofoundry.config import ServerConfig
+from obeaver.config import ServerConfig
 
 
 class TestServerConfigDefaults:

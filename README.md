@@ -1,23 +1,23 @@
-# oFoundry
+# oBeaver
 
 <p align="center">
-  <img src="img/logo.png" alt="oFoundry logo" width="*"/>
+  <img src="img/logo.png" alt="oBeaver logo" width="*"/>
 </p>
 
-**oFoundry** is a local-first LLM inference toolkit designed for AI developers and engineers who need to run models on their own hardware — no cloud, no API keys, no data leaving your machine. It exposes an **OpenAI-compatible API** so your existing agent pipelines, RAG stacks, and evaluation harnesses work out of the box with zero code changes.
+**oBeaver** is a local-first LLM inference toolkit designed for AI developers and engineers who need to run models on their own hardware — no cloud, no API keys, no data leaving your machine. It exposes an **OpenAI-compatible API** so your existing agent pipelines, RAG stacks, and evaluation harnesses work out of the box with zero code changes.
 
 > 中文说明请见 [README.zh-cn.md](README.zh-cn.md)
 
-📖 **Documentation:** <https://microsoft.github.io/ofoundry>
+📖 **Documentation:** <https://microsoft.github.io/obeaver>
 
 ---
 
 ## Table of Contents
 
-- [oFoundry](#ofoundry)
+- [oBeaver](#obeaver)
   - [Table of Contents](#table-of-contents)
   - [Key Features](#key-features)
-  - [Why oFoundry?](#why-ofoundry)
+  - [Why oBeaver?](#why-obeaver)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
     - [Common](#common)
@@ -57,8 +57,8 @@
     - [In CI / automated evaluation](#in-ci--automated-evaluation)
 - [Reference](#reference)
   - [API Reference](#api-reference)
-    - [Chat server (`ofoundry serve`)](#chat-server-ofoundry-serve)
-    - [Embedding server (`ofoundry serve-embed`)](#embedding-server-ofoundry-serve-embed)
+    - [Chat server (`obeaver serve`)](#chat-server-obeaver-serve)
+    - [Embedding server (`obeaver serve-embed`)](#embedding-server-obeaver-serve-embed)
     - [Request parameters (`/v1/chat/completions`)](#request-parameters-v1chatcompletions)
   - [Docker](#docker)
     - [Build](#build)
@@ -93,9 +93,9 @@
 
 ---
 
-## Why oFoundry?
+## Why oBeaver?
 
-| Pain point | How oFoundry solves it |
+| Pain point | How oBeaver solves it |
 |---|---|
 | **Cloud costs & latency** | Run inference locally on CPU, GPU, or NPU — zero network round-trips. |
 | **Data privacy** | Models run on-device. Nothing leaves your machine. |
@@ -108,7 +108,7 @@
 
 # Getting Started
 
-This section walks you through everything needed to get oFoundry up and running on your machine.
+This section walks you through everything needed to get oBeaver up and running on your machine.
 
 ## Requirements
 
@@ -126,8 +126,8 @@ This section walks you through everything needed to get oFoundry up and running 
 ## Installation
 
 ```bash
-git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .
 ```
 
@@ -138,16 +138,16 @@ pip install -e .
 After installation, configure the default model save location. This creates the required sub-folders (`ort/`, `foundrylocal/`, `cache_dir/`) automatically:
 
 ```bash
-ofoundry init
+obeaver init
 ```
 
 You can also pass a path directly:
 
 ```bash
-ofoundry init ~/my-models
+obeaver init ~/my-models
 ```
 
-> **💡 Tip:** The configuration is saved to `~/.ofoundry/config.json`. Run `ofoundry` with no arguments to view the welcome banner showing your current model directory paths at any time.
+> **💡 Tip:** The configuration is saved to `~/.obeaver/config.json`. Run `obeaver` with no arguments to view the welcome banner showing your current model directory paths at any time.
 
 ---
 
@@ -156,11 +156,11 @@ ofoundry init ~/my-models
 Verify your setup:
 
 ```bash
-ofoundry check
+obeaver check
 ```
 
 ```
-────────────────── ofoundry environment check ──────────────────
+────────────────── obeaver environment check ──────────────────
 Platform: macOS
 
 ✓  Foundry Local CLI found: /usr/local/bin/foundry
@@ -172,10 +172,10 @@ Platform: macOS
 
 ### List Local Models
 
-Use `ofoundry models` to list all local models discovered under the configured model directory:
+Use `obeaver models` to list all local models discovered under the configured model directory:
 
 ```bash
-ofoundry models
+obeaver models
 ```
 
 This scans the `foundrylocal/` and `ort/` sub-folders and shows each model's name, engine type, and category (Text, Vision + Text, or Embeddings).
@@ -184,23 +184,23 @@ This scans the `foundrylocal/` and `ort/` sub-folders and shows each model's nam
 
 ## Getting Models
 
-Before using oFoundry, you need models. Choose based on your engine:
+Before using oBeaver, you need models. Choose based on your engine:
 
 ### Foundry Local catalog (macOS/Windows)
 
 No manual download needed — pass a catalog alias and Foundry handles it:
 
 ```bash
-ofoundry run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use
+obeaver run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use
 ```
 
-> **💡 Tip:** Run `ofoundry models` to list all locally cached models. On macOS/Windows, run `foundry model list` to browse the full Foundry Local catalog for more aliases.
+> **💡 Tip:** Run `obeaver models` to list all locally cached models. On macOS/Windows, run `foundry model list` to browse the full Foundry Local catalog for more aliases.
 
 ### ONNX GenAI models (all platforms)
 
 Download pre-converted models from Hugging Face. Look for repos tagged `onnxruntime-genai` or use [Olive](https://github.com/microsoft/Olive) to convert your own.
 
-> **🔑 Hugging Face Authentication Required:** Downloading models with `hf download` or `ofoundry convert` requires Hugging Face CLI authentication. If you haven't logged in yet:
+> **🔑 Hugging Face Authentication Required:** Downloading models with `hf download` or `obeaver convert` requires Hugging Face CLI authentication. If you haven't logged in yet:
 >
 > ```bash
 > pip install -U huggingface-hub
@@ -211,7 +211,7 @@ Download pre-converted models from Hugging Face. Look for repos tagged `onnxrunt
 >
 > Alternatively, set the environment variable: `export HF_TOKEN='your_token_here'`
 >
-> Run `ofoundry check` to verify your Hugging Face authentication status.
+> Run `obeaver check` to verify your Hugging Face authentication status.
 
 ```bash
 # install the HF CLI
@@ -243,7 +243,7 @@ hf download onnx-community/Qwen3-Embedding-0.6B \
 
 # Basic Usage
 
-Now that you have oFoundry installed and models ready, here are the core ways to use it.
+Now that you have oBeaver installed and models ready, here are the core ways to use it.
 
 ## Chat Locally (Terminal)
 
@@ -251,19 +251,19 @@ Start an interactive multi-turn chat in your terminal.
 
 **Foundry Local** (macOS/Windows — auto-downloads models from catalog):
 ```bash
-ofoundry run Phi-4-mini-instruct-generic-cpu:5
-ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s
+obeaver run Phi-4-mini-instruct-generic-cpu:5
+obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s
 ```
 
 **ORT engine** (all platforms — point to a local ONNX model directory):
 ```bash
-ofoundry run --engine ort ./models/phi3-mini-int4
+obeaver run --engine ort ./models/phi3-mini-int4
 ```
 
 **VL (Vision-Language) models** — engine is auto-detected, no `--engine` flag needed:
 ```bash
-ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
-ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 ```
 
 > VL models require the ORT engine. When a VL model directory is detected (contains `vision.onnx`), the engine is automatically set to `ort` — you never need to specify `--engine ort` manually.
@@ -275,9 +275,9 @@ ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 Launch a local HTTP server that exposes OpenAI-compatible endpoints:
 
 ```bash
-ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
-ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT
-ofoundry serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL (auto-detected)
+obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve --engine ort ./models/phi3-mini-int4   # ORT
+obeaver serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL (auto-detected)
 ```
 
 Once the server is running, any OpenAI-compatible client can connect to `http://127.0.0.1:18000/v1`.
@@ -320,8 +320,8 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 Launch the real-time monitoring dashboard with the `dashboard` command:
 
 ```bash
-ofoundry dashboard               # Foundry Local engine, default port 1573
-ofoundry dashboard -e ort         # ORT engine, scans ./models for ONNX models
+obeaver dashboard               # Foundry Local engine, default port 1573
+obeaver dashboard -e ort         # ORT engine, scans ./models for ONNX models
 ```
 
 Then open in your browser:
@@ -331,7 +331,7 @@ http://127.0.0.1:1573/
 ```
 
 <p align="center">
-  <img src="Screenshots/01_fullpage_hd.png" alt="oFoundry Dashboard — full view showing model selector, memory cards, inference parameters, and chat" width="800"/>
+  <img src="Screenshots/01_fullpage_hd.png" alt="oBeaver Dashboard — full view showing model selector, memory cards, inference parameters, and chat" width="800"/>
 </p>
 
 The dashboard includes:
@@ -341,7 +341,7 @@ The dashboard includes:
 - **CPU Memory** — total, used, available, and real-time utilisation gauge
 - **GPU Memory** — detected GPU device and memory (NVIDIA, AMD, Intel, Qualcomm Adreno)
 - **NPU Memory** — detected NPU device and memory (Intel Meteor Lake, Qualcomm Hexagon)
-- **Process Memory** — resident and virtual memory of the oFoundry server process
+- **Process Memory** — resident and virtual memory of the oBeaver server process
 - **Inference Parameters** — temperature, top-p, top-k, max tokens, repetition penalty with Creative/Balanced/Precise presets
 - **Chat Interface** — send messages to the loaded model directly from the browser with streaming response and performance stats (TTFT, tok/s, token count)
 - **Conversation History** — sidebar with saved conversations and system prompt configuration
@@ -376,17 +376,17 @@ The embedding engine is **ONNX-only** — no `--engine` flag needed.
 
 ```bash
 # One-shot embedding
-ofoundry embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
+obeaver embed ./models/Qwen3-Embedding-0.6B "Hello, world!"
 
 # Interactive loop
-ofoundry embed ./models/embeddinggemma-300m-ONNX
+obeaver embed ./models/embeddinggemma-300m-ONNX
 ```
 
 ### Embedding server
 
 ```bash
-ofoundry serve-embed ./models/Qwen3-Embedding-0.6B           # default port 18001
-ofoundry serve-embed ./models/embeddinggemma-300m-ONNX -p 8002
+obeaver serve-embed ./models/Qwen3-Embedding-0.6B           # default port 18001
+obeaver serve-embed ./models/embeddinggemma-300m-ONNX -p 8002
 ```
 
 ### Use with OpenAI SDK
@@ -481,13 +481,13 @@ if choice.finish_reason == "tool_calls":
 
 ```bash
 # Foundry Local engine
-ofoundry serve Phi-4-mini-instruct-generic-cpu:5
+obeaver serve Phi-4-mini-instruct-generic-cpu:5
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_foundrylocal_request.json
 
 # ORT engine
-ofoundry serve --engine ort ./models/phi3-mini-int4
+obeaver serve --engine ort ./models/phi3-mini-int4
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_ort_request.json
@@ -505,14 +505,14 @@ Convert Hugging Face models to optimised ONNX format directly from the CLI.
 
 ```bash
 # INT4 quantized (smallest, fastest on CPU)
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 # → ./models/Qwen3-0.6B_ONNX_INT4_CPU
 
 # FP16 precision
-ofoundry convert Qwen/Qwen3-0.6B -p fp16
+obeaver convert Qwen/Qwen3-0.6B -p fp16
 
 # Custom output + extra options
-ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'
+obeaver convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'
 ```
 
 ### Vision-Language (VL) Models
@@ -531,14 +531,14 @@ VL model conversion uses the [Olive](https://github.com/microsoft/Olive) optimiz
 - **Qwen 2.5 VL**
 
   ```bash
-  ofoundry convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
+  obeaver convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
   # → ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
   ```
 
 - **Qwen 3 VL** (requires building onnxruntime-genai and Olive from source)
 
   ```bash
-  ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source
+  obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source
   # → ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
   ```
 
@@ -608,7 +608,7 @@ llm = OpenAILike(
 
 ```bash
 # Start server in background
-ofoundry serve --engine ort ./models/phi3-mini-int4 &
+obeaver serve --engine ort ./models/phi3-mini-int4 &
 sleep 5
 
 # Run your evaluation script against the local endpoint
@@ -624,7 +624,7 @@ kill %1
 
 ## API Reference
 
-### Chat server (`ofoundry serve`)
+### Chat server (`obeaver serve`)
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -637,7 +637,7 @@ kill %1
 | `POST` | `/api/models/load` | Hot-swap the active model at runtime |
 | `GET` | `/static/index.html` | Web dashboard (served automatically) |
 
-### Embedding server (`ofoundry serve-embed`)
+### Embedding server (`obeaver serve-embed`)
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -674,11 +674,11 @@ A CPU-only Docker image is provided for `linux/amd64` and `linux/arm64`.
 ```bash
 # x86_64
 docker buildx build --platform=linux/amd64 \
-  -f docker/Dockerfile.cpu -t ofoundry-cpu .
+  -f docker/Dockerfile.cpu -t obeaver-cpu .
 
 # arm64 (Apple Silicon / Graviton — compiles ORT from source)
 docker buildx build --platform=linux/arm64 \
-  -f docker/Dockerfile.cpu -t ofoundry-cpu .
+  -f docker/Dockerfile.cpu -t obeaver-cpu .
 ```
 
 | Build arg | Default | Description |
@@ -692,12 +692,12 @@ docker buildx build --platform=linux/arm64 \
 # Interactive chat
 docker run -it --rm \
   -v /path/to/models/phi3-mini-int4:/models \
-  ofoundry-cpu run -m /models -E ort
+  obeaver-cpu run -m /models -E ort
 
 # API server (bind to all interfaces)
 docker run -d --rm -p 18000:18000 \
   -v /path/to/models/phi3-mini-int4:/models \
-  ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 18000
+  obeaver-cpu serve -m /models -E ort --host 0.0.0.0 --port 18000
 
 curl http://localhost:18000/health
 ```
@@ -709,16 +709,16 @@ curl http://localhost:18000/health
 | `OMP_NUM_THREADS` | `4` | OpenMP thread count |
 | `MKL_NUM_THREADS` | `4` | MKL thread count |
 | `TOKENIZERS_PARALLELISM` | `false` | Disable HF tokenizer parallelism warning |
-| `OFOUNDRY_DEFAULT_ENGINE` | `ort` | Default engine when `--engine` omitted |
+| `OBEAVER_DEFAULT_ENGINE` | `ort` | Default engine when `--engine` omitted |
 
 ---
 
 ## Architecture
 
-![arch](./img/ofoundry_architecture.png)
+![arch](./img/obeaver_architecture.png)
 
 ```
-ofoundry/
+obeaver/
 ├── cli.py                  # Typer CLI: chat, serve, embed, serve-embed, convert, check
 ├── server.py               # FastAPI OpenAI-compatible server (chat + embeddings + dashboard)
 ├── chat.py                 # Interactive multi-turn terminal chat loop
@@ -771,7 +771,7 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ## Acknowledgements
 
-oFoundry is inspired by and builds upon the ideas from the following excellent projects:
+oBeaver is inspired by and builds upon the ideas from the following excellent projects:
 
 | Project | Description |
 |---------|-------------|

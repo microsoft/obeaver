@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the **oFoundry** project are documented in this file.
+All notable changes to the **oBeaver** project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
@@ -60,7 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Device detection labels (processor name, GPU model, NPU model).
   - Active / Idle / Unavailable status badges per device.
   - Model info bar showing loaded model name, engine type, platform, and Python version.
-  - oFoundry process stats (PID, resident memory, virtual memory).
+  - oBeaver process stats (PID, resident memory, virtual memory).
   - Interactive "Chat with Model" panel for sending messages directly from the browser.
   - Memory statistics auto-refresh every 3 seconds.
   - Dark theme UI with colour-coded device panels (blue = CPU, purple = GPU, green = NPU).
@@ -91,10 +91,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 #### Documentation
-- **`README.md`** — major rewrite with a "Why ofoundry?" value-proposition table, streamlined installation instructions, and dashboard documentation with screenshots.
+- **`README.md`** — major rewrite with a "Why obeaver?" value-proposition table, streamlined installation instructions, and dashboard documentation with screenshots.
 - **`README.zh-cn.md`** — updated Chinese documentation to match.
 - **`README.md.bak`** — backup of the previous README preserved.
-- **`blog_post.md`** — new introductory blog post: "Introducing oFoundry: Lightweight Local LLM Inference with a Built-in Dashboard".
+- **`blog_post.md`** — new introductory blog post: "Introducing oBeaver: Lightweight Local LLM Inference with a Built-in Dashboard".
 
 #### Dependencies
 - Added `psutil>=5.9.0` to `pyproject.toml` dependencies (required by the monitor module).
@@ -103,7 +103,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.1.0] — 2026-03-22
 
-Initial public release of oFoundry — a CPU-first, cross-platform LLM inference server powered by ONNX Runtime GenAI with an OpenAI-compatible API.
+Initial public release of oBeaver — a CPU-first, cross-platform LLM inference server powered by ONNX Runtime GenAI with an OpenAI-compatible API.
 
 ### Added
 
@@ -127,13 +127,13 @@ Initial public release of oFoundry — a CPU-first, cross-platform LLM inference
 - **Dashboard UI** (`static/index.html`) — built-in web dashboard served by the FastAPI app.
 
 #### CLI
-- **`ofoundry run`** — interactive terminal chat with model/engine selection (`-m`, `-E` flags).
-- **`ofoundry serve`** — launch the HTTP server with configurable `--host` and `--port`.
-- **`ofoundry serve-embed`** — serve embedding models via HTTP.
-- **`ofoundry embed`** — run embedding from the command line.
-- **`ofoundry check`** — verify runtime dependencies and environment.
-- **`ofoundry version`** — print the current version.
-- **`ofoundry convert`** — model conversion utilities.
+- **`obeaver run`** — interactive terminal chat with model/engine selection (`-m`, `-E` flags).
+- **`obeaver serve`** — launch the HTTP server with configurable `--host` and `--port`.
+- **`obeaver serve-embed`** — serve embedding models via HTTP.
+- **`obeaver embed`** — run embedding from the command line.
+- **`obeaver check`** — verify runtime dependencies and environment.
+- **`obeaver version`** — print the current version.
+- **`obeaver convert`** — model conversion utilities.
 - **ASCII banner** on startup using `pyfiglet`.
 - **Rich console output** for improved terminal UX.
 - **Cloud CLI support** — commands for cloud deployment workflows.
@@ -169,6 +169,6 @@ Initial public release of oFoundry — a CPU-first, cross-platform LLM inference
 #### Project Setup
 - `pyproject.toml` with full dependency list (onnxruntime-genai, foundry-local-sdk, openai, fastapi, uvicorn, typer, rich, pyfiglet, huggingface-hub, numpy, torch, psutil).
 - Dev dependencies: `pytest`, `httpx`.
-- Entry point: `ofoundry = ofoundry.cli:app`.
+- Entry point: `obeaver = obeaver.cli:app`.
 - Apache-2.0 license.
 - Python >= 3.10 required.

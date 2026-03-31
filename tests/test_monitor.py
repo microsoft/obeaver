@@ -1,5 +1,5 @@
 """
-Unit tests for ofoundry.monitor (system resource monitoring).
+Unit tests for obeaver.monitor (system resource monitoring).
 
 Run with:
   pytest tests/test_monitor.py -v
@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from ofoundry.monitor import MemoryInfo, get_all_memory, get_cpu_memory, get_process_memory
+from obeaver.monitor import MemoryInfo, get_all_memory, get_cpu_memory, get_process_memory
 
 
 # ---------------------------------------------------------------------------

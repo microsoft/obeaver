@@ -1,53 +1,67 @@
 /* ============================================================
-   ofoundry docs — CSS3 stylesheet
-   Inspired by docs.ollama.com: clean, minimal, responsive
+   oBeaver docs — CSS3 stylesheet
+   Brand: oBeaver — Build local. Dam the cloud.
    ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 /* ---------- CSS Custom Properties (Light / Dark) ---------- */
 :root {
+  /* oBeaver brand palette */
+  --ob-bark:    #1A0F05;
+  --ob-brown:   #6B3D1A;
+  --ob-amber:   #E8A828;
+  --ob-birch:   #FDF5E6;
+  --ob-river:   #2DD4A0;
+  --ob-belly:   #C8A474;
+  --ob-outline: #2A1205;
+  --ob-tail:    #4A2810;
+
   --bg: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-code: #f1f3f5;
+  --bg-secondary: var(--ob-birch);
+  --bg-code: #faf6ee;
   --bg-sidebar: #ffffff;
-  --bg-hover: #f0f0f0;
-  --bg-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --text: #1a1a2e;
-  --text-secondary: #555;
-  --text-muted: #888;
-  --border: #e5e7eb;
-  --accent: #6c63ff;
-  --accent-hover: #5a52d5;
-  --accent-light: rgba(108, 99, 255, 0.08);
-  --code-text: #e83e8c;
-  --link: #6c63ff;
-  --link-hover: #5a52d5;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-lg: 0 4px 20px rgba(0,0,0,0.08);
+  --bg-hover: #f5efe4;
+  --bg-hero: var(--ob-bark);
+  --text: #1A0F05;
+  --text-secondary: #4a3b2a;
+  --text-muted: #8b7a66;
+  --border: #e5ddd0;
+  --accent: var(--ob-amber);
+  --accent-hover: #B07A20;
+  --accent-light: rgba(232, 168, 40, 0.10);
+  --code-text: var(--ob-amber);
+  --link: var(--ob-amber);
+  --link-hover: #B07A20;
+  --shadow: 0 1px 3px rgba(26,15,5,0.06);
+  --shadow-lg: 0 4px 20px rgba(26,15,5,0.10);
   --radius: 8px;
   --sidebar-width: 280px;
   --header-height: 60px;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-mono: 'Space Mono', "SF Mono", "Fira Code", Menlo, Consolas, monospace;
   --transition: 0.2s ease;
 }
 
 [data-theme="dark"] {
-  --bg: #0d1117;
-  --bg-secondary: #161b22;
-  --bg-code: #1c2128;
-  --bg-sidebar: #0d1117;
-  --bg-hover: #1c2128;
-  --bg-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  --text: #e6edf3;
-  --text-secondary: #b0b8c1;
-  --text-muted: #7d8590;
-  --border: #30363d;
-  --accent: #8b7cf7;
-  --accent-hover: #a097f7;
-  --accent-light: rgba(139, 124, 247, 0.1);
-  --code-text: #f472b6;
-  --link: #8b7cf7;
-  --link-hover: #a097f7;
+  --bg: #0f0a05;
+  --bg-secondary: #1a1208;
+  --bg-code: #1e1610;
+  --bg-sidebar: #0f0a05;
+  --bg-hover: #241a10;
+  --bg-hero: var(--ob-bark);
+  --text: #f0e8dc;
+  --text-secondary: #c4b8a4;
+  --text-muted: #8b7a66;
+  --border: #3a2e20;
+  --accent: var(--ob-amber);
+  --accent-hover: #f0bc4c;
+  --accent-light: rgba(232, 168, 40, 0.12);
+  --code-text: var(--ob-amber);
+  --link: var(--ob-amber);
+  --link-hover: #f0bc4c;
   --shadow: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-lg: 0 4px 20px rgba(0,0,0,0.4);
 }
@@ -121,23 +135,35 @@ img { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: var(--font-heading);
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text);
   text-decoration: none;
+  letter-spacing: -1px;
 }
-.logo:hover { color: var(--accent); }
+.logo:hover { color: var(--ob-amber); }
 
-.logo img {
+.logo img,
+.logo svg {
   height: 32px;
   width: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .logo-text {
-  background: linear-gradient(135deg, #6c63ff, #e91e63);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: var(--font-heading);
+  letter-spacing: -2px;
+}
+.logo-text .logo-o {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ob-amber);
+}
+.logo-text .logo-beaver {
+  font-weight: 800;
 }
 
 .header-right {
@@ -328,7 +354,11 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Hero Section (Home page) ---------- */
 .hero {
-  background: var(--bg-hero);
+  background: var(--ob-bark);
+  background-image:
+    linear-gradient(rgba(232,168,40,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,168,40,.04) 1px, transparent 1px);
+  background-size: 16px 16px;
   border-radius: 16px;
   padding: 60px 48px;
   margin-bottom: 48px;
@@ -341,27 +371,65 @@ img { max-width: 100%; height: auto; }
 .hero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 400px;
-  height: 400px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse,
+    rgba(232,168,40,.18) 0%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.hero-logo {
+  width: 120px;
+  height: auto;
+  margin: 0 auto 24px;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  position: relative;
 }
 
 .hero h1 {
-  font-size: 2.8rem;
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
   font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+.hero h1 .hero-o {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ob-amber);
+}
+.hero h1 .hero-beaver {
+  font-weight: 800;
+  color: #fff;
+}
+
+.hero .hero-slogan {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.15rem;
+  color: var(--ob-amber);
   margin-bottom: 16px;
-  line-height: 1.2;
+  opacity: 0.9;
 }
 
 .hero p {
-  font-size: 1.15rem;
-  opacity: 0.9;
+  font-size: 1.05rem;
+  opacity: 0.85;
   max-width: 600px;
   margin: 0 auto 32px;
   line-height: 1.6;
+  color: var(--ob-belly);
 }
 
 .hero-buttons {
@@ -386,17 +454,17 @@ img { max-width: 100%; height: auto; }
 }
 
 .btn-primary {
-  background: #fff;
-  color: #6c63ff;
+  background: var(--ob-amber);
+  color: var(--ob-bark);
 }
 .btn-primary:hover {
-  background: #f0f0f0;
-  color: #5a52d5;
+  background: #f0bc4c;
+  color: var(--ob-bark);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.10);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.3);
 }
@@ -429,6 +497,7 @@ img { max-width: 100%; height: auto; }
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   color: var(--text);
+  border-color: var(--ob-amber);
 }
 
 .feature-card .card-icon {
@@ -437,6 +506,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .feature-card h3 {
+  font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -450,6 +520,7 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Content Typography ---------- */
 .content h1 {
+  font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 12px;
@@ -458,6 +529,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .content h2 {
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 48px;
@@ -467,6 +539,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .content h3 {
+  font-family: var(--font-heading);
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 32px;
@@ -564,6 +637,11 @@ img { max-width: 100%; height: auto; }
   line-height: 1.6;
   color: var(--text);
 }
+
+/* CLI syntax highlight: command name amber, args river */
+.code-block pre code .cli-cmd { color: var(--ob-amber); font-weight: 700; }
+.code-block pre code .cli-arg { color: var(--ob-river); }
+.code-block pre code .cli-flag { color: var(--text-muted); }
 
 .code-block pre code {
   background: none;

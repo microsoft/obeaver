@@ -1,4 +1,4 @@
-# Dockerfile.cpu — ofoundry CPU-only inference image
+# Dockerfile.cpu — obeaver CPU-only inference image
 #
 #
 # Supported platforms:
@@ -7,9 +7,9 @@
 #                             ref: https://onnxruntime.ai/docs/genai/howto/build-from-source.html\#linux-build
 #
 # Build context MUST be the project root (the directory containing pyproject.toml):
-#   cd /Users/lokinfey/Desktop/SLM/ofoundry
-#   docker buildx build --platform=linux/amd64 -f docker/Dockerfile.cpu -t ofoundry-cpu .
-#   docker buildx build --platform=linux/arm64 -f docker/Dockerfile.cpu -t ofoundry-cpu .
+#   cd /Users/lokinfey/Desktop/SLM/obeaver
+#   docker buildx build --platform=linux/amd64 -f docker/Dockerfile.cpu -t obeaver-cpu .
+#   docker buildx build --platform=linux/arm64 -f docker/Dockerfile.cpu -t obeaver-cpu .
 #
 # Build arguments:
 #   PYTHON_VERSION=3.12 (default)
@@ -19,7 +19,7 @@
 #   # Interactive chat session
 #   docker run -it --rm \
 #     -v ./models/phi3-mini-int4:/models \
-#     ofoundry-cpu run -m /models -E ort
+#     obeaver-cpu run -m /models -E ort
 #
 #   # OpenAI-compatible HTTP server
 #   # NOTE: --host 0.0.0.0 is required so uvicorn binds to all interfaces,
@@ -27,7 +27,7 @@
 #   docker run -d --rm \
 #     -p 1573:1573 \
 #     -v ./models/phi3-mini-int4:/models \
-#     ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
+#     obeaver-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
 
 ARG PYTHON_VERSION=3.12
 ARG ORT_GENAI_REF=v0.6.0
@@ -221,12 +221,12 @@ FROM python:${PYTHON_VERSION}-slim AS runtime
 
 ARG PYTHON_VERSION=3.12
 
-LABEL org.opencontainers.image.title="ofoundry CPU"
+LABEL org.opencontainers.image.title="obeaver CPU"
 LABEL org.opencontainers.image.description="ONNX Runtime GenAI inference engine for CPU — chat & serve"
 LABEL org.opencontainers.image.vendor="kinfey"
-LABEL org.opencontainers.image.source="https://github.com/microsoft/ofoundry"
-LABEL ai.ofoundry.build.python-version="${PYTHON_VERSION}"
-LABEL ai.ofoundry.build.target="cpu"
+LABEL org.opencontainers.image.source="https://github.com/microsoft/obeaver"
+LABEL ai.obeaver.build.python-version="${PYTHON_VERSION}"
+LABEL ai.obeaver.build.target="cpu"
 
 WORKDIR /app
 
@@ -245,12 +245,12 @@ COPY --from=deps ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 # ------------------------------------------------------------------
-# Copy ofoundry source from the local project root (build context).
+# Copy obeaver source from the local project root (build context).
 # No git clone — source is taken directly from the host machine.
-# Build context = /Users/lokinfey/Desktop/SLM/ofoundry
+# Build context = /Users/lokinfey/Desktop/SLM/obeaver
 # ------------------------------------------------------------------
 COPY pyproject.toml README.md ./
-COPY ofoundry/ ./ofoundry/
+COPY obeaver/ ./obeaver/
 
 # Install the package itself (no heavy dependency rebuild — already in venv)
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -268,11 +268,11 @@ ENV MKL_NUM_THREADS=4
 ENV TOKENIZERS_PARALLELISM=false
 
 # On Linux the ORT engine is used by default (no Foundry daemon needed)
-ENV OFOUNDRY_DEFAULT_ENGINE=ort
+ENV OBEAVER_DEFAULT_ENGINE=ort
 
-# Entrypoint delegates to the ofoundry CLI.
+# Entrypoint delegates to the obeaver CLI.
 # Examples:
-#   docker run -it ofoundry-cpu run -m /models/phi3-mini-int4 -E ort
-#   docker run    ofoundry-cpu serve -m /models/phi3-mini-int4 -E ort --port 1573
-ENTRYPOINT ["ofoundry"]
+#   docker run -it obeaver-cpu run -m /models/phi3-mini-int4 -E ort
+#   docker run    obeaver-cpu serve -m /models/phi3-mini-int4 -E ort --port 1573
+ENTRYPOINT ["obeaver"]
 CMD ["--help"]

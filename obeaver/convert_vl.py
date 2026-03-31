@@ -243,7 +243,7 @@ def _patch_cmake_fallback(repo_dir: Path) -> None:
 
     content = cmakelists.read_text()
     inject_line = (
-        '\n# [ofoundry] Force correct architecture for native build\n'
+        '\n# [obeaver] Force correct architecture for native build\n'
         'if(NOT CMAKE_OSX_ARCHITECTURES)\n'
         '  set(CMAKE_OSX_ARCHITECTURES "${CMAKE_HOST_SYSTEM_PROCESSOR}")\n'
         'endif()\n'
@@ -251,7 +251,7 @@ def _patch_cmake_fallback(repo_dir: Path) -> None:
 
     # Insert right after the project() command
     marker = "include(cmake/options.cmake)"
-    if marker in content and "[ofoundry]" not in content:
+    if marker in content and "[obeaver]" not in content:
         content = content.replace(marker, marker + inject_line)
         cmakelists.write_text(content)
         print("[build-from-source] Fallback patch: injected "
@@ -277,8 +277,8 @@ def _patch_skip_examples(repo_dir: Path) -> None:
     #       build_examples(arguments, environment)
     # We replace it with a pass-through that always skips.
     old = "build_examples(arguments, environment)"
-    new = "pass  # [ofoundry] skip examples build — only wheel needed"
-    if old in content and "[ofoundry]" not in content:
+    new = "pass  # [obeaver] skip examples build — only wheel needed"
+    if old in content and "[obeaver]" not in content:
         content = content.replace(old, new)
         build_py.write_text(content)
         print("[build-from-source] Patched build.py: skipped examples build")

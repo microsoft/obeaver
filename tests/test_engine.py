@@ -1,5 +1,5 @@
 """
-Minimal smoke-test for the ofoundry package (no real model required).
+Minimal smoke-test for the obeaver package (no real model required).
 """
 
 import sys
@@ -74,7 +74,7 @@ def _mock_model_dir():
 
 
 def test_engine_stream():
-    from ofoundry.engine_ort import GenerationConfig, OrtEngine
+    from obeaver.engine_ort import GenerationConfig, OrtEngine
 
     model_dir = _mock_model_dir()
     engine = OrtEngine(model_path=model_dir)
@@ -86,7 +86,7 @@ def test_engine_stream():
 
 
 def test_format_messages_fallback():
-    from ofoundry.engine_ort import _format_messages_fallback
+    from obeaver.engine_ort import _format_messages_fallback
 
     msgs = [
         {"role": "system", "content": "Be helpful."},
@@ -99,7 +99,7 @@ def test_format_messages_fallback():
 
 
 def test_version():
-    from ofoundry._version import __version__
+    from obeaver._version import __version__
 
     assert isinstance(__version__, str)
     assert "." in __version__

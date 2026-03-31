@@ -1,21 +1,21 @@
-# oFoundry
+# oBeaver
 
 <p align="center">
-  <img src="img/logo.png" alt="oFoundry logo" width="*"/>
+  <img src="img/logo.png" alt="oBeaver logo" width="*"/>
 </p>
 
-**oFoundry** 是一个本地优先的 LLM 推理工具包，专为需要在自有硬件上运行模型的 AI 开发者和工程师设计——无需云服务、无需 API 密钥、数据完全不离开你的设备。它提供 **OpenAI 兼容的 API**，让你现有的 Agent 流水线、RAG 技术栈和评估框架无需修改代码即可直接使用。
+**oBeaver** 是一个本地优先的 LLM 推理工具包，专为需要在自有硬件上运行模型的 AI 开发者和工程师设计——无需云服务、无需 API 密钥、数据完全不离开你的设备。它提供 **OpenAI 兼容的 API**，让你现有的 Agent 流水线、RAG 技术栈和评估框架无需修改代码即可直接使用。
 
 > English version: [README.md](README.md)
 
-📖 **在线文档：** <https://microsoft.github.io/ofoundry>
+📖 **在线文档：** <https://microsoft.github.io/obeaver>
 
 ---
 
 ## 目录
 
 - [核心特性](#核心特性)
-- [为什么选择 oFoundry？](#为什么选择-ofoundry)
+- [为什么选择 oBeaver？](#为什么选择-obeaver)
 - **快速入门**
   - [环境要求](#环境要求)
   - [安装](#安装)
@@ -60,9 +60,9 @@
 
 ---
 
-## 为什么选择 oFoundry？
+## 为什么选择 oBeaver？
 
-| 痛点 | oFoundry 如何解决 |
+| 痛点 | oBeaver 如何解决 |
 |------|-------------------|
 | **云端成本与延迟** | 在本地 CPU、GPU 或 NPU 上运行推理——零网络往返。 |
 | **数据隐私** | 模型在设备上运行，数据完全不离开你的机器。 |
@@ -75,7 +75,7 @@
 
 # 快速入门
 
-本节将引导你完成 oFoundry 的安装和配置，让其在你的机器上运行起来。
+本节将引导你完成 oBeaver 的安装和配置，让其在你的机器上运行起来。
 
 ## 环境要求
 
@@ -93,8 +93,8 @@
 ## 安装
 
 ```bash
-git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .
 ```
 
@@ -105,16 +105,16 @@ pip install -e .
 安装完成后，配置默认模型保存位置。这会自动创建所需的子目录（`ort/`、`foundrylocal/`、`cache_dir/`）：
 
 ```bash
-ofoundry init
+obeaver init
 ```
 
 你也可以直接传入路径：
 
 ```bash
-ofoundry init ~/my-models
+obeaver init ~/my-models
 ```
 
-> **💡 提示：** 配置保存在 `~/.ofoundry/config.json`。随时运行 `ofoundry`（不带参数）即可查看欢迎横幅，显示当前模型目录路径。
+> **💡 提示：** 配置保存在 `~/.obeaver/config.json`。随时运行 `obeaver`（不带参数）即可查看欢迎横幅，显示当前模型目录路径。
 
 ---
 
@@ -123,11 +123,11 @@ ofoundry init ~/my-models
 验证你的环境：
 
 ```bash
-ofoundry check
+obeaver check
 ```
 
 ```
-────────────────── ofoundry environment check ──────────────────
+────────────────── obeaver environment check ──────────────────
 Platform: macOS
 
 ✓  Foundry Local CLI found: /usr/local/bin/foundry
@@ -139,10 +139,10 @@ Platform: macOS
 
 ### 列出本地模型
 
-使用 `ofoundry models` 列出配置的模型目录下的所有本地模型：
+使用 `obeaver models` 列出配置的模型目录下的所有本地模型：
 
 ```bash
-ofoundry models
+obeaver models
 ```
 
 该命令会扫描 `foundrylocal/` 和 `ort/` 子文件夹，显示每个模型的名称、引擎类型和分类（Text、Vision + Text 或 Embeddings）。
@@ -151,23 +151,23 @@ ofoundry models
 
 ## 获取模型
 
-使用 oFoundry 前需要先准备模型，根据你的引擎选择获取方式：
+使用 oBeaver 前需要先准备模型，根据你的引擎选择获取方式：
 
 ### Foundry Local 目录（macOS/Windows）
 
 无需手动下载——传入 catalog alias，Foundry 会自动处理：
 
 ```bash
-ofoundry run Phi-4-mini-instruct-generic-cpu:5   # 首次使用时自动下载
+obeaver run Phi-4-mini-instruct-generic-cpu:5   # 首次使用时自动下载
 ```
 
-> **💡 提示：** 运行 `ofoundry models` 列出所有本地缓存的模型。在 macOS/Windows 上，运行 `foundry model list` 浏览完整的 Foundry Local 目录获取更多别名。
+> **💡 提示：** 运行 `obeaver models` 列出所有本地缓存的模型。在 macOS/Windows 上，运行 `foundry model list` 浏览完整的 Foundry Local 目录获取更多别名。
 
 ### ONNX GenAI 模型（全平台）
 
 从 Hugging Face 下载预转换模型。可搜索带有 `onnxruntime-genai` 标签的仓库，或使用 [Olive](https://github.com/microsoft/Olive) 自行转换。
 
-> **🔑 需要 Hugging Face 身份验证：** 使用 `hf download` 或 `ofoundry convert` 下载模型需要 Hugging Face CLI 身份验证。如果你还未登录：
+> **🔑 需要 Hugging Face 身份验证：** 使用 `hf download` 或 `obeaver convert` 下载模型需要 Hugging Face CLI 身份验证。如果你还未登录：
 >
 > ```bash
 > pip install -U huggingface-hub
@@ -178,7 +178,7 @@ ofoundry run Phi-4-mini-instruct-generic-cpu:5   # 首次使用时自动下载
 >
 > 你也可以使用环境变量替代登录：`export HF_TOKEN='your_token_here'`
 >
-> 运行 `ofoundry check` 验证你的 Hugging Face 身份验证状态。
+> 运行 `obeaver check` 验证你的 Hugging Face 身份验证状态。
 
 ```bash
 # 安装 HF CLI
@@ -210,7 +210,7 @@ hf download onnx-community/Qwen3-Embedding-0.6B \
 
 # 基础用法
 
-oFoundry 已安装且模型就绪后，以下是核心使用方式。
+oBeaver 已安装且模型就绪后，以下是核心使用方式。
 
 ## 终端交互式对话
 
@@ -218,19 +218,19 @@ oFoundry 已安装且模型就绪后，以下是核心使用方式。
 
 **Foundry Local**（macOS/Windows——自动从目录下载模型）：
 ```bash
-ofoundry run Phi-4-mini-instruct-generic-cpu:5
-ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # 显示 TTFT + tok/s
+obeaver run Phi-4-mini-instruct-generic-cpu:5
+obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # 显示 TTFT + tok/s
 ```
 
 **ORT 引擎**（全平台——指向本地 ONNX 模型目录）：
 ```bash
-ofoundry run --engine ort ./models/phi3-mini-int4
+obeaver run --engine ort ./models/phi3-mini-int4
 ```
 
 **VL（视觉语言）模型** —— 引擎自动检测，无需指定 `--engine`：
 ```bash
-ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
-ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 ```
 
 > VL 模型只能使用 ORT 引擎。当检测到 VL 模型目录（包含 `vision.onnx`）时，引擎会自动切换为 `ort`，无需手动指定 `--engine ort`。
@@ -242,9 +242,9 @@ ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 启动本地 HTTP 服务，暴露 OpenAI 兼容端点：
 
 ```bash
-ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
-ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT
-ofoundry serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL（自动检测）
+obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve --engine ort ./models/phi3-mini-int4   # ORT
+obeaver serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL（自动检测）
 ```
 
 服务启动后，任何 OpenAI 兼容客户端都可以连接到 `http://127.0.0.1:18000/v1`。
@@ -287,8 +287,8 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 使用 `dashboard` 命令启动实时监控仪表盘：
 
 ```bash
-ofoundry dashboard               # Foundry Local 引擎，默认端口 1573
-ofoundry dashboard -e ort         # ORT 引擎，扫描 ./models 下的 ONNX 模型
+obeaver dashboard               # Foundry Local 引擎，默认端口 1573
+obeaver dashboard -e ort         # ORT 引擎，扫描 ./models 下的 ONNX 模型
 ```
 
 然后在浏览器中打开：
@@ -298,7 +298,7 @@ http://127.0.0.1:1573/
 ```
 
 <p align="center">
-  <img src="Screenshots/01_fullpage_hd.png" alt="oFoundry 仪表盘——完整视图：模型选择器、内存卡片、推理参数和聊天界面" width="800"/>
+  <img src="Screenshots/01_fullpage_hd.png" alt="oBeaver 仪表盘——完整视图：模型选择器、内存卡片、推理参数和聊天界面" width="800"/>
 </p>
 
 仪表盘功能包括：
@@ -308,7 +308,7 @@ http://127.0.0.1:1573/
 - **CPU 内存** — 总量、已用、可用及实时使用率仪表
 - **GPU 内存** — 检测到的 GPU 设备及内存（NVIDIA、AMD、Intel、Qualcomm Adreno）
 - **NPU 内存** — 检测到的 NPU 设备及内存（Intel Meteor Lake、Qualcomm Hexagon）
-- **进程内存** — oFoundry 服务进程的驻留内存和虚拟内存
+- **进程内存** — oBeaver 服务进程的驻留内存和虚拟内存
 - **推理参数** — temperature、top-p、top-k、max tokens、repetition penalty，提供 Creative/Balanced/Precise 预设
 - **聊天界面** — 直接在浏览器中向已加载的模型发送消息，支持流式响应和性能统计（TTFT、tok/s、token 计数）
 - **会话历史** — 侧边栏保存对话记录，支持系统提示词配置
@@ -343,17 +343,17 @@ Embedding 引擎为**纯 ONNX**——无需 `--engine` 参数。
 
 ```bash
 # 单次嵌入
-ofoundry embed ./models/Qwen3-Embedding-0.6B "你好，世界！"
+obeaver embed ./models/Qwen3-Embedding-0.6B "你好，世界！"
 
 # 交互式循环
-ofoundry embed ./models/embeddinggemma-300m-ONNX
+obeaver embed ./models/embeddinggemma-300m-ONNX
 ```
 
 ### 嵌入服务
 
 ```bash
-ofoundry serve-embed ./models/Qwen3-Embedding-0.6B           # 默认端口 18001
-ofoundry serve-embed ./models/embeddinggemma-300m-ONNX -p 8002
+obeaver serve-embed ./models/Qwen3-Embedding-0.6B           # 默认端口 18001
+obeaver serve-embed ./models/embeddinggemma-300m-ONNX -p 8002
 ```
 
 ### 使用 OpenAI SDK
@@ -448,13 +448,13 @@ if choice.finish_reason == "tool_calls":
 
 ```bash
 # Foundry Local 引擎
-ofoundry serve Phi-4-mini-instruct-generic-cpu:5
+obeaver serve Phi-4-mini-instruct-generic-cpu:5
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_foundrylocal_request.json
 
 # ORT 引擎
-ofoundry serve --engine ort ./models/phi3-mini-int4
+obeaver serve --engine ort ./models/phi3-mini-int4
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_ort_request.json
@@ -472,14 +472,14 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 
 ```bash
 # INT4 量化（最小、CPU 上最快）
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 # → ./models/Qwen3-0.6B_ONNX_INT4_CPU
 
 # FP16 精度
-ofoundry convert Qwen/Qwen3-0.6B -p fp16
+obeaver convert Qwen/Qwen3-0.6B -p fp16
 
 # 自定义输出 + 额外选项
-ofoundry convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'
+obeaver convert Qwen/Qwen3-0.6B -o ./my_model --extra-options 'shared_embeddings=true'
 ```
 
 ### 视觉语言（VL）模型
@@ -498,14 +498,14 @@ VL 模型转换使用 [Olive](https://github.com/microsoft/Olive) 优化管道�
 - **Qwen 2.5 VL**
 
   ```bash
-  ofoundry convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
+  obeaver convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
   # → ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
   ```
 
 - **Qwen 3 VL**（需要从源码构建 onnxruntime-genai 和 Olive）
 
   ```bash
-  ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source
+  obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source
   # → ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
   ```
 
@@ -575,7 +575,7 @@ llm = OpenAILike(
 
 ```bash
 # 在后台启动服务
-ofoundry serve --engine ort ./models/phi3-mini-int4 &
+obeaver serve --engine ort ./models/phi3-mini-int4 &
 sleep 5
 
 # 对本地端点运行评估脚本
@@ -591,7 +591,7 @@ kill %1
 
 ## API 参考
 
-### 对话服务（`ofoundry serve`）
+### 对话服务（`obeaver serve`）
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
@@ -604,7 +604,7 @@ kill %1
 | `POST` | `/api/models/load` | 运行时热切换活跃模型 |
 | `GET` | `/static/index.html` | 网页仪表盘（自动提供） |
 
-### 嵌入服务（`ofoundry serve-embed`）
+### 嵌入服务（`obeaver serve-embed`）
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
@@ -641,11 +641,11 @@ kill %1
 ```bash
 # x86_64
 docker buildx build --platform=linux/amd64 \
-  -f docker/Dockerfile.cpu -t ofoundry-cpu .
+  -f docker/Dockerfile.cpu -t obeaver-cpu .
 
 # arm64（Apple Silicon / Graviton——从源码编译 ORT）
 docker buildx build --platform=linux/arm64 \
-  -f docker/Dockerfile.cpu -t ofoundry-cpu .
+  -f docker/Dockerfile.cpu -t obeaver-cpu .
 ```
 
 | 构建参数 | 默认值 | 说明 |
@@ -659,12 +659,12 @@ docker buildx build --platform=linux/arm64 \
 # 交互式对话
 docker run -it --rm \
   -v /path/to/models/phi3-mini-int4:/models \
-  ofoundry-cpu run -m /models -E ort
+  obeaver-cpu run -m /models -E ort
 
 # API 服务（绑定所有网络接口）
 docker run -d --rm -p 18000:18000 \
   -v /path/to/models/phi3-mini-int4:/models \
-  ofoundry-cpu serve -m /models -E ort --host 0.0.0.0 --port 18000
+  obeaver-cpu serve -m /models -E ort --host 0.0.0.0 --port 18000
 
 curl http://localhost:18000/health
 ```
@@ -676,17 +676,17 @@ curl http://localhost:18000/health
 | `OMP_NUM_THREADS` | `4` | OpenMP 线程数 |
 | `MKL_NUM_THREADS` | `4` | MKL 线程数 |
 | `TOKENIZERS_PARALLELISM` | `false` | 禁用 HuggingFace tokenizer 并行警告 |
-| `OFOUNDRY_DEFAULT_ENGINE` | `ort` | 未指定 `--engine` 时的默认引擎 |
+| `OBEAVER_DEFAULT_ENGINE` | `ort` | 未指定 `--engine` 时的默认引擎 |
 
 ---
 
 ## 架构说明
 
 
-![arch](./img/ofoundry_architecture.png)
+![arch](./img/obeaver_architecture.png)
 
 ```
-ofoundry/
+obeaver/
 ├── cli.py                  # Typer CLI：chat、serve、embed、serve-embed、convert、check
 ├── server.py               # FastAPI OpenAI 兼容服务（对话 + 嵌入 + 仪表盘）
 ├── chat.py                 # 交互式多轮对话终端循环
@@ -739,7 +739,7 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ## 致谢
 
-oFoundry 的灵感来源于以下优秀的开源项目，并在其理念基础上构建：
+oBeaver 的灵感来源于以下优秀的开源项目，并在其理念基础上构建：
 
 | 项目 | 说明 |
 |------|------|

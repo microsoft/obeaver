@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oFoundry quickstart guide — install, get models, and start chatting in minutes.">
-  <title>Quickstart — oFoundry</title>
+  <meta name="description" content="oBeaver quickstart guide — install, get models, and start chatting in minutes.">
+  <title>Quickstart — oBeaver</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="../img/logo.png" type="image/png">
+  <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -16,7 +16,8 @@
     <div class="header-left">
       <button class="menu-toggle" aria-label="Toggle menu">☰</button>
       <a href="index.html" class="logo">
-        <span class="logo-text">oFoundry</span>
+        <img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon">
+        <span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span>
       </a>
     </div>
     <div class="header-right">
@@ -27,7 +28,7 @@
       </div>
       <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-      <a href="https://github.com/microsoft/ofoundry" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </div>
@@ -65,7 +66,7 @@
   <main class="main-content content">
 
     <h1><span data-en>Quickstart</span><span data-zh>快速开始</span></h1>
-    <p><span data-en>Get oFoundry up and running in minutes. This guide covers installation, getting models, and your first chat.</span><span data-zh>几分钟即可启动 oFoundry。本指南涵盖安装、获取模型及首次对话。</span></p>
+    <p><span data-en>Get oBeaver up and running in minutes. This guide covers installation, getting models, and your first chat.</span><span data-zh>几分钟即可启动 oBeaver。本指南涵盖安装、获取模型及首次对话。</span></p>
 
     <!-- Requirements -->
     <h2 id="requirements"><span data-en>Requirements</span><span data-zh>系统要求</span></h2>
@@ -88,16 +89,16 @@ winget install Microsoft.FoundryLocal              # Windows</code></pre>
 
     <!-- Installation -->
     <h2 id="installation"><span data-en>Installation</span><span data-zh>安装</span></h2>
-    <p><span data-en>Clone the repository and install oFoundry — all Python dependencies are included:</span><span data-zh>克隆仓库并安装 oFoundry——所有 Python 依赖已包含：</span></p>
+    <p><span data-en>Clone the repository and install oBeaver — all Python dependencies are included:</span><span data-zh>克隆仓库并安装 oBeaver——所有 Python 依赖已包含：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+        <button class="copy-btn" data-code="git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .">Copy</button>
       </div>
-      <pre><code>git clone https://github.com/microsoft/ofoundry.git
-cd ofoundry
+      <pre><code>git clone https://github.com/microsoft/obeaver.git
+cd obeaver
 pip install -e .</code></pre>
     </div>
 
@@ -107,20 +108,20 @@ pip install -e .</code></pre>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry init">Copy</button>
+        <button class="copy-btn" data-code="obeaver init">Copy</button>
       </div>
-      <pre><code>ofoundry init</code></pre>
+      <pre><code>obeaver init</code></pre>
     </div>
     <p><span data-en>You can also pass a path directly:</span><span data-zh>你也可以直接传入路径：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry init ~/my-models">Copy</button>
+        <button class="copy-btn" data-code="obeaver init ~/my-models">Copy</button>
       </div>
-      <pre><code>ofoundry init ~/my-models</code></pre>
+      <pre><code>obeaver init ~/my-models</code></pre>
     </div>
     <div class="callout info">
-      <p><span data-en><strong>💡 Tip:</strong> The configuration is saved to <code>~/.ofoundry/config.json</code>. Run <code>ofoundry</code> with no arguments to view the current model directory paths at any time.</span><span data-zh><strong>💡 提示：</strong>配置保存在 <code>~/.ofoundry/config.json</code>。随时运行 <code>ofoundry</code> （不带参数）即可查看当前模型目录路径。</span></p>
+      <p><span data-en><strong>💡 Tip:</strong> The configuration is saved to <code>~/.obeaver/config.json</code>. Run <code>obeaver</code> with no arguments to view the current model directory paths at any time.</span><span data-zh><strong>💡 提示：</strong>配置保存在 <code>~/.obeaver/config.json</code>。随时运行 <code>obeaver</code> （不带参数）即可查看当前模型目录路径。</span></p>
     </div>
 
     <!-- Environment Check -->
@@ -129,16 +130,16 @@ pip install -e .</code></pre>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry check">Copy</button>
+        <button class="copy-btn" data-code="obeaver check">Copy</button>
       </div>
-      <pre><code>ofoundry check</code></pre>
+      <pre><code>obeaver check</code></pre>
     </div>
     <p><span data-en>Expected output:</span><span data-zh>预期输出：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">text</span>
       </div>
-      <pre><code>────────────────── ofoundry environment check ──────────────────
+      <pre><code>────────────────── obeaver environment check ──────────────────
 Platform: macOS
 
 ✓  Foundry Local CLI found: /usr/local/bin/foundry
@@ -150,19 +151,19 @@ Platform: macOS
 
     <!-- Getting Models -->
     <h2 id="getting-models"><span data-en>Getting Models</span><span data-zh>获取模型</span></h2>
-    <p><span data-en>Before using oFoundry, you need models. Choose based on your engine:</span><span data-zh>使用 oFoundry 前，你需要模型。根据引擎选择：</span></p>
+    <p><span data-en>Before using oBeaver, you need models. Choose based on your engine:</span><span data-zh>使用 oBeaver 前，你需要模型。根据引擎选择：</span></p>
 
     <h3 id="foundry-catalog"><span data-en>Foundry Local Catalog (macOS / Windows)</span><span data-zh>Foundry Local 目录（macOS / Windows）</span></h3>
     <p><span data-en>No manual download needed — pass a catalog alias and Foundry handles it:</span><span data-zh>无需手动下载——传入目录别名，Foundry 自动处理：</span></p>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use">Copy</button>
+        <button class="copy-btn" data-code="obeaver run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use">Copy</button>
       </div>
-      <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use</code></pre>
+      <pre><code>obeaver run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use</code></pre>
     </div>
     <div class="callout info">
-      <p><span data-en><strong>💡 Tip:</strong> Run <code>ofoundry models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>ofoundry models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
+      <p><span data-en><strong>💡 Tip:</strong> Run <code>obeaver models</code> to list all local models. On macOS/Windows, run <code>foundry model list</code> to browse the full Foundry Local catalog.</span><span data-zh><strong>💡 提示：</strong>运行 <code>obeaver models</code> 列出所有本地模型。在 macOS/Windows 上，运行 <code>foundry model list</code> 浏览完整的 Foundry Local 目录。</span></p>
     </div>
     <div class="callout warning">
       <p><span data-en><strong>⏳ First run requires download:</strong> When you run a Foundry Local model for the first time, the model will be downloaded from the Microsoft Foundry catalog. Please wait for the download to complete before the chat session starts — this may take several minutes depending on network speed and model size. Subsequent runs will use the cached version instantly.</span><span data-zh><strong>⏳ 首次运行需要下载：</strong>首次运行 Foundry Local 模型时，模型会从 Microsoft Foundry 目录下载。请等待下载完成后再开始对话——根据网络速度和模型大小，这可能需要几分钟。后续运行将直接使用缓存版本。</span></p>
@@ -177,24 +178,24 @@ Platform: macOS
 hf download Qwen/Qwen3-0.6B --local-dir ./models/cache_dir/models--Qwen--Qwen3-0.6B
 
 # Step 2: Convert to ONNX INT4
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 # → output: ./models/Qwen3-0.6B_ONNX_INT4_CPU
 
 # Step 3: Run with the converted model
-ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU'>Copy</button>
+obeaver run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU'>Copy</button>
       </div>
       <pre><code># Step 1: Download model from Hugging Face
 hf download Qwen/Qwen3-0.6B --local-dir ./models/cache_dir/models--Qwen--Qwen3-0.6B
 
 # Step 2: Convert to ONNX INT4
-ofoundry convert Qwen/Qwen3-0.6B
+obeaver convert Qwen/Qwen3-0.6B
 # → output: ./models/Qwen3-0.6B_ONNX_INT4_CPU
 
 # Step 3: Run with the converted model
-ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
+obeaver run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
     </div>
     <div class="callout warning">
-      <p><span data-en><strong>⚠️ ORT engine requires ONNX format:</strong> Models downloaded from Hugging Face in raw format (PyTorch / SafeTensors) <strong>cannot be loaded directly</strong>. You must first run <code>ofoundry convert</code> to transform them to ONNX GenAI format. See the <a href="models.html#conversion">Model Conversion</a> section for detailed instructions on text models and VL models.</span><span data-zh><strong>⚠️ ORT 引擎需要 ONNX 格式：</strong>从 Hugging Face 下载的原始格式模型（PyTorch / SafeTensors）<strong>无法直接加载</strong>。必须先运行 <code>ofoundry convert</code> 将其转换为 ONNX GenAI 格式。请参阅<a href="models.html#conversion">模型转换</a>章节了解文本模型和 VL 模型的详细说明。</span></p>
+      <p><span data-en><strong>⚠️ ORT engine requires ONNX format:</strong> Models downloaded from Hugging Face in raw format (PyTorch / SafeTensors) <strong>cannot be loaded directly</strong>. You must first run <code>obeaver convert</code> to transform them to ONNX GenAI format. See the <a href="models.html#conversion">Model Conversion</a> section for detailed instructions on text models and VL models.</span><span data-zh><strong>⚠️ ORT 引擎需要 ONNX 格式：</strong>从 Hugging Face 下载的原始格式模型（PyTorch / SafeTensors）<strong>无法直接加载</strong>。必须先运行 <code>obeaver convert</code> 将其转换为 ONNX GenAI 格式。请参阅<a href="models.html#conversion">模型转换</a>章节了解文本模型和 VL 模型的详细说明。</span></p>
     </div>
 
     <!-- First Chat -->
@@ -205,11 +206,11 @@ ofoundry run --engine ort ./models/Qwen3-0.6B_ONNX_INT4_CPU</code></pre>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry run Phi-4-mini-instruct-generic-cpu:5
-ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s">Copy</button>
+        <button class="copy-btn" data-code="obeaver run Phi-4-mini-instruct-generic-cpu:5
+obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s">Copy</button>
       </div>
-      <pre><code>ofoundry run Phi-4-mini-instruct-generic-cpu:5
-ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s</code></pre>
+      <pre><code>obeaver run Phi-4-mini-instruct-generic-cpu:5
+obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s</code></pre>
     </div>
     <div class="callout info">
       <p><span data-en><strong>First run:</strong> Foundry Local will automatically download the model on first use. Please wait for the download to complete — subsequent runs will be instant.</span><span data-zh><strong>首次运行：</strong>Foundry Local 会在首次使用时自动下载模型。请等待下载完成——后续运行将即时启动。</span></p>
@@ -219,23 +220,23 @@ ofoundry run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s</
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry run --engine ort ./models/phi3-mini-int4">Copy</button>
+        <button class="copy-btn" data-code="obeaver run --engine ort ./models/phi3-mini-int4">Copy</button>
       </div>
-      <pre><code>ofoundry run --engine ort ./models/phi3-mini-int4</code></pre>
+      <pre><code>obeaver run --engine ort ./models/phi3-mini-int4</code></pre>
     </div>
     <div class="callout info">
-      <p><span data-en><strong>Reminder:</strong> The ORT engine requires models in ONNX format. If your model is not pre-converted, run <code>ofoundry convert</code> first. See <a href="models.html#conversion">Model Conversion</a> for details.</span><span data-zh><strong>提醒：</strong>ORT 引擎需要 ONNX 格式的模型。如果模型未预转换，请先运行 <code>ofoundry convert</code>。请参阅<a href="models.html#conversion">模型转换</a>。</span></p>
+      <p><span data-en><strong>Reminder:</strong> The ORT engine requires models in ONNX format. If your model is not pre-converted, run <code>obeaver convert</code> first. See <a href="models.html#conversion">Model Conversion</a> for details.</span><span data-zh><strong>提醒：</strong>ORT 引擎需要 ONNX 格式的模型。如果模型未预转换，请先运行 <code>obeaver convert</code>。请参阅<a href="models.html#conversion">模型转换</a>。</span></p>
     </div>
 
     <h3><span data-en>Vision-Language Models</span><span data-zh>视觉语言模型</span></h3>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
-ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU">Copy</button>
+        <button class="copy-btn" data-code="obeaver run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU">Copy</button>
       </div>
-      <pre><code>ofoundry run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
-ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
+      <pre><code>obeaver run ./models/Qwen2.5-VL-3B-Instruct_VL_ONNX_INT4_CPU
+obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
     </div>
     <div class="callout info">
       <p><span data-en><strong>Note:</strong> VL models require the ORT engine. When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code>.</span><span data-zh><strong>注意：</strong>VL 模型需要 ORT 引擎。当检测到 VL 模型目录（包含 <code>vision.onnx</code>）时，引擎会自动设置为 <code>ort</code>。</span></p>
@@ -247,11 +248,11 @@ ofoundry run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
-ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT">Copy</button>
+        <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve --engine ort ./models/phi3-mini-int4   # ORT">Copy</button>
       </div>
-      <pre><code>ofoundry serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
-ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
+      <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
     </div>
     <p><span data-en>Once running, any OpenAI-compatible client can connect to <code>http://127.0.0.1:18000/v1</code>.</span><span data-zh>服务启动后，任何 OpenAI 兼容客户端都可以连接到 <code>http://127.0.0.1:18000/v1</code>。</span></p>
 
@@ -283,8 +284,8 @@ ofoundry serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
       </div>
-      <pre><code>ofoundry dashboard               # Foundry Local engine
-ofoundry dashboard -e ort         # ORT engine (scans ./models)</code></pre>
+      <pre><code>obeaver dashboard               # Foundry Local engine
+obeaver dashboard -e ort         # ORT engine (scans ./models)</code></pre>
     </div>
     <p><span data-en>Then open</span><span data-zh>然后打开</span> <code>http://127.0.0.1:1573/</code></p>
     <p><span data-en>The dashboard includes model selector, system memory monitoring, inference parameters, a chat interface, and server logs.</span><span data-zh>仪表盘包含模型选择器、系统内存监控、推理参数、聊天界面和服务器日志。</span></p>
@@ -315,9 +316,9 @@ ofoundry dashboard -e ort         # ORT engine (scans ./models)</code></pre>
 </div>
 
 <footer class="site-footer">
-  <span>© 2026 oFoundry · Apache 2.0 License</span>
+  <span>© 2026 oBeaver · Apache 2.0 License</span>
   <div class="footer-links">
-    <a href="https://github.com/microsoft/ofoundry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
   </div>
 </footer>
 <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>

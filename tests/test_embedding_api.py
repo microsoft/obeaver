@@ -1,8 +1,8 @@
 """
-Integration tests for the ofoundry embedding server.
+Integration tests for the obeaver embedding server.
 
 Assumes the server is already running:
-  ofoundry serve-embed <model_path> --port 1574
+  obeaver serve-embed <model_path> --port 1574
 
 Run with:
   python tests/test_embedding_api.py

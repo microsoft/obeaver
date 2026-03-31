@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>oFoundry Dashboard</title>
+  <title>oBeaver Dashboard</title>
   <style>
     /* ===== Theme Variables ===== */
     :root {
@@ -483,7 +483,7 @@
   <header class="header">
     <div class="header-left">
       <button class="icon-btn" id="toggleLeftBtn" title="Conversations" onclick="toggleSidebar('left')">&#x2630;</button>
-      <h1>oFoundry</h1>
+      <h1>oBeaver</h1>
     </div>
     <div class="header-right">
       <div id="serverStatus" class="status-badge offline">
@@ -608,7 +608,7 @@
 
       <!-- Process info -->
       <div class="process-bar">
-        <h3>oFoundry Process</h3>
+        <h3>oBeaver Process</h3>
         <div class="info-item"><span class="info-label">PID</span><span class="info-value" id="procPid">--</span></div>
         <div class="info-item"><span class="info-label">Resident</span><span class="info-value" id="procRss">--</span></div>
         <div class="info-item"><span class="info-label">Virtual</span><span class="info-value" id="procVms">--</span></div>
@@ -718,9 +718,9 @@
     /*  State                                                              */
     /* ------------------------------------------------------------------ */
     const BASE = window.location.origin;
-    const STORAGE_CONVS = 'ofoundry_conversations';
-    const STORAGE_THEME = 'ofoundry_theme';
-    const STORAGE_ACTIVE = 'ofoundry_active_conv';
+    const STORAGE_CONVS = 'obeaver_conversations';
+    const STORAGE_THEME = 'obeaver_theme';
+    const STORAGE_ACTIVE = 'obeaver_active_conv';
 
     const state = {
       conversations: [],

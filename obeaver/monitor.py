@@ -1,5 +1,5 @@
 """
-System resource monitoring for ofoundry.
+System resource monitoring for obeaver.
 
 Provides CPU, GPU, and NPU memory usage information for the dashboard UI.
 """
@@ -300,7 +300,7 @@ def _qualcomm_npu_info() -> Optional[MemoryInfo]:
 
 
 def get_process_memory() -> dict:
-    """Return memory used by the current ofoundry process."""
+    """Return memory used by the current obeaver process."""
     try:
         import psutil
         proc = psutil.Process(os.getpid())

@@ -1,9 +1,9 @@
 """
-CLI entry point for ofoundry.
+CLI entry point for obeaver.
 
 Commands:
-  ofoundry run     — interactive terminal chat
-  ofoundry serve   — OpenAI-compatible HTTP server
+  obeaver run     — interactive terminal chat
+  obeaver serve   — OpenAI-compatible HTTP server
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ def _default_engine() -> str:
     return "ort" if sys.platform.startswith("linux") else "foundry"
 
 app = typer.Typer(
-    name="ofoundry",
+    name="obeaver",
     help=(
         "LLM inference powered by Foundry Local (macOS/Windows default) "
         "or ONNX Runtime GenAI (Linux default)."
@@ -37,11 +37,11 @@ app = typer.Typer(
 def _print_banner() -> None:
     try:
         import pyfiglet
-        # Render 'o' and 'Foundry' separately so the lowercase o is
-        # vertically padded to match the taller uppercase F, keeping
+        # Render 'o' and 'Beaver' separately so the lowercase o is
+        # vertically padded to match the taller uppercase B, keeping
         # both letters clearly readable.
         o_lines = pyfiglet.figlet_format("o", font="big").rstrip("\n").splitlines()
-        f_lines = pyfiglet.figlet_format("Foundry", font="big").rstrip("\n").splitlines()
+        f_lines = pyfiglet.figlet_format("Beaver", font="big").rstrip("\n").splitlines()
         max_h = max(len(o_lines), len(f_lines))
         o_w = max(len(l) for l in o_lines)
         while len(o_lines) < max_h:
@@ -52,7 +52,7 @@ def _print_banner() -> None:
         combined = [ol.ljust(o_w) + " " + fl for ol, fl in zip(o_lines, f_lines)]
         big = "\n".join(combined)
     except Exception:
-        big = "oFoundry"
+        big = "oBeaver"
     # Pad all lines to the same width so the block stays aligned when centered
     lines = big.rstrip("\n").splitlines()
     max_w = max(len(l) for l in lines) if lines else 0
@@ -61,20 +61,20 @@ def _print_banner() -> None:
     console.print()
     console.print(padded, style="bold cyan")
     console.print()
-    console.print("Welcome to use ofoundry !", style="bold cyan")
-    console.print("We \u2764\ufe0f  ONNX", style="bold magenta")
+    console.print("Welcome to use obeaver !", style="bold cyan")
+    console.print("ONNX \u2764\ufe0f  \U0001f9ab = oBeaver", style="bold magenta")
     console.print("\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb  run, embedding, tools, convert, fine-tuning", style="bold yellow")
     console.print("\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f  Docker\uff0cAzure Container Apps , AKS", style="bold blue")
     console.print()
 
     # Show configured model directories
-    from ofoundry.config import get_models_dir, get_ort_models_dir, get_foundrylocal_models_dir, get_ort_cache_dir
+    from obeaver.config import get_models_dir, get_ort_models_dir, get_foundrylocal_models_dir, get_ort_cache_dir
     console.print(f"  [bold]Models dir:[/]         [green]{get_models_dir()}[/]")
     console.print(f"  [bold]ORT models:[/]         [green]{get_ort_models_dir()}[/]")
     console.print(f"  [bold]FoundryLocal models:[/] [green]{get_foundrylocal_models_dir()}[/]")
     console.print(f"  [bold]HF cache:[/]           [green]{get_ort_cache_dir()}[/]")
     console.print()
-    console.print("  [dim]Run [bold]ofoundry init[/][dim] to change the model save location.[/]")
+    console.print("  [dim]Run [bold]obeaver init[/][dim] to change the model save location.[/]")
     console.print()
     console.rule(style="cyan")
 
@@ -107,12 +107,12 @@ def init(
     ),
 ) -> None:
     """
-    Initialise ofoundry settings (model save location).
+    Initialise obeaver settings (model save location).
 
     If no path is given, you will be prompted to enter one interactively.
-    The configuration is stored in ~/.ofoundry/config.json.
+    The configuration is stored in ~/.obeaver/config.json.
     """
-    from ofoundry.config import (
+    from obeaver.config import (
         get_foundrylocal_models_dir,
         get_models_dir,
         get_ort_cache_dir,
@@ -147,7 +147,7 @@ def init(
     console.print(f"   ORT models:         [green]{ort_dir}[/]")
     console.print(f"   FoundryLocal models: [green]{fl_dir}[/]")
     console.print(f"   HF cache:           [green]{cache_d}[/]")
-    console.print(f"\n   [dim]Config saved to ~/.ofoundry/config.json[/]")
+    console.print(f"\n   [dim]Config saved to ~/.obeaver/config.json[/]")
 
 
 def _is_vl_model(model_path: str) -> bool:
@@ -236,7 +236,7 @@ def run(
             )
         engine_type = "ort"
 
-    from ofoundry.chat import run_chat
+    from obeaver.chat import run_chat
 
     run_chat(
         model_path=model_path,
@@ -296,11 +296,11 @@ def serve(
 
     import uvicorn
 
-    from ofoundry.server import build_app
+    from obeaver.server import build_app
 
     _engine = engine_type or _default_engine()
     console.print(
-        f"\n[bold cyan]ofoundry serve[/] — engine=[yellow]{_engine}[/]  "
+        f"\n[bold cyan]obeaver serve[/] — engine=[yellow]{_engine}[/]  "
         f"model=[green]{model_path}[/]  "
         f"addr=[blue]http://{host}:{port}[/]\n"
     )
@@ -333,18 +333,18 @@ def dashboard(
     port: int = typer.Option(1573, "--port", "-p", help="Bind port"),
 ) -> None:
     """
-    Launch the ofoundry dashboard (benchmark & monitoring UI).
+    Launch the obeaver dashboard (benchmark & monitoring UI).
 
     By default uses Foundry Local and lists cached models.
     Use --engine ort to list local ONNX models from ./models instead.
     """
     import uvicorn
 
-    from ofoundry.server import build_dashboard_app
+    from obeaver.server import build_dashboard_app
 
     _engine = engine_type or _default_engine()
     console.print(
-        f"\n[bold cyan]ofoundry dashboard[/] — engine=[yellow]{_engine}[/]  "
+        f"\n[bold cyan]obeaver dashboard[/] — engine=[yellow]{_engine}[/]  "
         f"addr=[blue]http://{host}:{port}[/]\n"
     )
 
@@ -385,10 +385,10 @@ def embed(
 
     NOTE: Embeddings are ONNX-only — no alternative engine is supported.
     """
-    from ofoundry.engine_embedding import EmbeddingEngine
+    from obeaver.engine_embedding import EmbeddingEngine
 
     console.print(
-        f"\n[bold cyan]ofoundry embed[/] — model=[green]{model_path}[/]  "
+        f"\n[bold cyan]obeaver embed[/] — model=[green]{model_path}[/]  "
         f"ep=[yellow]{execution_provider}[/]\n"
     )
     engine = EmbeddingEngine(model_path=model_path, execution_provider=execution_provider)
@@ -447,10 +447,10 @@ def serve_embed(
     """
     import uvicorn
 
-    from ofoundry.server import build_embed_app
+    from obeaver.server import build_embed_app
 
     console.print(
-        f"\n[bold cyan]ofoundry serve-embed[/] — model=[green]{model_path}[/]  "
+        f"\n[bold cyan]obeaver serve-embed[/] — model=[green]{model_path}[/]  "
         f"ep=[yellow]{execution_provider}[/]  "
         f"addr=[blue]http://{host}:{port}[/]\n"
     )
@@ -480,7 +480,7 @@ def check() -> None:
     import shutil
     import subprocess
 
-    console.rule("[bold cyan]ofoundry environment check[/]", style="cyan")
+    console.rule("[bold cyan]obeaver environment check[/]", style="cyan")
     console.print()
 
     # ── Platform ──────────────────────────────────────────────────────────
@@ -491,7 +491,7 @@ def check() -> None:
         console.print(
             "[bold red]✗  Foundry Local is not supported on Linux.[/]\n"
             "   Only the [bold]ORT[/] engine (onnxruntime-genai) is available.\n"
-            "   Use [bold]ofoundry run --engine ort[/] or [bold]ofoundry serve --engine ort[/]."
+            "   Use [bold]obeaver run --engine ort[/] or [bold]obeaver serve --engine ort[/]."
         )
         console.print()
         console.rule(style="cyan")
@@ -665,15 +665,15 @@ def convert(
 
     Examples:
 
-        ofoundry convert Qwen/Qwen3-0.6B
+        obeaver convert Qwen/Qwen3-0.6B
         → text model, saves to <models_dir>/ort/Qwen3-0.6B_ONNX_INT4_CPU
 
-        ofoundry convert Qwen/Qwen3-0.6B -o ./my_custom_dir
+        obeaver convert Qwen/Qwen3-0.6B -o ./my_custom_dir
 
-        ofoundry convert Qwen/Qwen3-0.6B -p fp16 -e cuda
+        obeaver convert Qwen/Qwen3-0.6B -p fp16 -e cuda
         → saves to <models_dir>/ort/Qwen3-0.6B_ONNX_FP16_CUDA
 
-        ofoundry convert Qwen/Qwen3-VL-2B-Instruct --type vl
+        obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl
         → VL model via Olive, saves to <models_dir>/ort/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
     """
     import subprocess
@@ -710,7 +710,7 @@ def convert(
         raise typer.Exit(code=1)
 
     # Build default output path under <models_dir>/ort/
-    from ofoundry.config import get_ort_cache_dir, get_ort_models_dir
+    from obeaver.config import get_ort_cache_dir, get_ort_models_dir
     if output is None:
         ort_dir = get_ort_models_dir()
         short_name = model_name.split("/")[-1]
@@ -726,7 +726,7 @@ def convert(
         cache_dir = str(get_ort_cache_dir())
 
     console.print()
-    console.rule("[bold cyan]ofoundry convert[/]", style="cyan")
+    console.rule("[bold cyan]obeaver convert[/]", style="cyan")
     console.print(f"  [bold]Model:[/]      [green]{model_name}[/]")
     console.print(f"  [bold]Type:[/]       [yellow]{mt}[/]")
     console.print(f"  [bold]Precision:[/]  [yellow]{precision.lower()}[/]")
@@ -737,7 +737,7 @@ def convert(
 
     if mt == "vl":
         # VL model: use Olive pipeline from olive-recipes
-        from ofoundry.convert_vl import convert_vl_model
+        from obeaver.convert_vl import convert_vl_model
 
         try:
             convert_vl_model(
@@ -896,12 +896,12 @@ def models() -> None:
     and displays each model's name, engine type, and model category
     (Text, Vision + Text, or Embeddings).
     """
-    from ofoundry.config import get_models_dir
+    from obeaver.config import get_models_dir
 
     models_root = get_models_dir()
 
     console.print()
-    console.rule("[bold cyan]ofoundry models[/]", style="cyan")
+    console.rule("[bold cyan]obeaver models[/]", style="cyan")
     console.print(f"  [bold]Models dir:[/] [green]{models_root}[/]")
     console.print()
 
@@ -914,7 +914,7 @@ def models() -> None:
         rows.extend(_collect_models(engine_dir, engine_name))
 
     if not rows:
-        console.print("  [dim]No models found. Use [bold]ofoundry convert[/] to add models.[/]")
+        console.print("  [dim]No models found. Use [bold]obeaver convert[/] to add models.[/]")
         console.print()
         console.rule(style="cyan")
         return
@@ -949,10 +949,10 @@ def models() -> None:
 
 @app.command()
 def version() -> None:
-    """Print the ofoundry version."""
-    from ofoundry._version import __version__
+    """Print the obeaver version."""
+    from obeaver._version import __version__
 
-    console.print(f"[bold cyan]ofoundry[/] v{__version__}")
+    console.print(f"[bold cyan]obeaver[/] v{__version__}")
 
 
 # ---------------------------------------------------------------------------

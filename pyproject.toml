@@ -3,7 +3,7 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ofoundry"
+name = "obeaver"
 version = "0.1.0"
 description = "LLM inference server powered by ONNX Runtime GenAI (CPU-first, cross-platform)"
 readme = "README.md"
@@ -37,8 +37,8 @@ dev = [
 ]
 
 [project.scripts]
-ofoundry = "ofoundry.cli:app"
+obeaver = "obeaver.cli:app"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ofoundry*"]
+include = ["obeaver*"]

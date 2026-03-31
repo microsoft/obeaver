@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442 306" shape-rendering="crispEdges" width="442" height="306">
+  <title>oBeaver Logo</title>
+  <desc>Pixel art beaver side profile — oBeaver brand logo</desc>
+
+  <!-- Row 0 — top of round head -->
+  <rect x="51"  y="0"   width="17" height="17" fill="#2A1205"/>
+  <rect x="68"  y="0"   width="17" height="17" fill="#2A1205"/>
+  <rect x="85"  y="0"   width="17" height="17" fill="#2A1205"/>
+  <rect x="102" y="0"   width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 1 — forehead -->
+  <rect x="34"  y="17"  width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="17"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="68"  y="17"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="85"  y="17"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="17"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="17"  width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 2 — eye row -->
+  <rect x="34"  y="34"  width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="34"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="68"  y="34"  width="17" height="17" fill="#0A0400"/>
+  <rect x="85"  y="34"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="34"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="34"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="34"  width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 3 — eye shine -->
+  <rect x="34"  y="51"  width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="51"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="68"  y="51"  width="17" height="17" fill="#FFFFFF"/>
+  <rect x="85"  y="51"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="51"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="51"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="51"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="51"  width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 4 — cheek -->
+  <rect x="34"  y="68"  width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="68"  width="17" height="17" fill="#C8A474"/>
+  <rect x="68"  y="68"  width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="68"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="68"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="68"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="68"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="68"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="68"  width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 5 — nose -->
+  <rect x="34"  y="85"  width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="85"  width="17" height="17" fill="#1A0A02"/>
+  <rect x="68"  y="85"  width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="85"  width="17" height="17" fill="#C8A474"/>
+  <rect x="102" y="85"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="85"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="85"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="85"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="85"  width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="85"  width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 6 — teeth (amber) -->
+  <rect x="17"  y="102" width="17" height="17" fill="#2A1205"/>
+  <rect x="34"  y="102" width="17" height="17" fill="#E8A828"/>
+  <rect x="51"  y="102" width="17" height="17" fill="#E8A828"/>
+  <rect x="68"  y="102" width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="102" width="17" height="17" fill="#C8A474"/>
+  <rect x="102" y="102" width="17" height="17" fill="#C8A474"/>
+  <rect x="119" y="102" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="102" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="102" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="102" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="102" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="102" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 7 — teeth lower -->
+  <rect x="17"  y="119" width="17" height="17" fill="#2A1205"/>
+  <rect x="34"  y="119" width="17" height="17" fill="#E8A828"/>
+  <rect x="51"  y="119" width="17" height="17" fill="#E8A828"/>
+  <rect x="68"  y="119" width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="119" width="17" height="17" fill="#C8A474"/>
+  <rect x="102" y="119" width="17" height="17" fill="#C8A474"/>
+  <rect x="119" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="119" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="221" y="119" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 8 — chin / neck -->
+  <rect x="34"  y="136" width="17" height="17" fill="#2A1205"/>
+  <rect x="51"  y="136" width="17" height="17" fill="#C8A474"/>
+  <rect x="68"  y="136" width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="136" width="17" height="17" fill="#C8A474"/>
+  <rect x="102" y="136" width="17" height="17" fill="#C8A474"/>
+  <rect x="119" y="136" width="17" height="17" fill="#C8A474"/>
+  <rect x="136" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="221" y="136" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="238" y="136" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 9 — upper body -->
+  <rect x="51"  y="153" width="17" height="17" fill="#2A1205"/>
+  <rect x="68"  y="153" width="17" height="17" fill="#C8A474"/>
+  <rect x="85"  y="153" width="17" height="17" fill="#C8A474"/>
+  <rect x="102" y="153" width="17" height="17" fill="#C8A474"/>
+  <rect x="119" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="221" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="238" y="153" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="255" y="153" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 10 — mid body -->
+  <rect x="51"  y="170" width="17" height="17" fill="#2A1205"/>
+  <rect x="68"  y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="85"  y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="221" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="238" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="255" y="170" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="272" y="170" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 11 — lower body + tail begins -->
+  <rect x="51"  y="187" width="17" height="17" fill="#2A1205"/>
+  <rect x="68"  y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="85"  y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="153" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="170" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="187" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="204" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="221" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="238" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="255" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="272" y="187" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="289" y="187" width="17" height="17" fill="#2A1205"/>
+  <rect x="306" y="187" width="17" height="17" fill="#4A2810"/>
+  <rect x="323" y="187" width="17" height="17" fill="#4A2810"/>
+  <rect x="340" y="187" width="17" height="17" fill="#4A2810"/>
+  <rect x="357" y="187" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 12 — front leg + hind leg + tail -->
+  <rect x="51"  y="204" width="17" height="17" fill="#2A1205"/>
+  <rect x="68"  y="204" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="85"  y="204" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="204" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="204" width="17" height="17" fill="#2A1205"/>
+  <rect x="221" y="204" width="17" height="17" fill="#2A1205"/>
+  <rect x="238" y="204" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="255" y="204" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="272" y="204" width="17" height="17" fill="#2A1205"/>
+  <rect x="289" y="204" width="17" height="17" fill="#4A2810"/>
+  <rect x="306" y="204" width="17" height="17" fill="#4A2810"/>
+  <rect x="323" y="204" width="17" height="17" fill="#4A2810"/>
+  <rect x="340" y="204" width="17" height="17" fill="#4A2810"/>
+  <rect x="357" y="204" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 13 — legs + tail wider -->
+  <rect x="68"  y="221" width="17" height="17" fill="#2A1205"/>
+  <rect x="85"  y="221" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="221" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="221" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="221" width="17" height="17" fill="#2A1205"/>
+  <rect x="238" y="221" width="17" height="17" fill="#2A1205"/>
+  <rect x="255" y="221" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="272" y="221" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="289" y="221" width="17" height="17" fill="#2A1205"/>
+  <rect x="306" y="221" width="17" height="17" fill="#4A2810"/>
+  <rect x="323" y="221" width="17" height="17" fill="#4A2810"/>
+  <rect x="340" y="221" width="17" height="17" fill="#4A2810"/>
+  <rect x="357" y="221" width="17" height="17" fill="#4A2810"/>
+  <rect x="374" y="221" width="17" height="17" fill="#4A2810"/>
+  <rect x="391" y="221" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 14 — paws + tail -->
+  <rect x="68"  y="238" width="17" height="17" fill="#2A1205"/>
+  <rect x="85"  y="238" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="102" y="238" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="119" y="238" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="136" y="238" width="17" height="17" fill="#2A1205"/>
+  <rect x="255" y="238" width="17" height="17" fill="#2A1205"/>
+  <rect x="272" y="238" width="17" height="17" fill="#6B3D1A"/>
+  <rect x="289" y="238" width="17" height="17" fill="#2A1205"/>
+  <rect x="306" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="323" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="340" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="357" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="374" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="391" y="238" width="17" height="17" fill="#4A2810"/>
+  <rect x="408" y="238" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 15 — toes + tail -->
+  <rect x="85"  y="255" width="17" height="17" fill="#2A1205"/>
+  <rect x="102" y="255" width="17" height="17" fill="#2A1205"/>
+  <rect x="119" y="255" width="17" height="17" fill="#2A1205"/>
+  <rect x="272" y="255" width="17" height="17" fill="#2A1205"/>
+  <rect x="289" y="255" width="17" height="17" fill="#2A1205"/>
+  <rect x="306" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="323" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="340" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="357" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="374" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="391" y="255" width="17" height="17" fill="#4A2810"/>
+  <rect x="408" y="255" width="17" height="17" fill="#2A1205"/>
+
+  <!-- Row 16 — tail tip -->
+  <rect x="323" y="272" width="17" height="17" fill="#2A1205"/>
+  <rect x="340" y="272" width="17" height="17" fill="#2A1205"/>
+  <rect x="357" y="272" width="17" height="17" fill="#4A2810"/>
+  <rect x="374" y="272" width="17" height="17" fill="#4A2810"/>
+  <rect x="391" y="272" width="17" height="17" fill="#4A2810"/>
+  <rect x="408" y="272" width="17" height="17" fill="#2A1205"/>
+</svg>

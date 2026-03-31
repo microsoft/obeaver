@@ -3,7 +3,7 @@ Interactive CLI chat session — mirrors the loop in:
   https://github.com/microsoft/onnxruntime-genai/blob/main/examples/python/model-chat.py
 
 Usage (standalone, without the CLI wrapper):
-    python -m ofoundry.chat -m ./path/to/model
+    python -m obeaver.chat -m ./path/to/model
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 from rich.console import Console
 from rich.prompt import Prompt
 
-from ofoundry.engine_ort import GenerationConfig
+from obeaver.engine_ort import GenerationConfig
 
 console = Console()
 
@@ -44,9 +44,9 @@ def run_chat(
         directory containing ``genai_config.json``.
     """
     if engine_type == "foundry":
-        from ofoundry.engine_foundrylocal import FoundryEngine
+        from obeaver.engine_foundrylocal import FoundryEngine
         console.print(
-            f"\n[bold cyan]ofoundry[/] — Foundry Local engine · "
+            f"\n[bold cyan]obeaver[/] — Foundry Local engine · "
             f"model alias [green]{model_path}[/]…"
         )
         engine: object = FoundryEngine(
@@ -54,9 +54,9 @@ def run_chat(
             device=execution_provider or "cpu",
         )
     else:
-        from ofoundry.engine_ort import OrtEngine
+        from obeaver.engine_ort import OrtEngine
         console.print(
-            f"\n[bold cyan]ofoundry[/] — ORT engine · "
+            f"\n[bold cyan]obeaver[/] — ORT engine · "
             f"loading model from [green]{model_path}[/]…"
         )
         engine = OrtEngine(model_path=model_path, execution_provider=execution_provider)

@@ -1,7 +1,7 @@
 """
 End-to-end test: start ORT server and call the tool-calling endpoint.
 Usage:
-    conda run -n ofoundrydev python tests/run_tool_test.py
+    conda run -n obeaverdev python tests/run_tool_test.py
 """
 
 import json
@@ -80,7 +80,7 @@ def main() -> None:
         print(f"[INFO] Starting ORT server with model {MODEL_PATH} ...")
         proc = subprocess.Popen(
             [
-                sys.executable, "-m", "ofoundry.cli",
+                sys.executable, "-m", "obeaver.cli",
                 "serve", "--engine", "ort", "-m", MODEL_PATH,
             ],
             stdout=subprocess.PIPE,

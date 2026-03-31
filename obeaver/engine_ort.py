@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING, Iterator
 import onnxruntime_genai as og  # type: ignore
 
 if TYPE_CHECKING:
-    from ofoundry.tools import ChatResponse
+    from obeaver.tools import ChatResponse
 
 
 @dataclass
@@ -262,11 +262,11 @@ class OrtEngine:
         For the ORT engine, tool calling uses prompt injection:
 
         1. Tool definitions are serialised as JSON Schema and appended to the
-           system message (see :func:`~ofoundry.tools.inject_tools_into_messages`).
+           system message (see :func:`~obeaver.tools.inject_tools_into_messages`).
         2. The model's full response is collected.
         3. The output is scanned for a ``<tool_call>`` block.
 
-        When a tool call is detected a :class:`~ofoundry.tools.ChatResponse`
+        When a tool call is detected a :class:`~obeaver.tools.ChatResponse`
         with ``tool_calls`` is returned; otherwise ``content`` is populated.
 
         References
@@ -274,7 +274,7 @@ class OrtEngine:
         * https://github.com/microsoft/onnxruntime-genai/blob/main/docs/ConstrainedDecoding.md
         * https://github.com/microsoft/onnxruntime-genai/tree/main/examples/python
         """
-        from ofoundry.tools import (
+        from obeaver.tools import (
             ChatResponse,
             inject_tools_into_messages,
             parse_tool_call,

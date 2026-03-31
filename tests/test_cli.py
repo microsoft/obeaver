@@ -1,5 +1,5 @@
 """
-Unit tests for ofoundry.cli (CLI command registration and help text).
+Unit tests for obeaver.cli (CLI command registration and help text).
 
 Run with:
   pytest tests/test_cli.py -v
@@ -10,7 +10,7 @@ from __future__ import annotations
 import pytest
 from typer.testing import CliRunner
 
-from ofoundry.cli import app
+from obeaver.cli import app
 
 runner = CliRunner()
 
@@ -20,9 +20,9 @@ class TestCliHelp:
         result = runner.invoke(app, ["--help"])
         assert result.exit_code == 0
 
-    def test_help_mentions_ofoundry(self) -> None:
+    def test_help_mentions_obeaver(self) -> None:
         result = runner.invoke(app, ["--help"])
-        assert "ofoundry" in result.output.lower() or "llm" in result.output.lower()
+        assert "obeaver" in result.output.lower() or "llm" in result.output.lower()
 
 
 class TestCliCommands:
@@ -84,30 +84,30 @@ class TestIsVlModel:
     """Verify _is_vl_model detection logic."""
 
     def test_detects_vl_model_with_vision_onnx(self, tmp_path) -> None:
-        from ofoundry.cli import _is_vl_model
+        from obeaver.cli import _is_vl_model
         (tmp_path / "vision.onnx").touch()
         (tmp_path / "genai_config.json").touch()
         assert _is_vl_model(str(tmp_path)) is True
 
     def test_rejects_text_only_model(self, tmp_path) -> None:
-        from ofoundry.cli import _is_vl_model
+        from obeaver.cli import _is_vl_model
         (tmp_path / "model.onnx").touch()
         (tmp_path / "genai_config.json").write_text('{"model": {"type": "qwen2"}}')
         assert _is_vl_model(str(tmp_path)) is False
 
     def test_detects_vl_via_genai_config(self, tmp_path) -> None:
-        from ofoundry.cli import _is_vl_model
+        from obeaver.cli import _is_vl_model
         import json
         cfg = {"model": {"type": "qwen2_5_vl", "vision": {"filename": "vision.onnx"}}}
         (tmp_path / "genai_config.json").write_text(json.dumps(cfg))
         assert _is_vl_model(str(tmp_path)) is True
 
     def test_rejects_nonexistent_path(self) -> None:
-        from ofoundry.cli import _is_vl_model
+        from obeaver.cli import _is_vl_model
         assert _is_vl_model("/nonexistent/path") is False
 
     def test_rejects_non_directory(self, tmp_path) -> None:
-        from ofoundry.cli import _is_vl_model
+        from obeaver.cli import _is_vl_model
         f = tmp_path / "somefile.txt"
         f.touch()
         assert _is_vl_model(str(f)) is False

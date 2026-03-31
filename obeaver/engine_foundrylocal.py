@@ -18,10 +18,10 @@ import re
 import uuid
 from typing import TYPE_CHECKING, Iterator
 
-from ofoundry.engine_ort import GenerationConfig
+from obeaver.engine_ort import GenerationConfig
 
 if TYPE_CHECKING:
-    from ofoundry.tools import ChatResponse
+    from obeaver.tools import ChatResponse
 
 
 class FoundryEngine:
@@ -35,7 +35,7 @@ class FoundryEngine:
 
     This engine shares the same duck-typed interface as ``OrtEngine``
     (``model_name`` property + ``stream()`` method) so the two are
-    interchangeable everywhere in ofoundry.
+    interchangeable everywhere in obeaver.
     """
 
     def __init__(self, model_alias: str, device: str | None = None) -> None:
@@ -189,7 +189,7 @@ class FoundryEngine:
         Reference:
         https://github.com/microsoft/Foundry-Local/blob/main/samples/python/functioncalling/fl_tools.ipynb
         """
-        from ofoundry.tools import (
+        from obeaver.tools import (
             ChatResponse,
             ToolCall,
             inject_tools_into_messages,

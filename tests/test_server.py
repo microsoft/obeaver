@@ -1,5 +1,5 @@
 """
-Unit tests for ofoundry.server (FastAPI endpoints with mocked engines).
+Unit tests for obeaver.server (FastAPI endpoints with mocked engines).
 
 Run with:
   pytest tests/test_server.py -v
@@ -12,7 +12,7 @@ import pytest
 from fastapi import Request as FastAPIRequest
 from fastapi.testclient import TestClient
 
-from ofoundry.tools import ChatResponse, ToolCall
+from obeaver.tools import ChatResponse, ToolCall
 
 
 # ---------------------------------------------------------------------------
@@ -55,26 +55,26 @@ class FakeEmbedEngine:
 @pytest.fixture()
 def chat_client():
     """Build a TestClient for the chat server with a fake engine."""
-    import ofoundry.server as srv
+    import obeaver.server as srv
 
     original = srv._engine
     try:
         # Patch the engine constructor so build_app doesn't try to load a real model
-        with patch("ofoundry.server.FoundryEngine", create=True) as mock_cls:
+        with patch("obeaver.server.FoundryEngine", create=True) as mock_cls:
             mock_cls.return_value = FakeChatEngine()
-            with patch.dict("sys.modules", {"ofoundry.engine_foundrylocal": MagicMock(FoundryEngine=mock_cls)}):
+            with patch.dict("sys.modules", {"obeaver.engine_foundrylocal": MagicMock(FoundryEngine=mock_cls)}):
                 # Directly set the engine and build a minimal app
                 app = srv.build_app.__wrapped__(model_path="dummy", engine_type="foundry") if hasattr(srv.build_app, "__wrapped__") else None
         # Simpler approach: just build the app structure manually
         if app is None:
             from fastapi import FastAPI
             from pathlib import Path
-            app = FastAPI(title="ofoundry-test", version="0.1.0")
+            app = FastAPI(title="obeaver-test", version="0.1.0")
 
             srv._engine = FakeChatEngine()
             _engine_label = "foundry"
 
-            _static_dir = Path(__file__).parent.parent / "ofoundry" / "static"
+            _static_dir = Path(__file__).parent.parent / "obeaver" / "static"
             if _static_dir.is_dir():
                 from fastapi.staticfiles import StaticFiles
                 app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
@@ -90,19 +90,19 @@ def chat_client():
 
             @app.get("/api/system/memory")
             async def system_memory():
-                from ofoundry.monitor import get_all_memory
+                from obeaver.monitor import get_all_memory
                 return get_all_memory()
 
             @app.get("/v1/models")
             async def list_models():
                 import time
-                return {"object": "list", "data": [{"id": srv._engine.model_name, "object": "model", "created": int(time.time()), "owned_by": "ofoundry"}]}
+                return {"object": "list", "data": [{"id": srv._engine.model_name, "object": "model", "created": int(time.time()), "owned_by": "obeaver"}]}
 
             @app.post("/v1/chat/completions")
             async def chat_completions(request: dict):
                 import uuid, time
                 from fastapi.responses import JSONResponse, StreamingResponse
-                from ofoundry.engine_ort import GenerationConfig
+                from obeaver.engine_ort import GenerationConfig
 
                 messages = [m for m in request.get("messages", [])]
                 config = GenerationConfig(max_new_tokens=request.get("max_tokens", 1024))
@@ -135,18 +135,18 @@ def chat_client():
 @pytest.fixture()
 def embed_client():
     """Build a TestClient for the embedding server with a fake engine."""
-    import ofoundry.server as srv
+    import obeaver.server as srv
     from fastapi import FastAPI
     from fastapi.responses import JSONResponse
     import time
 
     original = srv._embed_engine
     try:
-        app = FastAPI(title="ofoundry-embed-test", version="0.1.0")
+        app = FastAPI(title="obeaver-embed-test", version="0.1.0")
         srv._embed_engine = FakeEmbedEngine()
 
         from pathlib import Path
-        _static_dir = Path(__file__).parent.parent / "ofoundry" / "static"
+        _static_dir = Path(__file__).parent.parent / "obeaver" / "static"
         if _static_dir.is_dir():
             from fastapi.staticfiles import StaticFiles
             app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
@@ -162,12 +162,12 @@ def embed_client():
 
         @app.get("/api/system/memory")
         async def system_memory():
-            from ofoundry.monitor import get_all_memory
+            from obeaver.monitor import get_all_memory
             return get_all_memory()
 
         @app.get("/v1/models")
         async def list_models():
-            return {"object": "list", "data": [{"id": srv._embed_engine.model_name, "object": "model", "created": int(time.time()), "owned_by": "ofoundry"}]}
+            return {"object": "list", "data": [{"id": srv._embed_engine.model_name, "object": "model", "created": int(time.time()), "owned_by": "obeaver"}]}
 
         @app.post("/v1/embeddings")
         async def create_embeddings(request: FastAPIRequest):

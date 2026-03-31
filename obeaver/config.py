@@ -1,7 +1,7 @@
 """
 Global server / model configuration (dataclass-based, no external file required for the prototype).
 
-Persistent user config is stored in ``~/.ofoundry/config.json``.
+Persistent user config is stored in ``~/.obeaver/config.json``.
 """
 
 from __future__ import annotations
@@ -12,13 +12,13 @@ from pathlib import Path
 from typing import Optional
 
 # ---------------------------------------------------------------------------
-# Persistent user configuration  (~/.ofoundry/config.json)
+# Persistent user configuration  (~/.obeaver/config.json)
 # ---------------------------------------------------------------------------
 
-_CONFIG_DIR = Path.home() / ".ofoundry"
+_CONFIG_DIR = Path.home() / ".obeaver"
 _CONFIG_FILE = _CONFIG_DIR / "config.json"
 
-# Default model root when the user hasn't run ``ofoundry init``
+# Default model root when the user hasn't run ``obeaver init``
 _DEFAULT_MODELS_DIR = Path("./models")
 
 
@@ -45,7 +45,7 @@ def get_models_dir() -> Path:
     """Return the configured model root directory (always absolute).
 
     Resolution order:
-    1. ``models_dir`` key in ``~/.ofoundry/config.json``
+    1. ``models_dir`` key in ``~/.obeaver/config.json``
     2. ``./models`` (relative to cwd)
     """
     cfg = _read_config()
@@ -81,7 +81,7 @@ def get_foundrylocal_models_dir() -> Path:
 
 @dataclass
 class ServerConfig:
-    """Top-level configuration for ofoundry serve."""
+    """Top-level configuration for obeaver serve."""
 
     model_path: Path = field(default_factory=Path)
     host: str = "127.0.0.1"
