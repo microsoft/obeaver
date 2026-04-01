@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oBeaver — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency.">
-  <title>oBeaver — Documentation</title>
+  <meta name="description" data-content-en="oBeaver — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency." data-content-zh="oBeaver——本地优先的 LLM 推理工具包，提供 OpenAI 兼容 API。在自有硬件上运行模型，零云依赖。" content="oBeaver — local-first LLM inference toolkit with OpenAI-compatible API. Run models on your own hardware with zero cloud dependency.">
+  <title data-title-en="oBeaver — Documentation" data-title-zh="oBeaver —— 文档">oBeaver — Documentation</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
 </head>
@@ -14,22 +14,21 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="header-left">
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <button class="menu-toggle" aria-label="Toggle menu" data-aria-label-en="Toggle menu" data-aria-label-zh="切换菜单">☰</button>
       <a href="index.html" class="logo">
         <img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon">
         <span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span>
       </a>
-      <span class="header-badge">Tech Preview (CPU only)</span>
     </div>
     <div class="header-right">
       <div class="search-box">
         <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Search docs..." autocomplete="off">
+        <input type="text" id="search-input" placeholder="Search docs..." data-placeholder-en="Search docs..." data-placeholder-zh="搜索文档..." autocomplete="off">
         <div class="search-results" id="search-results"></div>
       </div>
-      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language" data-aria-label-en="Toggle language" data-aria-label-zh="切换语言">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" data-aria-label-en="Toggle dark mode" data-aria-label-zh="切换深色模式">🌙</button>
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" data-aria-label-en="GitHub" data-aria-label-zh="GitHub 仓库" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </div>
@@ -56,7 +55,7 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
-      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> <span data-en>Docker</span><span data-zh>Docker 部署</span></a>
       <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
     </div>
     <div class="sidebar-section">
@@ -73,13 +72,13 @@
 
     <!-- Hero Section -->
     <section class="hero">
-      <img src="imgs/obeaver-logo.svg" alt="oBeaver pixel beaver" class="hero-logo">
+      <img src="imgs/obeaver-logo.svg" alt="oBeaver pixel beaver" data-alt-en="oBeaver pixel beaver" data-alt-zh="oBeaver 像素河狸" class="hero-logo">
       <h1><span class="hero-o">o</span><span class="hero-beaver">Beaver</span></h1>
-      <p class="hero-slogan">Build local. Dam the cloud.</p>
+      <p class="hero-slogan"><span data-en>Build local. Dam the cloud.</span><span data-zh>本地构建，截流云端。</span></p>
       <p><span data-en>Local-first LLM inference toolkit. Run models on your own hardware with an OpenAI-compatible API — no cloud, no API keys, no data leaving your machine.</span><span data-zh>本地优先的 LLM 推理工具包。在自有硬件上运行模型，提供 OpenAI 兼容 API——无需云端、无需 API Key、数据不离开本机。</span></p>
       <div class="hero-buttons">
         <a href="quickstart.html" class="btn btn-primary"><span data-en>Get Started →</span><span data-zh>快速开始 →</span></a>
-        <a href="https://github.com/microsoft/obeaver" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://github.com/microsoft/obeaver" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><span data-en>GitHub ↗</span><span data-zh>GitHub ↗</span></a>
       </div>
     </section>
 
@@ -90,7 +89,7 @@
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="git clone https://github.com/microsoft/obeaver.git
+          <button class="copy-btn" data-copy-en="Copy" data-copy-zh="复制" data-copied-en="Copied!" data-copied-zh="已复制！" data-code="git clone https://github.com/microsoft/obeaver.git
 cd obeaver
 pip install -e .">Copy</button>
         </div>
@@ -102,7 +101,7 @@ pip install -e .</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class=\"copy-btn\" data-code=\"# View oBeaver banner and configuration info
+          <button class="copy-btn" data-copy-en="Copy" data-copy-zh="复制" data-copied-en="Copied!" data-copied-zh="已复制！" data-code="# View oBeaver banner and configuration info
 obeaver
 
 # Set the default model save location
@@ -175,26 +174,26 @@ obeaver check</code></pre>
       <table>
         <thead>
           <tr>
-            <th>Engine</th>
-            <th>Platform</th>
-            <th>Description</th>
+            <th><span data-en>Engine</span><span data-zh>引擎</span></th>
+            <th><span data-en>Platform</span><span data-zh>平台</span></th>
+            <th><span data-en>Description</span><span data-zh>说明</span></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Foundry Local</strong></td>
-            <td>macOS, Windows</td>
-            <td>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU > GPU > CPU).</td>
+            <td><span data-en>macOS, Windows</span><span data-zh>macOS、Windows</span></td>
+            <td><span data-en>Powered by Microsoft Foundry Local. Automatic model download, hardware acceleration (NPU &gt; GPU &gt; CPU).</span><span data-zh>基于 Microsoft Foundry Local。支持自动下载模型，并按 NPU &gt; GPU &gt; CPU 的顺序优先使用硬件加速。</span></td>
           </tr>
           <tr>
             <td><strong>ORT</strong></td>
-            <td>macOS, Windows, Linux</td>
-            <td>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline.</td>
+            <td><span data-en>macOS, Windows, Linux</span><span data-zh>macOS、Windows、Linux</span></td>
+            <td><span data-en>Powered by ONNX Runtime GenAI. Loads a local <code>.onnx</code> model directory — fully offline.</span><span data-zh>基于 ONNX Runtime GenAI。加载本地 <code>.onnx</code> 模型目录，完整离线运行。</span></td>
           </tr>
           <tr>
-            <td><strong>Embedding</strong></td>
-            <td>All platforms</td>
-            <td>ONNX-only text embeddings for RAG & retrieval pipelines.</td>
+            <td><strong><span data-en>Embedding</span><span data-zh>嵌入</span></strong></td>
+            <td><span data-en>All platforms</span><span data-zh>全平台</span></td>
+            <td><span data-en>ONNX-only text embeddings for RAG & retrieval pipelines.</span><span data-zh>仅基于 ONNX 的文本嵌入能力，适用于 RAG 与检索流水线。</span></td>
           </tr>
         </tbody>
       </table>
@@ -207,7 +206,7 @@ obeaver check</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="obeaver run phi-4-mini">Copy</button>
+          <button class="copy-btn" data-copy-en="Copy" data-copy-zh="复制" data-copied-en="Copied!" data-copied-zh="已复制！" data-code="obeaver run phi-4-mini">Copy</button>
         </div>
         <pre><code>obeaver run phi-4-mini</code></pre>
       </div>
@@ -216,7 +215,7 @@ obeaver check</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="obeaver serve Phi-4-mini">Copy</button>
+          <button class="copy-btn" data-copy-en="Copy" data-copy-zh="复制" data-copied-en="Copied!" data-copied-zh="已复制！" data-code="obeaver serve Phi-4-mini">Copy</button>
         </div>
         <pre><code>obeaver serve Phi-4-mini</code></pre>
       </div>
@@ -225,7 +224,7 @@ obeaver check</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">python</span>
-          <button class="copy-btn" data-code='from openai import OpenAI
+          <button class="copy-btn" data-copy-en="Copy" data-copy-zh="复制" data-copied-en="Copied!" data-copied-zh="已复制！" data-code='from openai import OpenAI
 
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
@@ -268,14 +267,14 @@ for chunk in response:
 
 <!-- ============ Footer ============ -->
 <footer class="site-footer">
-  <span>© 2026 oBeaver · MIT License</span>
+  <span><span data-en>© 2026 oBeaver · MIT License</span><span data-zh>© 2026 oBeaver · MIT 许可证</span></span>
   <div class="footer-links">
-    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer"><span data-en>GitHub</span><span data-zh>GitHub</span></a>
   </div>
 </footer>
 
 <!-- Scroll to top -->
-<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top" data-aria-label-en="Scroll to top" data-aria-label-zh="回到顶部">↑</button>
 
 <script src="js/main.js"></script>
 </body>

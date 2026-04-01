@@ -15,6 +15,28 @@ from typing import Optional
 import typer
 from rich.console import Console
 
+from ofoundry.brand import (
+    ARG_STYLE,
+    COMMAND_STYLE,
+    ERROR_STYLE,
+    LABEL_STYLE,
+    MUTED_STYLE,
+    PATH_STYLE,
+    RULE_STYLE,
+    SUBTITLE_STYLE,
+    SUCCESS_STYLE,
+    TABLE_ENGINE_STYLE,
+    TABLE_HEADER_STYLE,
+    TABLE_MODEL_STYLE,
+    TABLE_TYPE_STYLE,
+    TEXT_STYLE,
+    TITLE_STYLE,
+    URL_STYLE,
+    VALUE_STYLE,
+    WARNING_STYLE,
+    markup,
+)
+
 
 def _default_engine() -> str:
     """Return the default engine for the current platform.
@@ -57,26 +79,40 @@ def _print_banner() -> None:
     lines = big.rstrip("\n").splitlines()
     max_w = max(len(l) for l in lines) if lines else 0
     padded = "\n".join(l.ljust(max_w) for l in lines)
-    console.rule(style="cyan")
+    console.rule(style=RULE_STYLE)
     console.print()
-    console.print(padded, style="bold cyan")
+    console.print(padded, style=TITLE_STYLE)
     console.print()
-    console.print("Welcome to use ofoundry !", style="bold cyan")
-    console.print("We \u2764\ufe0f  ONNX", style="bold magenta")
-    console.print("\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb\U0001f4bb  run, embedding, tools, convert, fine-tuning", style="bold yellow")
-    console.print("\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f\u2601\ufe0f  Docker\uff0cAzure Container Apps , AKS", style="bold blue")
+    console.print("Build local. Dam the cloud.", style=SUBTITLE_STYLE)
+    console.print(markup("OpenAI-compatible local runtime", TEXT_STYLE))
+    console.print(
+        f"{markup('Commands:', LABEL_STYLE)} "
+        f"{markup('ofoundry run', COMMAND_STYLE)} "
+        f"{markup('ofoundry serve', COMMAND_STYLE)} "
+        f"{markup('ofoundry models', COMMAND_STYLE)}"
+    )
+    console.print(
+        f"{markup('Targets:', LABEL_STYLE)} "
+        f"{markup('local models', ARG_STYLE)}, "
+        f"{markup('Foundry Local', ARG_STYLE)}, "
+        f"{markup('OpenAI API', ARG_STYLE)}"
+    )
     console.print()
 
     # Show configured model directories
     from ofoundry.config import get_models_dir, get_ort_models_dir, get_foundrylocal_models_dir, get_ort_cache_dir
-    console.print(f"  [bold]Models dir:[/]         [green]{get_models_dir()}[/]")
-    console.print(f"  [bold]ORT models:[/]         [green]{get_ort_models_dir()}[/]")
-    console.print(f"  [bold]FoundryLocal models:[/] [green]{get_foundrylocal_models_dir()}[/]")
-    console.print(f"  [bold]HF cache:[/]           [green]{get_ort_cache_dir()}[/]")
+    console.print(f"  {markup('Models dir:', LABEL_STYLE)}         {markup(get_models_dir(), PATH_STYLE)}")
+    console.print(f"  {markup('ORT models:', LABEL_STYLE)}         {markup(get_ort_models_dir(), PATH_STYLE)}")
+    console.print(f"  {markup('FoundryLocal models:', LABEL_STYLE)} {markup(get_foundrylocal_models_dir(), PATH_STYLE)}")
+    console.print(f"  {markup('HF cache:', LABEL_STYLE)}           {markup(get_ort_cache_dir(), PATH_STYLE)}")
     console.print()
-    console.print("  [dim]Run [bold]ofoundry init[/][dim] to change the model save location.[/]")
+    console.print(
+        f"  {markup('Run ', MUTED_STYLE)}"
+        f"{markup('ofoundry init', COMMAND_STYLE)}"
+        f"{markup(' to change the model save location.', MUTED_STYLE)}"
+    )
     console.print()
-    console.rule(style="cyan")
+    console.rule(style=RULE_STYLE)
 
 
 @app.callback()
@@ -122,10 +158,10 @@ def init(
 
     current = get_models_dir()
     if models_dir is None:
-        console.print(f"\n[bold]Current model save location:[/] [green]{current}[/]")
-        console.print(f"  ORT models:         [green]{get_ort_models_dir()}[/]")
-        console.print(f"  FoundryLocal models: [green]{get_foundrylocal_models_dir()}[/]")
-        console.print(f"  HF cache:           [green]{get_ort_cache_dir()}[/]")
+        console.print(f"\n{markup('Current model save location:', LABEL_STYLE)} {markup(current, PATH_STYLE)}")
+        console.print(f"  {markup('ORT models:', LABEL_STYLE)}         {markup(get_ort_models_dir(), PATH_STYLE)}")
+        console.print(f"  {markup('FoundryLocal models:', LABEL_STYLE)} {markup(get_foundrylocal_models_dir(), PATH_STYLE)}")
+        console.print(f"  {markup('HF cache:', LABEL_STYLE)}           {markup(get_ort_cache_dir(), PATH_STYLE)}")
         console.print()
         models_dir = typer.prompt(
             "Enter new model save location (press Enter to keep current)",
@@ -143,11 +179,11 @@ def init(
     cache_d.mkdir(parents=True, exist_ok=True)
 
     console.print()
-    console.print(f"[bold green]\u2713  Model save location set to:[/] [green]{resolved}[/]")
-    console.print(f"   ORT models:         [green]{ort_dir}[/]")
-    console.print(f"   FoundryLocal models: [green]{fl_dir}[/]")
-    console.print(f"   HF cache:           [green]{cache_d}[/]")
-    console.print(f"\n   [dim]Config saved to ~/.ofoundry/config.json[/]")
+    console.print(f"{markup('✓ Model save location set to:', SUCCESS_STYLE)} {markup(resolved, PATH_STYLE)}")
+    console.print(f"   {markup('ORT models:', LABEL_STYLE)}         {markup(ort_dir, PATH_STYLE)}")
+    console.print(f"   {markup('FoundryLocal models:', LABEL_STYLE)} {markup(fl_dir, PATH_STYLE)}")
+    console.print(f"   {markup('HF cache:', LABEL_STYLE)}           {markup(cache_d, PATH_STYLE)}")
+    console.print(f"\n   {markup('Config saved to ~/.ofoundry/config.json', MUTED_STYLE)}")
 
 
 def _is_vl_model(model_path: str) -> bool:
@@ -222,7 +258,7 @@ def run(
     """Start an interactive multi-turn chat session in the terminal."""
     if sys.platform.startswith("linux") and engine_type and engine_type != "ort":
         console.print(
-            "[bold red]Error:[/] On Linux, only the 'ort' engine is supported. "
+            f"{markup('Error:', ERROR_STYLE)} On Linux, only the 'ort' engine is supported. "
             "Foundry Local is not available on Linux.",
         )
         raise typer.Exit(code=1)
@@ -231,7 +267,7 @@ def run(
     if _is_vl_model(model_path):
         if engine_type and engine_type != "ort":
             console.print(
-                "[bold yellow]Warning:[/] VL models require the 'ort' engine. "
+                f"{markup('Warning:', WARNING_STYLE)} VL models require the 'ort' engine. "
                 "Switching from '{}' to 'ort' automatically.".format(engine_type),
             )
         engine_type = "ort"
@@ -280,7 +316,7 @@ def serve(
     """
     if sys.platform.startswith("linux") and engine_type and engine_type != "ort":
         console.print(
-            "[bold red]Error:[/] On Linux, only the 'ort' engine is supported. "
+            f"{markup('Error:', ERROR_STYLE)} On Linux, only the 'ort' engine is supported. "
             "Foundry Local is not available on Linux.",
         )
         raise typer.Exit(code=1)
@@ -289,7 +325,7 @@ def serve(
     if _is_vl_model(model_path):
         if engine_type and engine_type != "ort":
             console.print(
-                "[bold yellow]Warning:[/] VL models require the 'ort' engine. "
+                f"{markup('Warning:', WARNING_STYLE)} VL models require the 'ort' engine. "
                 "Switching from '{}' to 'ort' automatically.".format(engine_type),
             )
         engine_type = "ort"
@@ -300,9 +336,10 @@ def serve(
 
     _engine = engine_type or _default_engine()
     console.print(
-        f"\n[bold cyan]ofoundry serve[/] — engine=[yellow]{_engine}[/]  "
-        f"model=[green]{model_path}[/]  "
-        f"addr=[blue]http://{host}:{port}[/]\n"
+        f"\n{markup('ofoundry serve', COMMAND_STYLE)} "
+        f"{markup('engine=', LABEL_STYLE)}{markup(_engine, ARG_STYLE)}  "
+        f"{markup('model=', LABEL_STYLE)}{markup(model_path, PATH_STYLE)}  "
+        f"{markup('addr=', LABEL_STYLE)}{markup(f'http://{host}:{port}', URL_STYLE)}\n"
     )
 
     application = build_app(
@@ -344,8 +381,9 @@ def dashboard(
 
     _engine = engine_type or _default_engine()
     console.print(
-        f"\n[bold cyan]ofoundry dashboard[/] — engine=[yellow]{_engine}[/]  "
-        f"addr=[blue]http://{host}:{port}[/]\n"
+        f"\n{markup('ofoundry dashboard', COMMAND_STYLE)} "
+        f"{markup('engine=', LABEL_STYLE)}{markup(_engine, ARG_STYLE)}  "
+        f"{markup('addr=', LABEL_STYLE)}{markup(f'http://{host}:{port}', URL_STYLE)}\n"
     )
 
     application = build_dashboard_app(engine_type=_engine)
@@ -388,25 +426,29 @@ def embed(
     from ofoundry.engine_embedding import EmbeddingEngine
 
     console.print(
-        f"\n[bold cyan]ofoundry embed[/] — model=[green]{model_path}[/]  "
-        f"ep=[yellow]{execution_provider}[/]\n"
+        f"\n{markup('ofoundry embed', COMMAND_STYLE)} "
+        f"{markup('model=', LABEL_STYLE)}{markup(model_path, PATH_STYLE)}  "
+        f"{markup('ep=', LABEL_STYLE)}{markup(execution_provider, ARG_STYLE)}\n"
     )
     engine = EmbeddingEngine(model_path=model_path, execution_provider=execution_provider)
 
     if text:
         vectors = engine.embed(text)
-        console.print(f"[bold]Embedding ([dim]{len(vectors[0])}[/] dims):[/]")
+        console.print(f"{markup('Embedding', LABEL_STYLE)} {markup(f'({len(vectors[0])} dims)', MUTED_STYLE)}:")
         console.print(vectors[0])
         return
 
     # Interactive loop
-    console.print("Type text and press [bold]Enter[/] to get its embedding.  "
-                  "Press [bold]Ctrl-C[/] to quit.\n")
+    console.print(
+        f"{markup('Type text and press ', MUTED_STYLE)}{markup('Enter', COMMAND_STYLE)}"
+        f"{markup(' to get its embedding. Press ', MUTED_STYLE)}{markup('Ctrl-C', COMMAND_STYLE)}"
+        f"{markup(' to quit.', MUTED_STYLE)}\n"
+    )
     while True:
         try:
-            query = console.input("[bold green]text>[/] ").strip()
+            query = console.input(f"[{COMMAND_STYLE}]text>[/] ").strip()
         except (KeyboardInterrupt, EOFError):
-            console.print("\n[dim]Bye![/]")
+            console.print(f"\n{markup('Bye!', MUTED_STYLE)}")
             break
         if not query:
             continue
@@ -414,8 +456,7 @@ def embed(
         dims = len(vectors[0])
         preview = vectors[0][:8]
         console.print(
-            f"[dim]embedding ({dims} dims, first 8): "
-            f"{[round(v, 6) for v in preview]} …[/]\n"
+            f"{markup(f'embedding ({dims} dims, first 8): {[round(v, 6) for v in preview]} ...', MUTED_STYLE)}\n"
         )
 
 
@@ -450,9 +491,10 @@ def serve_embed(
     from ofoundry.server import build_embed_app
 
     console.print(
-        f"\n[bold cyan]ofoundry serve-embed[/] — model=[green]{model_path}[/]  "
-        f"ep=[yellow]{execution_provider}[/]  "
-        f"addr=[blue]http://{host}:{port}[/]\n"
+        f"\n{markup('ofoundry serve-embed', COMMAND_STYLE)} "
+        f"{markup('model=', LABEL_STYLE)}{markup(model_path, PATH_STYLE)}  "
+        f"{markup('ep=', LABEL_STYLE)}{markup(execution_provider, ARG_STYLE)}  "
+        f"{markup('addr=', LABEL_STYLE)}{markup(f'http://{host}:{port}', URL_STYLE)}\n"
     )
 
     application = build_embed_app(
@@ -480,21 +522,22 @@ def check() -> None:
     import shutil
     import subprocess
 
-    console.rule("[bold cyan]ofoundry environment check[/]", style="cyan")
+    console.rule(markup("ofoundry environment check", TITLE_STYLE), style=RULE_STYLE)
     console.print()
 
     # ── Platform ──────────────────────────────────────────────────────────
     platform_name = sys.platform
     if platform_name.startswith("linux"):
-        console.print(f"[bold]Platform:[/] [yellow]{platform_name}[/]")
+        console.print(f"{markup('Platform:', LABEL_STYLE)} {markup(platform_name, ARG_STYLE)}")
         console.print()
         console.print(
-            "[bold red]✗  Foundry Local is not supported on Linux.[/]\n"
-            "   Only the [bold]ORT[/] engine (onnxruntime-genai) is available.\n"
-            "   Use [bold]ofoundry run --engine ort[/] or [bold]ofoundry serve --engine ort[/]."
+            f"{markup('Error:', ERROR_STYLE)} Foundry Local is not supported on Linux.\n"
+            f"   Only the {markup('ORT', ARG_STYLE)} engine (onnxruntime-genai) is available.\n"
+            f"   Use {markup('ofoundry run --engine ort', COMMAND_STYLE)} or "
+            f"{markup('ofoundry serve --engine ort', COMMAND_STYLE)}."
         )
         console.print()
-        console.rule(style="cyan")
+        console.rule(style=RULE_STYLE)
         return
 
     if platform_name == "darwin":
@@ -504,7 +547,7 @@ def check() -> None:
     else:
         platform_label = platform_name
 
-    console.print(f"[bold]Platform:[/] [green]{platform_label}[/]")
+    console.print(f"{markup('Platform:', LABEL_STYLE)} {markup(platform_label, VALUE_STYLE)}")
     console.print()
 
     # ── Foundry Local daemon ───────────────────────────────────────────────
@@ -512,25 +555,25 @@ def check() -> None:
     foundry_bin = shutil.which("foundry")
 
     if foundry_bin is None:
-        console.print("[bold red]✗  Foundry Local CLI not found.[/]")
+        console.print(markup("Foundry Local CLI not found.", ERROR_STYLE))
         console.print()
-        console.print("[bold]Install instructions:[/]")
+        console.print(markup("Install instructions:", LABEL_STYLE))
         if platform_name == "darwin":
             console.print(
-                "    [cyan]brew install microsoft/foundrylocal/foundrylocal[/]"
+                f"    {markup('brew install microsoft/foundrylocal/foundrylocal', COMMAND_STYLE)}"
             )
         else:  # win32
             console.print(
-                "    [cyan]winget install Microsoft.FoundryLocal[/]"
+                f"    {markup('winget install Microsoft.FoundryLocal', COMMAND_STYLE)}"
             )
         console.print()
         console.print(
             "  For more information, see: "
-            "[link=https://github.com/microsoft/foundry-local]"
+            f"[link=https://github.com/microsoft/foundry-local][{URL_STYLE}]"
             "https://github.com/microsoft/foundry-local[/link]"
         )
     else:
-        console.print(f"[bold green]✓  Foundry Local CLI found:[/] [dim]{foundry_bin}[/]")
+        console.print(f"{markup('✓ Foundry Local CLI found:', SUCCESS_STYLE)} {markup(foundry_bin, PATH_STYLE)}")
 
         # Try to get the version
         try:
@@ -542,27 +585,27 @@ def check() -> None:
             )
             version_output = (result.stdout or result.stderr).strip()
             if version_output:
-                console.print(f"   [bold]Version:[/] [yellow]{version_output}[/]")
+                console.print(f"   {markup('Version:', LABEL_STYLE)} {markup(version_output, ARG_STYLE)}")
             else:
-                console.print("   [dim]Version information not available.[/]")
+                console.print(f"   {markup('Version information not available.', MUTED_STYLE)}")
         except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-            console.print("   [dim]Could not retrieve version information.[/]")
+            console.print(f"   {markup('Could not retrieve version information.', MUTED_STYLE)}")
 
         # Check if the SDK is importable
         console.print()
         try:
             import foundry_local  # noqa: F401
-            console.print("[bold green]✓  foundry-local-sdk (Python) is installed.[/]")
+            console.print(markup("✓ foundry-local-sdk (Python) is installed.", SUCCESS_STYLE))
             try:
                 from importlib.metadata import version as pkg_version
                 sdk_ver = pkg_version("foundry-local-sdk")
-                console.print(f"   [bold]SDK version:[/] [yellow]{sdk_ver}[/]")
+                console.print(f"   {markup('SDK version:', LABEL_STYLE)} {markup(sdk_ver, ARG_STYLE)}")
             except Exception:
                 pass
         except ImportError:
             console.print(
-                "[bold yellow]⚠  foundry-local-sdk (Python) not found.[/]\n"
-                "   Install with: [cyan]pip install foundry-local-sdk[/]"
+                f"{markup('Warning:', WARNING_STYLE)} foundry-local-sdk (Python) not found.\n"
+                f"   Install with: {markup('pip install foundry-local-sdk', COMMAND_STYLE)}"
             )
 
     console.print()
@@ -572,39 +615,41 @@ def check() -> None:
         from huggingface_hub import get_token
         hf_token = get_token()
         if hf_token:
-            console.print("[bold green]✓  Hugging Face authentication found.[/]")
+            console.print(markup("✓ Hugging Face authentication found.", SUCCESS_STYLE))
             # Show a shortened version of the token for confirmation
             token_preview = hf_token[:20] + "..." if len(hf_token) > 20 else hf_token
-            console.print(f"   [dim]Token:[/] [yellow]{token_preview}[/]")
+            console.print(f"   {markup('Token:', MUTED_STYLE)} {markup(token_preview, ARG_STYLE)}")
         else:
-            console.print("[bold yellow]⚠  Hugging Face not authenticated.[/]")
+            console.print(markup("Hugging Face not authenticated.", WARNING_STYLE))
             console.print()
-            console.print("[bold]Why authenticate with Hugging Face?[/]")
+            console.print(markup("Why authenticate with Hugging Face?", LABEL_STYLE))
             console.print("   • Download gated models (Llama 2, Mistral, etc.)")
             console.print("   • Higher rate limits on model downloads")
             console.print("   • Access to private model repositories")
             console.print()
-            console.print("[bold]How to authenticate:[/]")
-            console.print("   [bold]Option 1 — CLI:[/]")
-            console.print("       [cyan]huggingface-cli login[/]")
+            console.print(markup("How to authenticate:", LABEL_STYLE))
+            console.print(f"   {markup('Option 1 - CLI:', LABEL_STYLE)}")
+            console.print(f"       {markup('huggingface-cli login', COMMAND_STYLE)}")
             console.print()
-            console.print("   [bold]Option 2 — Python:[/]")
-            console.print("       [cyan]python -c \"from huggingface_hub import login; login()\"[/]")
+            console.print(f"   {markup('Option 2 - Python:', LABEL_STYLE)}")
+            console.print(f"       {markup('python -c \"from huggingface_hub import login; login()\"', COMMAND_STYLE)}")
             console.print()
-            console.print("   [bold]Option 3 — Environment variable:[/]")
-            console.print("       [cyan]export HF_TOKEN='your_token_here'[/]")
+            console.print(f"   {markup('Option 3 - Environment variable:', LABEL_STYLE)}")
+            console.print("       " + markup("export HF_TOKEN='your_token_here'", COMMAND_STYLE))
             console.print()
-            console.print("[bold]Get your token:[/]")
-            console.print("   Visit: [link=https://huggingface.co/settings/tokens]"
-                          "https://huggingface.co/settings/tokens[/link]")
+            console.print(markup("Get your token:", LABEL_STYLE))
+            console.print(
+                f"   Visit: [link=https://huggingface.co/settings/tokens][{URL_STYLE}]"
+                "https://huggingface.co/settings/tokens[/link]"
+            )
     except ImportError:
         console.print(
-            "[bold yellow]⚠  huggingface-hub not installed.[/]\n"
-            "   Install with: [cyan]pip install huggingface-hub[/]"
+            f"{markup('Warning:', WARNING_STYLE)} huggingface-hub not installed.\n"
+            f"   Install with: {markup('pip install huggingface-hub', COMMAND_STYLE)}"
         )
 
     console.print()
-    console.rule(style="cyan")
+    console.rule(style=RULE_STYLE)
 
 
 # ---------------------------------------------------------------------------
@@ -686,7 +731,7 @@ def convert(
         ep = "cpu"
     else:
         console.print(
-            f"[bold red]Error:[/] unsupported execution provider '{execution_provider}'. "
+            f"{markup('Error:', ERROR_STYLE)} unsupported execution provider '{execution_provider}'. "
             "Only 'cpu' and 'cuda' (gpu) are supported."
         )
         raise typer.Exit(code=1)
@@ -695,7 +740,7 @@ def convert(
     valid_precisions = ("fp32", "fp16", "int4")
     if precision.lower() not in valid_precisions:
         console.print(
-            f"[bold red]Error:[/] unsupported precision '{precision}'. "
+            f"{markup('Error:', ERROR_STYLE)} unsupported precision '{precision}'. "
             f"Choose from: {', '.join(valid_precisions)}."
         )
         raise typer.Exit(code=1)
@@ -704,7 +749,7 @@ def convert(
     mt = model_type.strip().lower()
     if mt not in ("text", "vl"):
         console.print(
-            f"[bold red]Error:[/] unsupported model type '{model_type}'. "
+            f"{markup('Error:', ERROR_STYLE)} unsupported model type '{model_type}'. "
             "Choose from: text, vl."
         )
         raise typer.Exit(code=1)
@@ -726,13 +771,13 @@ def convert(
         cache_dir = str(get_ort_cache_dir())
 
     console.print()
-    console.rule("[bold cyan]ofoundry convert[/]", style="cyan")
-    console.print(f"  [bold]Model:[/]      [green]{model_name}[/]")
-    console.print(f"  [bold]Type:[/]       [yellow]{mt}[/]")
-    console.print(f"  [bold]Precision:[/]  [yellow]{precision.lower()}[/]")
-    console.print(f"  [bold]EP:[/]         [yellow]{ep}[/]")
-    console.print(f"  [bold]Output:[/]     [blue]{output_path}[/]")
-    console.rule(style="cyan")
+    console.rule(markup("ofoundry convert", TITLE_STYLE), style=RULE_STYLE)
+    console.print(f"  {markup('Model:', LABEL_STYLE)}      {markup(model_name, PATH_STYLE)}")
+    console.print(f"  {markup('Type:', LABEL_STYLE)}       {markup(mt, ARG_STYLE)}")
+    console.print(f"  {markup('Precision:', LABEL_STYLE)}  {markup(precision.lower(), ARG_STYLE)}")
+    console.print(f"  {markup('EP:', LABEL_STYLE)}         {markup(ep, ARG_STYLE)}")
+    console.print(f"  {markup('Output:', LABEL_STYLE)}     {markup(output_path, PATH_STYLE)}")
+    console.rule(style=RULE_STYLE)
     console.print()
 
     if mt == "vl":
@@ -748,17 +793,17 @@ def convert(
                 cache_dir=cache_dir,
             )
         except ValueError as e:
-            console.print(f"[bold red]Error:[/] {e}")
+            console.print(f"{markup('Error:', ERROR_STYLE)} {e}")
             raise typer.Exit(code=1)
         except subprocess.CalledProcessError as e:
             console.print(
-                f"\n[bold red]VL conversion failed[/] (exit code {e.returncode})."
+                f"\n{markup('VL conversion failed', ERROR_STYLE)} (exit code {e.returncode})."
             )
             raise typer.Exit(code=e.returncode)
     else:
         # Text model: use onnxruntime-genai model builder
         cache_path = Path(cache_dir).resolve()
-        console.print(f"  [bold]Cache:[/]      [dim]{cache_path}[/]")
+        console.print(f"  {markup('Cache:', LABEL_STYLE)}      {markup(cache_path, PATH_STYLE)}")
         console.print()
 
         cmd = [
@@ -774,17 +819,17 @@ def convert(
             cmd.append("--extra_options")
             cmd.extend(extra_options.split())
 
-        console.print(f"[dim]Running: {' '.join(cmd)}[/]\n")
+        console.print(markup(f"Running: {' '.join(cmd)}", MUTED_STYLE) + "\n")
 
         result = subprocess.run(cmd)
 
         if result.returncode != 0:
             console.print(
-                f"\n[bold red]Conversion failed[/] (exit code {result.returncode})."
+                f"\n{markup('Conversion failed', ERROR_STYLE)} (exit code {result.returncode})."
             )
             raise typer.Exit(code=result.returncode)
 
-    console.print(f"\n[bold green]✓  Model saved to {output_path}[/]")
+    console.print(f"\n{markup('✓ Model saved to', SUCCESS_STYLE)} {markup(output_path, PATH_STYLE)}")
 
 
 # ---------------------------------------------------------------------------
@@ -901,8 +946,8 @@ def models() -> None:
     models_root = get_models_dir()
 
     console.print()
-    console.rule("[bold cyan]ofoundry models[/]", style="cyan")
-    console.print(f"  [bold]Models dir:[/] [green]{models_root}[/]")
+    console.rule(markup("ofoundry models", TITLE_STYLE), style=RULE_STYLE)
+    console.print(f"  {markup('Models dir:', LABEL_STYLE)} {markup(models_root, PATH_STYLE)}")
     console.print()
 
     rows: list[tuple[str, str, str]] = []  # (name, engine, type)
@@ -914,18 +959,22 @@ def models() -> None:
         rows.extend(_collect_models(engine_dir, engine_name))
 
     if not rows:
-        console.print("  [dim]No models found. Use [bold]ofoundry convert[/] to add models.[/]")
+        console.print(
+            f"  {markup('No models found. Use ', MUTED_STYLE)}"
+            f"{markup('ofoundry convert', COMMAND_STYLE)}"
+            f"{markup(' to add models.', MUTED_STYLE)}"
+        )
         console.print()
-        console.rule(style="cyan")
+        console.rule(style=RULE_STYLE)
         return
 
     # Pretty-print as a Rich table
     from rich.table import Table
 
-    table = Table(show_header=True, header_style="bold magenta")
-    table.add_column("Model", style="green", min_width=20)
-    table.add_column("Engine", style="yellow", min_width=14)
-    table.add_column("Type", style="cyan", min_width=14)
+    table = Table(show_header=True, header_style=TABLE_HEADER_STYLE)
+    table.add_column("Model", style=TABLE_MODEL_STYLE, min_width=20)
+    table.add_column("Engine", style=TABLE_ENGINE_STYLE, min_width=14)
+    table.add_column("Type", style=TABLE_TYPE_STYLE, min_width=14)
 
     type_icons = {
         "Text": "💬 Text",
@@ -937,9 +986,9 @@ def models() -> None:
         table.add_row(name, engine, type_icons.get(mtype, mtype))
 
     console.print(table)
-    console.print(f"\n  [dim]Total: {len(rows)} model(s)[/]")
+    console.print(f"\n  {markup(f'Total: {len(rows)} model(s)', MUTED_STYLE)}")
     console.print()
-    console.rule(style="cyan")
+    console.rule(style=RULE_STYLE)
 
 
 # ---------------------------------------------------------------------------
@@ -952,7 +1001,7 @@ def version() -> None:
     """Print the ofoundry version."""
     from ofoundry._version import __version__
 
-    console.print(f"[bold cyan]ofoundry[/] v{__version__}")
+    console.print(f"{markup('ofoundry', COMMAND_STYLE)} {markup(f'v{__version__}', TEXT_STYLE)}")
 
 
 # ---------------------------------------------------------------------------

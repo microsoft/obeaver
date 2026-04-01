@@ -13,24 +13,24 @@
 #
 # Build arguments:
 #   PYTHON_VERSION=3.12 (default)
-#   ORT_GENAI_REF=v0.6.0 (git tag/branch for source build on arm64)
+#   ORT_GENAI_REF=main (git tag/branch for source build on arm64)
 #
 # Typical usage:
 #   # Interactive chat session
 #   docker run -it --rm \
 #     -v ./models/phi3-mini-int4:/models \
-#     obeaver-cpu run -m /models -E ort
+#     obeaver-cpu run /models -E ort
 #
 #   # OpenAI-compatible HTTP server
 #   # NOTE: --host 0.0.0.0 is required so uvicorn binds to all interfaces,
 #   #       not just 127.0.0.1 (loopback-only inside the container).
 #   docker run -d --rm \
-#     -p 1573:1573 \
+#     -p 18000:18000 \
 #     -v ./models/phi3-mini-int4:/models \
-#     obeaver-cpu serve -m /models -E ort --host 0.0.0.0 --port 1573
+#     obeaver-cpu serve /models -E ort --host 0.0.0.0 --port 18000
 
 ARG PYTHON_VERSION=3.12
-ARG ORT_GENAI_REF=v0.6.0
+ARG ORT_GENAI_REF=main
 
 # ==========================================================================
 # STAGE: ort-genai-builder
@@ -41,7 +41,7 @@ ARG ORT_GENAI_REF=v0.6.0
 # ==========================================================================
 FROM python:${PYTHON_VERSION} AS ort-genai-builder
 
-ARG ORT_GENAI_REF=v0.6.0
+ARG ORT_GENAI_REF=main
 
 # Build tools required by onnxruntime-genai's cmake / build.py
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -74,14 +74,31 @@ RUN git clone --depth 1 --branch ${ORT_GENAI_REF} \
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install requests
 
-# CPU-only Release build — three-phase approach so we can patch a
-# missing #include <algorithm> in onnxruntime_extensions before compilation.
+# CPU-only Release build — four-phase approach so we can:
+#   1. force-skip C examples (matches `obeaver convert --build-from-source`),
+#   2. configure/fetch dependencies,
+#   3. patch a missing #include <algorithm> in onnxruntime_extensions,
+#   4. compile the Python wheel only.
+# This avoids example-build failures like missing `onnxruntime_cxx_api.h`.
 # See: https://github.com/microsoft/onnxruntime-extensions/issues (decode_image.hpp)
 
-# Phase 1: cmake configure only — fetches & configures all dependencies
-RUN python build.py --config Release --update
+# Phase 1: defensively patch build.py to skip building C examples even if
+# `--skip_examples` behavior changes upstream.
+RUN python - <<'PY'
+from pathlib import Path
 
-# Phase 2: patch decode_image.hpp — add missing <algorithm> include
+build_py = Path('/ort-genai-src/build.py')
+content = build_py.read_text()
+old = 'build_examples(arguments, environment)'
+new = 'pass  # [obeaver] skip examples build - only wheel needed'
+if old in content and '[obeaver] skip examples build' not in content:
+    build_py.write_text(content.replace(old, new))
+PY
+
+# Phase 2: cmake configure only — fetches & configures all dependencies
+RUN python build.py --config Release --update --skip_examples --skip_tests
+
+# Phase 3: patch decode_image.hpp — add missing <algorithm> include
 # (std::transform is used without the header on GCC 12+)
 RUN HEADER="build/Linux/Release/_deps/onnxruntime_extensions-src/operators/vision/decode_image.hpp" && \
     if [ -f "$HEADER" ]; then \
@@ -89,8 +106,8 @@ RUN HEADER="build/Linux/Release/_deps/onnxruntime_extensions-src/operators/visio
         sed -i '1i #include <algorithm>' "$HEADER"; \
     fi
 
-# Phase 3: compile and produce the Python wheel
-RUN python build.py --config Release --build --skip_tests
+# Phase 4: compile and produce the Python wheel
+RUN python build.py --config Release --build --skip_examples --skip_tests
 
 # ==========================================================================
 # STAGE: deps-amd64

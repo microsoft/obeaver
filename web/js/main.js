@@ -45,6 +45,32 @@
     if (langToggle) {
       langToggle.textContent = lang === 'zh' ? 'EN' : '中文';
     }
+
+    document.querySelectorAll('[data-placeholder-en][data-placeholder-zh]').forEach(function (el) {
+      el.setAttribute('placeholder', lang === 'zh' ? el.getAttribute('data-placeholder-zh') : el.getAttribute('data-placeholder-en'));
+    });
+
+    document.querySelectorAll('[data-aria-label-en][data-aria-label-zh]').forEach(function (el) {
+      el.setAttribute('aria-label', lang === 'zh' ? el.getAttribute('data-aria-label-zh') : el.getAttribute('data-aria-label-en'));
+    });
+
+    document.querySelectorAll('[data-alt-en][data-alt-zh]').forEach(function (el) {
+      el.setAttribute('alt', lang === 'zh' ? el.getAttribute('data-alt-zh') : el.getAttribute('data-alt-en'));
+    });
+
+    document.querySelectorAll('.copy-btn[data-copy-en][data-copy-zh]').forEach(function (btn) {
+      btn.textContent = lang === 'zh' ? btn.getAttribute('data-copy-zh') : btn.getAttribute('data-copy-en');
+    });
+
+    var titleEl = document.querySelector('title[data-title-en][data-title-zh]');
+    if (titleEl) {
+      titleEl.textContent = lang === 'zh' ? titleEl.getAttribute('data-title-zh') : titleEl.getAttribute('data-title-en');
+    }
+
+    var metaDescription = document.querySelector('meta[name="description"][data-content-en][data-content-zh]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', lang === 'zh' ? metaDescription.getAttribute('data-content-zh') : metaDescription.getAttribute('data-content-en'));
+    }
   }
   setLang(getPreferredLang());
   if (langToggle) {
@@ -87,10 +113,11 @@
       if (!code) return;
 
       navigator.clipboard.writeText(code).then(function () {
-        btn.textContent = 'Copied!';
+        var lang = html.getAttribute('data-lang') || 'en';
+        btn.textContent = lang === 'zh' ? (btn.getAttribute('data-copied-zh') || '已复制！') : (btn.getAttribute('data-copied-en') || 'Copied!');
         btn.classList.add('copied');
         setTimeout(function () {
-          btn.textContent = 'Copy';
+          btn.textContent = lang === 'zh' ? (btn.getAttribute('data-copy-zh') || '复制') : (btn.getAttribute('data-copy-en') || 'Copy');
           btn.classList.remove('copied');
         }, 2000);
       });
@@ -168,7 +195,10 @@
     });
 
     if (results.length === 0) {
-      searchResults.innerHTML = '<div class="search-result-item"><span class="result-title">No results found</span></div>';
+      var lang = html.getAttribute('data-lang') || 'en';
+      searchResults.innerHTML = '<div class="search-result-item"><span class="result-title">' +
+        (lang === 'zh' ? '未找到结果' : 'No results found') +
+        '</span></div>';
       searchResults.classList.add('active');
       return;
     }

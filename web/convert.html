@@ -76,7 +76,6 @@
         <img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon">
         <span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span>
       </a>
-      <span class="header-badge">Tech Preview (CPU only)</span>
     </div>
     <div class="header-right">
       <div class="search-box">
@@ -126,7 +125,7 @@
 </aside>
 
 <!-- ============ Main Content ============ -->
-<div class="docs-layout">
+<div class="docs-layout docs-layout-preview">
   <main class="main-content content">
 
     <h1><span data-en>Model Conversion</span><span data-zh>模型转换</span></h1>
@@ -144,7 +143,7 @@
         <h4><span data-en>🟢 Foundry Local Engine</span><span data-zh>🟢 Foundry Local 引擎</span></h4>
         <p><span data-en><strong>No conversion needed.</strong> Foundry Local downloads pre-optimised models from the Microsoft catalog automatically. Just pass a catalog alias:</span><span data-zh><strong>无需转换。</strong> Foundry Local 会自动从 Microsoft 目录下载预优化模型。只需传入 catalog alias：</span></p>
         <pre><code>obeaver run phi-4-mini</code></pre>
-        <p style="margin-bottom:0;color:var(--text-secondary);font-size:0.9rem;"><span data-en>First run will download the model — please wait for it to complete. Run <code>foundry model list</code> to see all available aliases.</span><span data-zh>首次运行会下载模型——请等待下载完成。运行 <code>foundry model list</code> 查看所有可用的模型别名。</span></p>
+        <p class="content-note-compact"><span data-en>First run will download the model — please wait for it to complete. Run <code>foundry model list</code> to see all available aliases.</span><span data-zh>首次运行会下载模型——请等待下载完成。运行 <code>foundry model list</code> 查看所有可用的模型别名。</span></p>
       </div>
       <div class="engine-card">
         <h4><span data-en>🔶 ORT Engine</span><span data-zh>🔶 ORT 引擎</span></h4>

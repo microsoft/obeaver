@@ -112,6 +112,7 @@ img { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   padding: 0 24px;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   transition: background var(--transition), border-color var(--transition);
 }
@@ -135,7 +136,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .header-badge {
-  display: inline-flex;
+  display: none !important;
   align-items: center;
   padding: 6px 12px;
   border: 1px solid rgba(217, 119, 6, 0.25);
@@ -166,9 +167,8 @@ img { max-width: 100%; height: auto; }
 .logo svg {
   height: 32px;
   width: auto;
+  image-rendering: -webkit-optimize-contrast;
   image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 
 .logo-text {
@@ -329,6 +329,11 @@ img { max-width: 100%; height: auto; }
   pointer-events: none;
 }
 
+[data-lang="zh"] .docs-layout-preview::after {
+  content: "技术预览版\A(仅提供 CPU 测试)";
+  letter-spacing: 0.08em;
+}
+
 /* ---------- Sidebar ---------- */
 .sidebar {
   position: fixed;
@@ -435,9 +440,8 @@ img { max-width: 100%; height: auto; }
   height: auto;
   margin: 0 auto 24px;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
   image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
   position: relative;
 }
 
@@ -602,6 +606,16 @@ img { max-width: 100%; height: auto; }
 .content p {
   margin-bottom: 16px;
   color: var(--text-secondary);
+}
+
+.content-note-compact {
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.features-grid-spaced {
+  margin-top: 32px;
 }
 
 .content ul, .content ol {
@@ -933,6 +947,28 @@ img { max-width: 100%; height: auto; }
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+}
+
+.arch-image-zoomable {
+  cursor: zoom-in;
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* ---------- Print ---------- */

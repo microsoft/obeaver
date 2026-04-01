@@ -665,7 +665,7 @@ docker buildx build --platform=linux/arm64 \
 | Build arg | Default | Description |
 |-----------|---------|-------------|
 | `PYTHON_VERSION` | `3.12` | Python version |
-| `ORT_GENAI_REF` | `v0.6.0` | onnxruntime-genai git tag (arm64 source build) |
+| `ORT_GENAI_REF` | `main` | onnxruntime-genai git tag/branch (arm64 source build) |
 
 ### Run
 

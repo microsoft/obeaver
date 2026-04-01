@@ -14,6 +14,17 @@ from pathlib import Path
 from rich.console import Console
 from rich.prompt import Prompt
 
+from ofoundry.brand import (
+    ARG_STYLE,
+    COMMAND_STYLE,
+    ERROR_STYLE,
+    MUTED_STYLE,
+    PATH_STYLE,
+    PROMPT_ASSISTANT_STYLE,
+    TEXT_STYLE,
+    VALUE_STYLE,
+    markup,
+)
 from ofoundry.engine_ort import GenerationConfig
 
 console = Console()
@@ -46,8 +57,9 @@ def run_chat(
     if engine_type == "foundry":
         from ofoundry.engine_foundrylocal import FoundryEngine
         console.print(
-            f"\n[bold cyan]ofoundry[/] — Foundry Local engine · "
-            f"model alias [green]{model_path}[/]…"
+            f"\n{markup('ofoundry', COMMAND_STYLE)} "
+            f"{markup('Foundry Local engine', VALUE_STYLE)} · "
+            f"{markup('model alias', TEXT_STYLE)} {markup(model_path, PATH_STYLE)}..."
         )
         engine: object = FoundryEngine(
             model_alias=str(model_path),
@@ -56,16 +68,24 @@ def run_chat(
     else:
         from ofoundry.engine_ort import OrtEngine
         console.print(
-            f"\n[bold cyan]ofoundry[/] — ORT engine · "
-            f"loading model from [green]{model_path}[/]…"
+            f"\n{markup('ofoundry', COMMAND_STYLE)} "
+            f"{markup('ORT engine', VALUE_STYLE)} · "
+            f"{markup('loading model from', TEXT_STYLE)} {markup(model_path, PATH_STYLE)}..."
         )
         engine = OrtEngine(model_path=model_path, execution_provider=execution_provider)
-    console.print(f"[bold green]✓ Model ready:[/] {engine.model_name}\n")
-    console.print("[dim]Type your message and press Enter. Type [bold]/bye[/][dim] or press [bold]Ctrl+Q[/][dim] to exit.[/]\n")
+    console.print(f"{markup('✓ Model ready:', VALUE_STYLE)} {markup(engine.model_name, TEXT_STYLE)}\n")
+    console.print(
+        f"{markup('Type your message and press ', MUTED_STYLE)}{markup('Enter', COMMAND_STYLE)}"
+        f"{markup('. Type ', MUTED_STYLE)}{markup('/bye', COMMAND_STYLE)}"
+        f"{markup(' or press ', MUTED_STYLE)}{markup('Ctrl+Q', COMMAND_STYLE)}"
+        f"{markup(' to exit.', MUTED_STYLE)}\n"
+    )
     if engine_type == "ort" and getattr(engine, "supports_multimodal", False):
         console.print(
-            "[dim]VL input supported: use [bold]image:/path/to/image.jpg your prompt[/] "
-            "(or only [bold]image:/path/to/image.jpg[/]).[/]\n"
+            f"{markup('VL input supported: use ', MUTED_STYLE)}"
+            f"{markup('image:/path/to/image.jpg your prompt', COMMAND_STYLE)}"
+            f"{markup(' (or only ', MUTED_STYLE)}{markup('image:/path/to/image.jpg', COMMAND_STYLE)}"
+            f"{markup(').', MUTED_STYLE)}\n"
         )
 
     config = GenerationConfig(
@@ -85,15 +105,15 @@ def run_chat(
     while True:
         # ---- Prompt user ----
         try:
-            user_input = Prompt.ask("\n[bold yellow]You[/]")
+            user_input = Prompt.ask(f"\n[{ARG_STYLE}]You[/]")
         except (EOFError, KeyboardInterrupt):
-            console.print("\n[dim]Goodbye.[/]")
+            console.print(f"\n{markup('Goodbye.', MUTED_STYLE)}")
             break
 
         if not user_input.strip():
             continue
         if user_input.strip().lower() in {"/bye", "/exit", "/quit"}:
-            console.print("[dim]Goodbye.[/]")
+            console.print(markup("Goodbye.", MUTED_STYLE))
             break
 
         image_path: str | None = None
@@ -111,7 +131,7 @@ def run_chat(
 
             if engine_type != "ort" or not getattr(engine, "supports_multimodal", False):
                 console.print(
-                    "[bold red]Error:[/] Current engine/model does not support image input."
+                    f"{markup('Error:', ERROR_STYLE)} Current engine/model does not support image input."
                 )
                 continue
 
@@ -123,7 +143,7 @@ def run_chat(
         history.append({"role": "user", "content": message_content})
 
         # ---- Stream assistant reply ----
-        console.print("\n[bold magenta]Assistant[/]: ", end="")
+        console.print(f"\n[{PROMPT_ASSISTANT_STYLE}]Assistant[/]: ", end="")
 
         t0 = time.perf_counter()
         first_token_time: float | None = None
@@ -148,7 +168,7 @@ def run_chat(
                     print(fragment, end="", flush=True)
                     assistant_reply_parts.append(fragment)
         except KeyboardInterrupt:
-            console.print("\n[dim]--generation interrupted--[/]")
+            console.print(f"\n{markup('--generation interrupted--', MUTED_STYLE)}")
 
         elapsed = time.perf_counter() - t0
         assistant_reply = "".join(assistant_reply_parts)
@@ -162,5 +182,5 @@ def run_chat(
             n_tokens = len(assistant_reply_parts)
             tps = n_tokens / gen_time if gen_time > 0 else 0.0
             console.print(
-                f"[dim]  ⏱ TTFT {ttft:.2f}s | {n_tokens} tokens | {tps:.1f} tok/s[/]"
+                markup(f"  TTFT {ttft:.2f}s | {n_tokens} tokens | {tps:.1f} tok/s", MUTED_STYLE)
             )
