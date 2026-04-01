@@ -7,6 +7,8 @@ Run with:
 
 from __future__ import annotations
 
+import subprocess
+
 import pytest
 from typer.testing import CliRunner
 
@@ -58,6 +60,75 @@ class TestCliCommands:
     def test_serve_embed_command_registered(self) -> None:
         result = runner.invoke(app, ["serve-embed", "--help"])
         assert result.exit_code == 0
+
+
+class TestInitCommand:
+    def test_init_syncs_foundrylocal_cache_dir(self, tmp_path, monkeypatch) -> None:
+        import obeaver.config as config
+        import obeaver.cli as cli
+
+        monkeypatch.setattr(config, "_CONFIG_DIR", tmp_path / ".obeaver")
+        monkeypatch.setattr(config, "_CONFIG_FILE", config._CONFIG_DIR / "config.json")
+        models_root = (tmp_path / "models").resolve()
+        foundry_cache_dir = models_root / "foundrylocal"
+        printed: list[str] = []
+
+        commands: list[list[str]] = []
+
+        def fake_print(*args, **kwargs):
+            printed.append(" ".join(str(arg) for arg in args))
+
+        def fake_run(cmd, check, **kwargs):
+            commands.append(cmd)
+            if cmd[1:] == ["cache", "cd", str(foundry_cache_dir)]:
+                assert kwargs["stdout"] is subprocess.DEVNULL
+                assert kwargs["stderr"] is subprocess.DEVNULL
+                assert kwargs["timeout"] == 30
+                return subprocess.CompletedProcess(cmd, 0, stdout="", stderr="")
+            if cmd[1:] == ["cache", "location"]:
+                assert kwargs["capture_output"] is True
+                assert kwargs["text"] is True
+                return subprocess.CompletedProcess(
+                    cmd,
+                    0,
+                    stdout=str(foundry_cache_dir) + "\n",
+                    stderr="",
+                )
+            raise AssertionError(f"Unexpected command: {cmd}")
+
+        monkeypatch.setattr(cli.shutil, "which", lambda name: "/usr/local/bin/foundry")
+        monkeypatch.setattr(cli.subprocess, "run", fake_run)
+        monkeypatch.setattr(cli.console, "print", fake_print)
+
+        result = runner.invoke(app, ["init", str(tmp_path / "models")])
+
+        assert result.exit_code == 0
+        assert any("FoundryLocal cache:" in line for line in printed)
+        assert any("(configured)" in line for line in printed)
+        assert any(str(foundry_cache_dir) in line for line in printed)
+        assert commands == [
+            ["/usr/local/bin/foundry", "cache", "cd", str(foundry_cache_dir)],
+            ["/usr/local/bin/foundry", "cache", "location"],
+        ]
+
+    def test_init_warns_when_foundry_cli_missing(self, tmp_path, monkeypatch) -> None:
+        import obeaver.config as config
+        import obeaver.cli as cli
+
+        monkeypatch.setattr(config, "_CONFIG_DIR", tmp_path / ".obeaver")
+        monkeypatch.setattr(config, "_CONFIG_FILE", config._CONFIG_DIR / "config.json")
+        printed: list[str] = []
+
+        def fake_print(*args, **kwargs):
+            printed.append(" ".join(str(arg) for arg in args))
+
+        monkeypatch.setattr(cli.shutil, "which", lambda name: None)
+        monkeypatch.setattr(cli.console, "print", fake_print)
+
+        result = runner.invoke(app, ["init", str(tmp_path / "models")])
+
+        assert result.exit_code == 0
+        assert any("Foundry Local CLI not found on PATH" in line for line in printed)
 
 
 class TestCliOptions:

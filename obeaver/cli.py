@@ -8,6 +8,8 @@ Commands:
 
 from __future__ import annotations
 
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
@@ -98,6 +100,45 @@ ENGINE_HELP = (
 # ---------------------------------------------------------------------------
 
 
+def _sync_foundrylocal_cache_dir(cache_dir: Path) -> tuple[bool, str]:
+    """Point Foundry Local's cache root at *cache_dir* when the CLI is available."""
+    foundry_exe = shutil.which("foundry")
+    if foundry_exe is None:
+        return False, "Foundry Local CLI not found on PATH; skipped cache path update."
+
+    try:
+        subprocess.run(
+            [foundry_exe, "cache", "cd", str(cache_dir)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=30,
+        )
+    except subprocess.TimeoutExpired:
+        return False, "Foundry Local cache path update timed out."
+    except OSError as exc:
+        return False, f"Failed to run Foundry Local CLI: {exc}"
+    except subprocess.CalledProcessError as exc:
+        detail = str(exc).strip()
+        return False, f"Foundry Local cache path update failed: {detail}"
+
+    try:
+        result = subprocess.run(
+            [foundry_exe, "cache", "location"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        confirmed = result.stdout.strip() or str(cache_dir)
+        prefix = "Cache directory path:"
+        if prefix in confirmed:
+            confirmed = confirmed.split(prefix, 1)[1].strip() or str(cache_dir)
+    except (OSError, subprocess.CalledProcessError):
+        confirmed = str(cache_dir)
+
+    return True, confirmed
+
+
 @app.command()
 def init(
     models_dir: Optional[str] = typer.Argument(
@@ -141,11 +182,16 @@ def init(
     ort_dir.mkdir(parents=True, exist_ok=True)
     fl_dir.mkdir(parents=True, exist_ok=True)
     cache_d.mkdir(parents=True, exist_ok=True)
+    cache_synced, cache_message = _sync_foundrylocal_cache_dir(fl_dir)
 
     console.print()
     console.print(f"[bold green]\u2713  Model save location set to:[/] [green]{resolved}[/]")
     console.print(f"   ORT models:         [green]{ort_dir}[/]")
     console.print(f"   FoundryLocal models: [green]{fl_dir}[/]")
+    if cache_synced:
+        console.print(f"   FoundryLocal cache:  [green]{cache_message}[/] [dim](configured)[/]")
+    else:
+        console.print(f"   FoundryLocal cache:  [yellow]{cache_message}[/]")
     console.print(f"   HF cache:           [green]{cache_d}[/]")
     console.print(f"\n   [dim]Config saved to ~/.obeaver/config.json[/]")
 
