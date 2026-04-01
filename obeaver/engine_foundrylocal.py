@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import uuid
 from typing import TYPE_CHECKING, Iterator
 
@@ -60,6 +61,20 @@ class FoundryEngine:
 
         self._alias = model_alias
         _device = self._map_device(device) or "CPU"
+
+        # Redirect Foundry Local model cache to the obeaver-configured directory
+        # before bootstrapping, so downloads land in the expected location.
+        try:
+            from obeaver.config import get_foundrylocal_models_dir
+            _target_dir = get_foundrylocal_models_dir()
+            _target_dir.mkdir(parents=True, exist_ok=True)
+            subprocess.run(
+                ["foundry", "cache", "cd", str(_target_dir)],
+                check=True,
+                capture_output=True,
+            )
+        except Exception:
+            pass  # non-fatal: fall back to the current Foundry cache location
 
         manager = FoundryLocalManager(bootstrap=True)
 
