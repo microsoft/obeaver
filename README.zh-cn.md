@@ -284,52 +284,63 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 
 ## 网页仪表盘
 
-使用 `dashboard` 命令启动实时监控仪表盘：
+选择引擎并启动 dashboard：
 
 ```bash
 obeaver dashboard               # Foundry Local 引擎，默认端口 1573
 obeaver dashboard -e ort         # ORT 引擎，扫描 ./models 下的 ONNX 模型
 ```
 
-然后在浏览器中打开：
-
-```
-http://127.0.0.1:1573/
-```
+在浏览器中打开 `http://127.0.0.1:1573/`，选择您的模型即可进行测试。您可以在该环境中评估不同硬件的资源占用情况。
 
 <p align="center">
-  <img src="Screenshots/01_fullpage_hd.png" alt="oBeaver 仪表盘——完整视图：模型选择器、内存卡片、推理参数和聊天界面" width="800"/>
+  <img src="img/obeaver_home.png" alt="oBeaver Dashboard 首页" width="800"/>
 </p>
+
+### Foundry Local 仪表盘
+
+默认情况下，dashboard 使用 Foundry Local 引擎，并从您默认路径加载 Foundry Local 引擎的模型。
+
+<p align="center">
+  <img src="img/obeaver_foundrylocal_model.png" alt="Foundry Local 模型选择器——列出默认路径下缓存的模型" width="800"/>
+</p>
+
+你可以进行聊天，查看模型在本地响应的 benchmark 指标：
+
+<p align="center">
+  <img src="img/obeaver_foundrylocal_chat.png" alt="与 Foundry Local 模型进行聊天" width="400"/>
+  <img src="img/obeaver_foundrylocal_chat_result.png" alt="聊天响应及 benchmark 统计（TTFT、tok/s、Token 数）" width="400"/>
+</p>
+
+### ORT 仪表盘
+
+使用 `obeaver dashboard -e ort` 时，您可以选择默认路径下的本地 ONNX 模型：
+
+<p align="center">
+  <img src="img/obeaver_ort_model.png" alt="ORT 模型选择器——列出本地 ONNX GenAI 模型" width="800"/>
+</p>
+
+非 VL 模型的使用方式与 Foundry Local 一致。但加载 **VL（视觉语言）模型**时，Chat 界面会隐藏，进入专用的 VL 界面。您需要添加网络照片的链接进行测试，例如 `https://images-sports.now.com/sport/news/6/576/39556158576/39556718725_600x400.jpg`。
+
+<p align="center">
+  <img src="img/obeaver_ort_vl.png" alt="VL 界面——提供图片 URL 和提示词进行多模态推理" width="400"/>
+  <img src="img/obeaver_ort_vl_result.png" alt="VL 模型响应，描述图片内容" width="400"/>
+</p>
+
+### 仪表盘功能
 
 仪表盘功能包括：
 
 - **模型选择器** — 运行时切换已缓存的模型；NPU 加速模型标有 ⚡ 标识
 - **系统信息栏** — 已加载的模型名称、引擎类型、平台和 Python 版本，实时健康状态
-- **CPU 内存** — 总量、已用、可用及实时使用率仪表
-- **GPU 内存** — 检测到的 GPU 设备及内存（NVIDIA、AMD、Intel、Qualcomm Adreno）
-- **NPU 内存** — 检测到的 NPU 设备及内存（Intel Meteor Lake、Qualcomm Hexagon）
+- **内存仪表** — CPU / GPU / NPU 利用率，每 3 秒自动刷新
 - **进程内存** — oBeaver 服务进程的驻留内存和虚拟内存
 - **推理参数** — temperature、top-p、top-k、max tokens、repetition penalty，提供 Creative/Balanced/Precise 预设
 - **聊天界面** — 直接在浏览器中向已加载的模型发送消息，支持流式响应和性能统计（TTFT、tok/s、token 计数）
+- **VL 界面** — 视觉语言模型专用多模态界面，支持图片 URL 输入
 - **会话历史** — 侧边栏保存对话记录，支持系统提示词配置
 - **服务器日志** — 实时请求日志，包含方法、路径、状态和耗时
 - **导出** — 将对话导出为 JSON 或 Markdown
-
-<p align="center">
-  <img src="Screenshots/02_top_viewport_hd.png" alt="仪表盘顶部：模型选择器、系统信息栏和 CPU 内存仪表" width="800"/>
-</p>
-
-<p align="center">
-  <img src="Screenshots/03_memory_cards_hd.png" alt="CPU、GPU 和 NPU 内存卡片及实时仪表" width="800"/>
-</p>
-
-内置聊天界面可直接在浏览器中测试模型，支持实时流式输出和性能指标：
-
-<p align="center">
-  <img src="Screenshots/05_chat_response_hd.png" alt="与模型对话，显示流式响应、TTFT、tok/s 统计" width="800"/>
-</p>
-
-内存统计每 3 秒自动刷新。健康状态指示器显示服务是否在线。
 
 ---
 

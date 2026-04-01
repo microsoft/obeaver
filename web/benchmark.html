@@ -151,27 +151,27 @@ obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU --timings</code></pre
     <div class="metric-cards">
       <div class="metric-card">
         <span class="metric-value">TTFT</span>
-        <span class="metric-label">Time to First Token (ms)</span>
+        <span class="metric-label"><span data-en>Time to First Token (ms)</span><span data-zh>首个 Token 时间（ms）</span></span>
       </div>
       <div class="metric-card">
         <span class="metric-value">tok/s</span>
-        <span class="metric-label">Tokens per second</span>
+        <span class="metric-label"><span data-en>Tokens per second</span><span data-zh>每秒 Token 数</span></span>
       </div>
       <div class="metric-card">
         <span class="metric-value">tokens</span>
-        <span class="metric-label">Total tokens generated</span>
+        <span class="metric-label"><span data-en>Total tokens generated</span><span data-zh>生成的总 Token 数</span></span>
       </div>
     </div>
 
     <div class="callout">
-      <strong>Example output:</strong> After asking a question, the CLI will show stats like<br>
+      <strong><span data-en>Example output:</span><span data-zh>示例输出：</span></strong> <span data-en>After asking a question, the CLI will show stats like</span><span data-zh>提问后，CLI 会显示如下统计信息</span><br>
       <code>TTFT 1398ms · 5.7 tok/s · 26 tokens</code>
     </div>
 
     <!-- ============================================ -->
     <h2 id="web-dashboard-monitoring"><span data-en>Web Dashboard Monitoring</span><span data-zh>Web 仪表盘监控</span></h2>
 
-    <p><span data-en>Launch the monitoring dashboard to browse and test models interactively:</span><span data-zh>启动监控仪表盘，交互式浏览和测试模型：</span></p>
+    <p><span data-en>You can select an engine and launch the dashboard with the following commands:</span><span data-zh>你可以通过以下指令选择引擎并进入 dashboard：</span></p>
 
     <div class="code-block">
       <div class="code-block-header"><span class="code-block-lang">bash</span></div>
@@ -182,12 +182,63 @@ obeaver dashboard
 obeaver dashboard -e ort</code></pre>
     </div>
 
-    <p><span data-en>Then open <code>http://127.0.0.1:1573/</code> in your browser. Select a model from the dropdown and start chatting — the dashboard loads the model in-process and provides real-time system resource tracking alongside an integrated chat interface.</span><span data-zh>然后在浏览器中打开 <code>http://127.0.0.1:1573/</code>。从下拉列表中选择模型即可开始对话——仪表盘会在进程内加载模型，并提供实时系统资源监控和集成聊天界面。</span></p>
+    <p><span data-en>Open <code>http://127.0.0.1:1573/</code> in your browser, select your model, and start testing. You can use the dashboard to evaluate resource usage across different hardware configurations.</span><span data-zh>在浏览器中打开 <code>http://127.0.0.1:1573/</code>，选择您的模型即可进行测试。您可以在该环境中评估不同硬件的资源占用情况。</span></p>
 
     <figure class="screenshot-card">
-      <img src="imgs/01_fullpage_hd.png" alt="oBeaver Dashboard — full view showing model selector, memory cards, inference parameters, and chat interface" loading="lazy">
-      <figcaption>Full dashboard view: model selector, memory gauges, inference parameters, chat interface, and server logs.</figcaption>
+      <img src="imgs/obeaver_home.png" alt="oBeaver Dashboard home page" loading="lazy">
+      <figcaption><span data-en>oBeaver Dashboard home page.</span><span data-zh>oBeaver Dashboard 首页。</span></figcaption>
     </figure>
+
+    <!-- ---- Foundry Local Dashboard ---- -->
+    <h3 id="foundry-local-dashboard"><span data-en>Foundry Local Dashboard</span><span data-zh>Foundry Local 仪表盘</span></h3>
+
+    <p><span data-en>By default, the dashboard uses the Foundry Local engine and loads models from your configured Foundry Local model directory.</span><span data-zh>默认情况下，dashboard 使用 Foundry Local 引擎，并从您默认路径加载 Foundry Local 引擎的模型。</span></p>
+
+    <figure class="screenshot-card">
+      <img src="imgs/obeaver_foundrylocal_model.png" alt="Foundry Local model selector showing cached models" loading="lazy">
+      <figcaption><span data-en>Foundry Local model selector — lists cached models from your default path.</span><span data-zh>Foundry Local 模型选择器——列出默认路径下缓存的模型。</span></figcaption>
+    </figure>
+
+    <p><span data-en>You can chat with the model and observe the local inference benchmark metrics in real time:</span><span data-zh>你可以进行聊天，查看模型在本地响应的 benchmark 指标：</span></p>
+
+    <div class="screenshot-pair">
+      <figure class="screenshot-card">
+        <img src="imgs/obeaver_foundrylocal_chat.png" alt="Foundry Local chat — sending a message" loading="lazy">
+        <figcaption><span data-en>Chatting with a Foundry Local model.</span><span data-zh>与 Foundry Local 模型进行聊天。</span></figcaption>
+      </figure>
+      <figure class="screenshot-card">
+        <img src="imgs/obeaver_foundrylocal_chat_result.png" alt="Foundry Local chat — benchmark result with TTFT and tok/s" loading="lazy">
+        <figcaption><span data-en>Chat response with benchmark stats (TTFT, tok/s, token count).</span><span data-zh>聊天响应及 benchmark 统计（TTFT、tok/s、Token 数）。</span></figcaption>
+      </figure>
+    </div>
+
+    <!-- ---- ORT Dashboard ---- -->
+    <h3 id="ort-dashboard"><span data-en>ORT Dashboard</span><span data-zh>ORT 仪表盘</span></h3>
+
+    <p><span data-en>When using <code>obeaver dashboard -e ort</code>, you can select any local ONNX model from your default model directory:</span><span data-zh>使用 <code>obeaver dashboard -e ort</code> 时，您可以选择默认路径下的本地 ONNX 模型：</span></p>
+
+    <figure class="screenshot-card">
+      <img src="imgs/obeaver_ort_model.png" alt="ORT model selector showing local ONNX models" loading="lazy">
+      <figcaption><span data-en>ORT model selector — lists local ONNX GenAI models.</span><span data-zh>ORT 模型选择器——列出本地 ONNX GenAI 模型。</span></figcaption>
+    </figure>
+
+    <p><span data-en>For standard (non-VL) models, the usage is the same as Foundry Local. However, when loading a <strong>VL (Vision-Language) model</strong>, the chat interface is hidden and replaced with a dedicated VL interface. You can provide a web image URL for testing, such as:</span><span data-zh>非 VL 模型的使用方式与 Foundry Local 一致。但加载 <strong>VL（视觉语言）模型</strong>时，Chat 界面会隐藏，进入专用的 VL 界面。您需要添加网络照片的链接进行测试，例如：</span></p>
+
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-block-lang">text</span></div>
+      <pre><code>https://images-sports.now.com/sport/news/6/576/39556158576/39556718725_600x400.jpg</code></pre>
+    </div>
+
+    <div class="screenshot-pair">
+      <figure class="screenshot-card">
+        <img src="imgs/obeaver_ort_vl.png" alt="ORT VL interface — image URL input and prompt" loading="lazy">
+        <figcaption><span data-en>VL interface — provide an image URL and prompt for multimodal inference.</span><span data-zh>VL 界面——提供图片 URL 和提示词进行多模态推理。</span></figcaption>
+      </figure>
+      <figure class="screenshot-card">
+        <img src="imgs/obeaver_ort_vl_result.png" alt="ORT VL result — model describing the image" loading="lazy">
+        <figcaption><span data-en>VL model response describing the image content.</span><span data-zh>VL 模型响应，描述图片内容。</span></figcaption>
+      </figure>
+    </div>
 
     <!-- ============================================ -->
     <h2 id="system-resource-gauges"><span data-en>System Resource Gauges</span><span data-zh>系统资源仪表</span></h2>
@@ -197,50 +248,39 @@ obeaver dashboard -e ort</code></pre>
     <table>
       <thead>
         <tr>
-          <th>Resource</th>
-          <th>Metrics Shown</th>
-          <th>Description</th>
+          <th><span data-en>Resource</span><span data-zh>资源</span></th>
+          <th><span data-en>Metrics Shown</span><span data-zh>显示指标</span></th>
+          <th><span data-en>Description</span><span data-zh>描述</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>CPU Memory</strong></td>
-          <td>Total, Used, Available, % gauge</td>
-          <td>System RAM utilisation with processor identification (e.g. ARMv8 Qualcomm, Apple M-series, Intel/AMD)</td>
+          <td><strong><span data-en>CPU Memory</span><span data-zh>CPU 内存</span></strong></td>
+          <td><span data-en>Total, Used, Available, % gauge</span><span data-zh>总量、已用、可用、百分比仪表</span></td>
+          <td><span data-en>System RAM utilisation with processor identification (e.g. ARMv8 Qualcomm, Apple M-series, Intel/AMD)</span><span data-zh>系统 RAM 利用率及处理器识别（如 ARMv8 Qualcomm、Apple M 系列、Intel/AMD）</span></td>
         </tr>
         <tr>
-          <td><strong>GPU Memory</strong></td>
-          <td>Total, Used, Available, Active/Idle</td>
-          <td>Detected GPU device memory (NVIDIA, AMD, Intel, Qualcomm Adreno)</td>
+          <td><strong><span data-en>GPU Memory</span><span data-zh>GPU 内存</span></strong></td>
+          <td><span data-en>Total, Used, Available, Active/Idle</span><span data-zh>总量、已用、可用、活跃/空闲</span></td>
+          <td><span data-en>Detected GPU device memory (NVIDIA, AMD, Intel, Qualcomm Adreno)</span><span data-zh>检测到的 GPU 设备内存（NVIDIA、AMD、Intel、Qualcomm Adreno）</span></td>
         </tr>
         <tr>
-          <td><strong>NPU Memory</strong></td>
-          <td>Total, Used, Available, Active/Idle</td>
-          <td>Neural Processing Unit if available (Intel Meteor Lake, Qualcomm Hexagon)</td>
+          <td><strong><span data-en>NPU Memory</span><span data-zh>NPU 内存</span></strong></td>
+          <td><span data-en>Total, Used, Available, Active/Idle</span><span data-zh>总量、已用、可用、活跃/空闲</span></td>
+          <td><span data-en>Neural Processing Unit if available (Intel Meteor Lake, Qualcomm Hexagon)</span><span data-zh>神经处理单元（如可用）（Intel Meteor Lake、Qualcomm Hexagon）</span></td>
         </tr>
         <tr>
-          <td><strong>Process Memory</strong></td>
-          <td>PID, Resident, Virtual</td>
-          <td>Memory consumed by the oBeaver server process itself</td>
+          <td><strong><span data-en>Process Memory</span><span data-zh>进程内存</span></strong></td>
+          <td><span data-en>PID, Resident, Virtual</span><span data-zh>PID、常驻内存、虚拟内存</span></td>
+          <td><span data-en>Memory consumed by the oBeaver server process itself</span><span data-zh>oBeaver 服务器进程自身消耗的内存</span></td>
         </tr>
       </tbody>
     </table>
 
     <figure class="screenshot-card">
-      <img src="imgs/03_memory_cards_hd.png" alt="CPU, GPU, and NPU memory cards with real-time gauges" loading="lazy">
-      <figcaption>CPU Memory (87% — 31.6 GB total), GPU Memory (Qualcomm Adreno X1-85), NPU Memory (Snapdragon X Elite Hexagon), and process info (PID, Resident 118 MB, Virtual 87 MB).</figcaption>
+      <img src="imgs/obeaver_home.png" alt="CPU, GPU, and NPU memory cards with real-time gauges" loading="lazy">
+      <figcaption><span data-en>CPU Memory (87% — 31.6 GB total), GPU Memory (Qualcomm Adreno X1-85), NPU Memory (Snapdragon X Elite Hexagon), and process info (PID, Resident 118 MB, Virtual 87 MB).</span><span data-zh>CPU 内存（87% — 共 31.6 GB）、GPU 内存（Qualcomm Adreno X1-85）、NPU 内存（Snapdragon X Elite Hexagon）及进程信息（PID、常驻 118 MB、虚拟 87 MB）。</span></figcaption>
     </figure>
-
-    <div class="screenshot-pair">
-      <figure class="screenshot-card">
-        <img src="imgs/02_top_viewport_hd.png" alt="Dashboard top viewport: model selector, system info bar, memory cards, chat, and inference parameters" loading="lazy">
-        <figcaption>Top viewport showing model selector, system info bar, and full dashboard layout.</figcaption>
-      </figure>
-      <figure class="screenshot-card">
-        <img src="imgs/02_dashboard_fullpage_hd.png" alt="Dashboard close-up: CPU memory gauge and system info" loading="lazy">
-        <figcaption>Close-up of CPU memory gauge (83% utilisation) with processor and model info.</figcaption>
-      </figure>
-    </div>
 
     <!-- ============================================ -->
     <h2 id="inference-parameters"><span data-en>Inference Parameters</span><span data-zh>推理参数</span></h2>
@@ -250,42 +290,42 @@ obeaver dashboard -e ort</code></pre>
     <table>
       <thead>
         <tr>
-          <th>Parameter</th>
-          <th>Range</th>
-          <th>Description</th>
+          <th><span data-en>Parameter</span><span data-zh>参数</span></th>
+          <th><span data-en>Range</span><span data-zh>范围</span></th>
+          <th><span data-en>Description</span><span data-zh>描述</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Temperature</strong></td>
           <td>0 – 2</td>
-          <td>Controls randomness of output. Lower = more deterministic</td>
+          <td><span data-en>Controls randomness of output. Lower = more deterministic</span><span data-zh>控制输出的随机性。越低越确定</span></td>
         </tr>
         <tr>
           <td><strong>Top P</strong></td>
           <td>0 – 1</td>
-          <td>Nucleus sampling probability threshold</td>
+          <td><span data-en>Nucleus sampling probability threshold</span><span data-zh>核采样概率阈值</span></td>
         </tr>
         <tr>
           <td><strong>Top K</strong></td>
           <td>1 – 100</td>
-          <td>Top-K sampling — limits token choices</td>
+          <td><span data-en>Top-K sampling — limits token choices</span><span data-zh>Top-K 采样——限制候选 Token 数量</span></td>
         </tr>
         <tr>
           <td><strong>Max Tokens</strong></td>
           <td>1 – 4096</td>
-          <td>Maximum number of tokens to generate</td>
+          <td><span data-en>Maximum number of tokens to generate</span><span data-zh>最大生成 Token 数</span></td>
         </tr>
         <tr>
           <td><strong>Repetition Penalty</strong></td>
           <td>1.0 – 2.0</td>
-          <td>Penalises repeated tokens</td>
+          <td><span data-en>Penalises repeated tokens</span><span data-zh>对重复 Token 进行惩罚</span></td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <strong>Presets:</strong> <code>Creative</code> (high temperature, high top-k) · <code>Balanced</code> (default) · <code>Precise</code> (low temperature, greedy)
+      <strong><span data-en>Presets:</span><span data-zh>预设：</span></strong> <code>Creative</code> <span data-en>(high temperature, high top-k)</span><span data-zh>（高温度、高 top-k）</span> · <code>Balanced</code> <span data-en>(default)</span><span data-zh>（默认）</span> · <code>Precise</code> <span data-en>(low temperature, greedy)</span><span data-zh>（低温度、贪心）</span>
     </div>
 
     <!-- ============================================ -->
@@ -294,8 +334,8 @@ obeaver dashboard -e ort</code></pre>
     <p><span data-en>The built-in chat interface shows real-time performance stats for every model response:</span><span data-zh>内置聊天界面为每次模型响应显示实时性能统计：</span></p>
 
     <figure class="screenshot-card">
-      <img src="imgs/05_chat_response_hd.png" alt="Chat interface showing streaming response with TTFT, tok/s stats" loading="lazy">
-      <figcaption>Chat response to "Explain quantum computing in one sentence" — showing TTFT 1398 ms, 5.7 tok/s, 26 tokens.</figcaption>
+      <img src="imgs/obeaver_foundrylocal_chat_result.png" alt="Chat interface showing streaming response with TTFT, tok/s stats" loading="lazy">
+      <figcaption><span data-en>Chat response to "Explain quantum computing in one sentence" — showing TTFT 2532 ms, 12.7 tok/s, 26 tokens.</span><span data-zh>对话响应"用一句话解释量子计算"——显示 TTFT 2532 ms、12.7 tok/s、26 tokens。</span></figcaption>
     </figure>
 
     <p><span data-en>Each message displays three key metrics:</span><span data-zh>每条消息显示三个关键指标：</span></p>
@@ -305,10 +345,9 @@ obeaver dashboard -e ort</code></pre>
       <li><strong><span data-en>tok/s (Tokens per Second)</span><span data-zh>tok/s（每秒 Token 数）</span></strong> — <span data-en>the sustained generation speed. Higher is better; CPU-only inference typically ranges 3-15 tok/s for small models.</span><span data-zh>持续生成速度。越高越好；纯 CPU 推理小模型通常为 3-15 tok/s。</span></li>
       <li><strong><span data-en>Token Count</span><span data-zh>Token 计数</span></strong> — <span data-en>total tokens generated in the response.</span><span data-zh>响应中生成的总 Token 数。</span></li>
     </ul>
-
     <figure class="screenshot-card">
-      <img src="imgs/04_chat_section_hd.png" alt="Chat section with conversation history sidebar and inference parameters" loading="lazy">
-      <figcaption>Chat section with conversation history sidebar and tuneable inference parameters panel.</figcaption>
+      <img src="imgs/obeaver_foundrylocal_chat.png" alt="Chat section with conversation history sidebar and inference parameters" loading="lazy">
+      <figcaption><span data-en>Chat section with conversation history sidebar and tuneable inference parameters panel.</span><span data-zh>聊天区域，包含会话历史侧边栏和可调推理参数面板。</span></figcaption>
     </figure>
 
     <!-- ============================================ -->
@@ -317,50 +356,50 @@ obeaver dashboard -e ort</code></pre>
     <p><span data-en>The complete dashboard brings together system monitoring, a chat interface, inference parameter controls, conversation history, server logs, and export functionality in a single view:</span><span data-zh>完整的仪表盘将系统监控、聊天界面、推理参数控制、会话历史、服务器日志和导出功能集成在一个视图中：</span></p>
 
     <figure class="screenshot-card">
-      <img src="imgs/06_full_overview_hd.png" alt="Full overview of oBeaver dashboard with all sections visible" loading="lazy">
-      <figcaption>Full dashboard overview: model selector, memory gauges, process info, API reference, chat, server logs, and export buttons.</figcaption>
+      <img src="imgs/obeaver_home.png" alt="Full overview of oBeaver dashboard with all sections visible" loading="lazy">
+      <figcaption><span data-en>Full dashboard overview: model selector, memory gauges, process info, API reference, chat, server logs, and export buttons.</span><span data-zh>仪表盘完整概览：模型选择器、内存仪表、进程信息、API 参考、聊天、服务器日志和导出按钮。</span></figcaption>
     </figure>
 
     <h3><span data-en>Dashboard Features Summary</span><span data-zh>仪表盘功能摘要</span></h3>
     <table>
       <thead>
         <tr>
-          <th>Feature</th>
-          <th>Description</th>
+          <th><span data-en>Feature</span><span data-zh>功能</span></th>
+          <th><span data-en>Description</span><span data-zh>描述</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Model Selector</td>
-          <td>Switch between cached models at runtime; NPU-accelerated models are marked with ⚡</td>
+          <td><span data-en>Model Selector</span><span data-zh>模型选择器</span></td>
+          <td><span data-en>Switch between cached models at runtime; NPU-accelerated models are marked with ⚡</span><span data-zh>运行时切换缓存模型；NPU 加速模型以 ⚡ 标记</span></td>
         </tr>
         <tr>
-          <td>System Info Bar</td>
-          <td>Model name, engine type, platform, Python version, live health status</td>
+          <td><span data-en>System Info Bar</span><span data-zh>系统信息栏</span></td>
+          <td><span data-en>Model name, engine type, platform, Python version, live health status</span><span data-zh>模型名称、引擎类型、平台、Python 版本、实时健康状态</span></td>
         </tr>
         <tr>
-          <td>Memory Gauges</td>
-          <td>CPU / GPU / NPU utilisation with auto-refresh every 3 seconds</td>
+          <td><span data-en>Memory Gauges</span><span data-zh>内存仪表</span></td>
+          <td><span data-en>CPU / GPU / NPU utilisation with auto-refresh every 3 seconds</span><span data-zh>CPU / GPU / NPU 利用率，每 3 秒自动刷新</span></td>
         </tr>
         <tr>
-          <td>Inference Parameters</td>
-          <td>Temperature, Top P, Top K, Max Tokens, Repetition Penalty with presets</td>
+          <td><span data-en>Inference Parameters</span><span data-zh>推理参数</span></td>
+          <td><span data-en>Temperature, Top P, Top K, Max Tokens, Repetition Penalty with presets</span><span data-zh>Temperature、Top P、Top K、Max Tokens、Repetition Penalty 及预设</span></td>
         </tr>
         <tr>
-          <td>Chat Interface</td>
-          <td>Streaming responses with TTFT, tok/s, and token count per message</td>
+          <td><span data-en>Chat Interface</span><span data-zh>聊天界面</span></td>
+          <td><span data-en>Streaming responses with TTFT, tok/s, and token count per message</span><span data-zh>流式响应，显示每条消息的 TTFT、tok/s 和 Token 数</span></td>
         </tr>
         <tr>
-          <td>Conversation History</td>
-          <td>Saved conversations sidebar with system prompt configuration</td>
+          <td><span data-en>Conversation History</span><span data-zh>会话历史</span></td>
+          <td><span data-en>Saved conversations sidebar with system prompt configuration</span><span data-zh>保存的会话侧边栏，支持系统提示词配置</span></td>
         </tr>
         <tr>
-          <td>Server Logs</td>
-          <td>Live request log with method, path, status code, and timing</td>
+          <td><span data-en>Server Logs</span><span data-zh>服务器日志</span></td>
+          <td><span data-en>Live request log with method, path, status code, and timing</span><span data-zh>实时请求日志，显示方法、路径、状态码和耗时</span></td>
         </tr>
         <tr>
-          <td>Export</td>
-          <td>Export conversations as JSON or Markdown</td>
+          <td><span data-en>Export</span><span data-zh>导出</span></td>
+          <td><span data-en>Export conversations as JSON or Markdown</span><span data-zh>将会话导出为 JSON 或 Markdown</span></td>
         </tr>
       </tbody>
     </table>

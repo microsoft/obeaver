@@ -317,52 +317,63 @@ curl -s http://127.0.0.1:18000/v1/chat/completions \
 
 ## Web Dashboard
 
-Launch the real-time monitoring dashboard with the `dashboard` command:
+Select an engine and launch the dashboard:
 
 ```bash
 obeaver dashboard               # Foundry Local engine, default port 1573
 obeaver dashboard -e ort         # ORT engine, scans ./models for ONNX models
 ```
 
-Then open in your browser:
-
-```
-http://127.0.0.1:1573/
-```
+Open `http://127.0.0.1:1573/` in your browser, select a model, and start testing. You can use the dashboard to evaluate resource usage across different hardware configurations.
 
 <p align="center">
-  <img src="Screenshots/01_fullpage_hd.png" alt="oBeaver Dashboard — full view showing model selector, memory cards, inference parameters, and chat" width="800"/>
+  <img src="img/obeaver_home.png" alt="oBeaver Dashboard home page" width="800"/>
 </p>
+
+### Foundry Local Dashboard
+
+By default, the dashboard uses the Foundry Local engine and loads models from your configured Foundry Local model directory.
+
+<p align="center">
+  <img src="img/obeaver_foundrylocal_model.png" alt="Foundry Local model selector — lists cached models" width="800"/>
+</p>
+
+Chat with the model and observe local inference benchmark metrics in real time:
+
+<p align="center">
+  <img src="img/obeaver_foundrylocal_chat.png" alt="Chatting with a Foundry Local model" width="400"/>
+  <img src="img/obeaver_foundrylocal_chat_result.png" alt="Chat response with benchmark stats (TTFT, tok/s, token count)" width="400"/>
+</p>
+
+### ORT Dashboard
+
+When using `obeaver dashboard -e ort`, you can select any local ONNX model from your default model directory:
+
+<p align="center">
+  <img src="img/obeaver_ort_model.png" alt="ORT model selector — lists local ONNX GenAI models" width="800"/>
+</p>
+
+For standard (non-VL) models, the usage is the same as Foundry Local. However, when loading a **VL (Vision-Language) model**, the chat interface is hidden and replaced with a dedicated VL interface. You can provide a web image URL for testing, such as `https://images-sports.now.com/sport/news/6/576/39556158576/39556718725_600x400.jpg`.
+
+<p align="center">
+  <img src="img/obeaver_ort_vl.png" alt="VL interface — provide an image URL and prompt" width="400"/>
+  <img src="img/obeaver_ort_vl_result.png" alt="VL model response describing the image" width="400"/>
+</p>
+
+### Dashboard Features
 
 The dashboard includes:
 
 - **Model Selector** — switch between cached models at runtime; NPU-accelerated models are marked with a ⚡ badge
 - **System Info Bar** — loaded model name, engine type, platform, and Python version with live health status
-- **CPU Memory** — total, used, available, and real-time utilisation gauge
-- **GPU Memory** — detected GPU device and memory (NVIDIA, AMD, Intel, Qualcomm Adreno)
-- **NPU Memory** — detected NPU device and memory (Intel Meteor Lake, Qualcomm Hexagon)
+- **Memory Gauges** — CPU / GPU / NPU utilisation with auto-refresh every 3 seconds
 - **Process Memory** — resident and virtual memory of the oBeaver server process
 - **Inference Parameters** — temperature, top-p, top-k, max tokens, repetition penalty with Creative/Balanced/Precise presets
 - **Chat Interface** — send messages to the loaded model directly from the browser with streaming response and performance stats (TTFT, tok/s, token count)
+- **VL Interface** — dedicated multimodal interface for Vision-Language models with image URL input
 - **Conversation History** — sidebar with saved conversations and system prompt configuration
 - **Server Logs** — live request log with method, path, status, and timing
 - **Export** — export conversations as JSON or Markdown
-
-<p align="center">
-  <img src="Screenshots/02_top_viewport_hd.png" alt="Dashboard top: model selector, system info bar, and CPU memory gauge" width="800"/>
-</p>
-
-<p align="center">
-  <img src="Screenshots/03_memory_cards_hd.png" alt="CPU, GPU, and NPU memory cards with real-time gauges" width="800"/>
-</p>
-
-The built-in chat interface lets you test the model directly from the browser with real-time streaming and performance metrics:
-
-<p align="center">
-  <img src="Screenshots/05_chat_response_hd.png" alt="Chat with model showing streaming response, TTFT, tok/s stats" width="800"/>
-</p>
-
-Memory statistics refresh automatically every 3 seconds. The health status indicator shows whether the server is online.
 
 ---
 
