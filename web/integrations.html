@@ -71,7 +71,7 @@
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     stream=True,
 )
@@ -83,7 +83,7 @@ for chunk in response:
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     stream=True,
 )

@@ -215,9 +215,9 @@ obeaver check</code></pre>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
-          <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+          <button class="copy-btn" data-code="obeaver serve Phi-4-mini">Copy</button>
         </div>
-        <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
+        <pre><code>obeaver serve Phi-4-mini</code></pre>
       </div>
 
       <h3><span data-en>Use with the OpenAI Python SDK</span><span data-zh>使用 OpenAI Python SDK</span></h3>
@@ -229,7 +229,7 @@ obeaver check</code></pre>
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     stream=True,
 )
@@ -241,7 +241,7 @@ for chunk in response:
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     stream=True,
 )

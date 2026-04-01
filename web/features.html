@@ -88,7 +88,7 @@
         <tr><th><span data-en>Condition</span><span data-zh>条件</span></th><th><span data-en>Engine</span><span data-zh>引擎</span></th><th><span data-en>Model argument</span><span data-zh>模型参数</span></th></tr>
       </thead>
       <tbody>
-        <tr><td><span data-en>macOS / Windows (default)</span><span data-zh>macOS / Windows（默认）</span></td><td>Foundry Local</td><td><span data-en>Catalog alias (e.g. <code>Phi-4-mini-instruct-generic-cpu:5</code>)</span><span data-zh>Catalog alias（如 <code>Phi-4-mini-instruct-generic-cpu:5</code>）</span></td></tr>
+        <tr><td><span data-en>macOS / Windows (default)</span><span data-zh>macOS / Windows（默认）</span></td><td>Foundry Local</td><td><span data-en>Catalog alias (e.g. <code>Phi-4-mini</code>)</span><span data-zh>Catalog alias（如 <code>Phi-4-mini</code>）</span></td></tr>
         <tr><td><span data-en><code>--engine ort</code> or Linux (default)</span><span data-zh><code>--engine ort</code> 或 Linux（默认）</span></td><td>ONNX Runtime GenAI</td><td><span data-en>Local directory path</span><span data-zh>本地目录路径</span></td></tr>
         <tr><td><code>embed</code> / <code>serve-embed</code></td><td><span data-en>Embedding Engine (ONNX)</span><span data-zh>嵌入引擎（ONNX）</span></td><td><span data-en>Local model directory</span><span data-zh>本地模型目录</span></td></tr>
       </tbody>
@@ -216,7 +216,7 @@ tools = [{
 messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
 
 # Turn 1 — model decides to call a tool
-resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+resp = client.chat.completions.create(model="Phi-4-mini", messages=messages, tools=tools)
 choice = resp.choices[0]
 
 if choice.finish_reason == "tool_calls":
@@ -231,7 +231,7 @@ if choice.finish_reason == "tool_calls":
         choice.message,
         {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
     ]
-    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    final = client.chat.completions.create(model="Phi-4-mini", messages=messages)
     print(final.choices[0].message.content)'>Copy</button>
       </div>
       <pre><code>from openai import OpenAI
@@ -255,7 +255,7 @@ tools = [{
 messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
 
 # Turn 1 — model decides to call a tool
-resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+resp = client.chat.completions.create(model="Phi-4-mini", messages=messages, tools=tools)
 choice = resp.choices[0]
 
 if choice.finish_reason == "tool_calls":
@@ -270,7 +270,7 @@ if choice.finish_reason == "tool_calls":
         choice.message,
         {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
     ]
-    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    final = client.chat.completions.create(model="Phi-4-mini", messages=messages)
     print(final.choices[0].message.content)</code></pre>
     </div>
 

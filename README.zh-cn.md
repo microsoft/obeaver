@@ -242,7 +242,7 @@ obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 启动本地 HTTP 服务，暴露 OpenAI 兼容端点：
 
 ```bash
-obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve Phi-4-mini                          # Foundry Local
 obeaver serve --engine ort ./models/phi3-mini-int4   # ORT
 obeaver serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL（自动检测）
 ```
@@ -432,7 +432,7 @@ tools = [{
 messages = [{"role": "user", "content": "东京现在天气怎么样？"}]
 
 # 第一轮——模型决定调用工具
-resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+resp = client.chat.completions.create(model="Phi-4-mini", messages=messages, tools=tools)
 choice = resp.choices[0]
 
 if choice.finish_reason == "tool_calls":
@@ -451,7 +451,7 @@ if choice.finish_reason == "tool_calls":
             "content": json.dumps(weather_result, ensure_ascii=False),
         },
     ]
-    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    final = client.chat.completions.create(model="Phi-4-mini", messages=messages)
     print(final.choices[0].message.content)
 ```
 
@@ -459,7 +459,7 @@ if choice.finish_reason == "tool_calls":
 
 ```bash
 # Foundry Local 引擎
-obeaver serve Phi-4-mini-instruct-generic-cpu:5
+obeaver serve Phi-4-mini
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_foundrylocal_request.json
@@ -559,7 +559,7 @@ from openai import OpenAI
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "法国的首都是哪里？"}],
     stream=True,
 )
@@ -689,7 +689,7 @@ obeaver/
 
 | 条件 | 引擎 | 模型参数 |
 |------|------|----------|
-| macOS / Windows（默认） | Foundry Local | Catalog alias（如 `Phi-4-mini-instruct-generic-cpu:5`） |
+| macOS / Windows（默认） | Foundry Local | Catalog alias（如 `Phi-4-mini`） |
 | `--engine ort` 或 Linux（默认） | onnxruntime-genai | 本地目录路径 |
 | `embed` / `serve-embed` 命令 | EmbeddingEngine（ONNX） | 本地 ONNX 模型目录 |
 

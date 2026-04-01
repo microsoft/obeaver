@@ -253,10 +253,10 @@ obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU</code></pre>
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+        <button class="copy-btn" data-code="obeaver serve Phi-4-mini                          # Foundry Local
 obeaver serve --engine ort ./models/phi3-mini-int4   # ORT">Copy</button>
       </div>
-      <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+      <pre><code>obeaver serve Phi-4-mini                          # Foundry Local
 obeaver serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
     </div>
     <p><span data-en>Once running, any OpenAI-compatible client can connect to <code>http://127.0.0.1:18000/v1</code>.</span><span data-zh>服务启动后，任何 OpenAI 兼容客户端都可以连接到 <code>http://127.0.0.1:18000/v1</code>。</span></p>
@@ -268,7 +268,7 @@ obeaver serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
         <button class="copy-btn" data-code='curl http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d &apos;{
-    "model": "Phi-4-mini-instruct-generic-cpu:5",
+    "model": "Phi-4-mini",
     "messages": [{"role": "user", "content": "Hello!"}],
     "stream": false
   }&apos;'>Copy</button>
@@ -276,7 +276,7 @@ obeaver serve --engine ort ./models/phi3-mini-int4   # ORT</code></pre>
       <pre><code>curl http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "Phi-4-mini-instruct-generic-cpu:5",
+    "model": "Phi-4-mini",
     "messages": [{"role": "user", "content": "Hello!"}],
     "stream": false
   }'</code></pre>

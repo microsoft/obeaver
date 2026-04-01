@@ -272,7 +272,7 @@ obeaver run ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU
 Launch a local HTTP server that exposes OpenAI-compatible endpoints:
 
 ```bash
-obeaver serve Phi-4-mini-instruct-generic-cpu:5                          # Foundry Local
+obeaver serve Phi-4-mini                          # Foundry Local
 obeaver serve --engine ort ./models/phi3-mini-int4   # ORT
 obeaver serve ./models/Qwen3-VL-2B-Instruct_VL_ONNX_INT4_CPU  # VL (auto-detected)
 ```
@@ -462,7 +462,7 @@ tools = [{
 messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
 
 # Turn 1 — model decides to call a tool
-resp = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages, tools=tools)
+resp = client.chat.completions.create(model="Phi-4-mini", messages=messages, tools=tools)
 choice = resp.choices[0]
 
 if choice.finish_reason == "tool_calls":
@@ -481,7 +481,7 @@ if choice.finish_reason == "tool_calls":
             "content": json.dumps(weather_result),
         },
     ]
-    final = client.chat.completions.create(model="Phi-4-mini-instruct-generic-cpu:5", messages=messages)
+    final = client.chat.completions.create(model="Phi-4-mini", messages=messages)
     print(final.choices[0].message.content)
 ```
 
@@ -489,7 +489,7 @@ if choice.finish_reason == "tool_calls":
 
 ```bash
 # Foundry Local engine
-obeaver serve Phi-4-mini-instruct-generic-cpu:5
+obeaver serve Phi-4-mini
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_foundrylocal_request.json
@@ -589,7 +589,7 @@ from openai import OpenAI
 client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
 
 response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     stream=True,
 )
@@ -718,7 +718,7 @@ obeaver/
 
 | Condition | Engine | Model argument |
 |-----------|--------|----------------|
-| macOS / Windows (default) | Foundry Local | Catalog alias (e.g. `Phi-4-mini-instruct-generic-cpu:5`) |
+| macOS / Windows (default) | Foundry Local | Catalog alias (e.g. `Phi-4-mini`) |
 | `--engine ort` or Linux (default) | onnxruntime-genai | Local directory path |
 | `embed` / `serve-embed` commands | EmbeddingEngine (ONNX) | Local ONNX model directory |
 

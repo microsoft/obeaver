@@ -110,9 +110,9 @@
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5">Copy</button>
+        <button class="copy-btn" data-code="obeaver serve Phi-4-mini">Copy</button>
       </div>
-      <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5</code></pre>
+      <pre><code>obeaver serve Phi-4-mini</code></pre>
     </div>
 
     <h3><span data-en>Step 2: Python client with tool calling</span><span data-zh>第 2 步：Python 客户端调用工具</span></h3>
@@ -142,7 +142,7 @@ messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
 
 # Turn 1 — model decides to call a tool
 resp = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=messages,
     tools=tools
 )
@@ -161,7 +161,7 @@ if choice.finish_reason == "tool_calls":
         {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
     ]
     final = client.chat.completions.create(
-        model="Phi-4-mini-instruct-generic-cpu:5",
+        model="Phi-4-mini",
         messages=messages
     )
     print(final.choices[0].message.content)'>Copy</button>
@@ -189,7 +189,7 @@ messages = [{"role": "user", "content": "What is the weather in Tokyo?"}]
 
 # Turn 1 — model decides to call a tool
 resp = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
+    model="Phi-4-mini",
     messages=messages,
     tools=tools
 )
@@ -208,7 +208,7 @@ if choice.finish_reason == "tool_calls":
         {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(weather_result)},
     ]
     final = client.chat.completions.create(
-        model="Phi-4-mini-instruct-generic-cpu:5",
+        model="Phi-4-mini",
         messages=messages
     )
     print(final.choices[0].message.content)</code></pre>
@@ -221,12 +221,12 @@ if choice.finish_reason == "tool_calls":
     <div class="code-block">
       <div class="code-block-header">
         <span class="code-block-lang">bash</span>
-        <button class="copy-btn" data-code="obeaver serve Phi-4-mini-instruct-generic-cpu:5
+        <button class="copy-btn" data-code="obeaver serve Phi-4-mini
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H &quot;Content-Type: application/json&quot; \
   -d @tests/tool_foundrylocal_request.json">Copy</button>
       </div>
-      <pre><code>obeaver serve Phi-4-mini-instruct-generic-cpu:5
+      <pre><code>obeaver serve Phi-4-mini
 curl -s http://127.0.0.1:18000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d @tests/tool_foundrylocal_request.json</code></pre>
