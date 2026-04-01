@@ -715,6 +715,17 @@ oBeaver 的灵感来源于以下优秀的开源项目，并在其理念基础上
 | [vLLM](https://github.com/vllm-project/vllm) | 高吞吐量、高内存效率的 LLM 推理引擎 |
 | [Foundry Local](https://github.com/microsoft/foundry-local) | 微软本地模型推理运行时，支持 NPU/GPU/CPU 加速 |
 | [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai) | ONNX Runtime 的生成式 AI 扩展 |
+| [Olive](https://github.com/microsoft/Olive) | 微软面向 ONNX Runtime 的模型优化工具包 |
+
+---
+
+## 感谢
+
+特别感谢微软 FTE [@leestoot](https://github.com/leestoot)、[@SCuffy](https://github.com/SCuffy) 和 [@haxudev](https://github.com/haxudev) 的支持与指导。
+
+感谢好朋友 [@lextm](https://github.com/lextm) 和 [@geffzhang](https://github.com/geffzhang) 的宝贵反馈。
+
+最后，衷心感谢我的家人——父亲、母亲、太太，以及两个宝贝智谦和慧璇——感谢他们一路以来的爱与支持。
 
 ---
 

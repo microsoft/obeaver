@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="oBeaver thanks — special thanks to contributors, friends, and family.">
+  <title>Thanks — oBeaver</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
+  <style>
+    .thanks-section {
+      margin: 36px 0;
+      padding: 28px 32px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .thanks-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      padding: 0;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .thanks-section h2 .section-icon {
+      font-size: 1.5rem;
+    }
+    .thanks-section p {
+      margin: 8px 0;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .thanks-people {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .thanks-person {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .thanks-person:hover {
+      border-color: var(--ob-amber);
+      box-shadow: 0 2px 8px rgba(232, 168, 40, 0.15);
+      color: var(--text);
+    }
+    .thanks-person img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+    .family-names {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .family-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo"><img src="imgs/obeaver-logo.svg" alt="oBeaver" class="logo-icon"><span class="logo-text"><span class="logo-o">o</span><span class="logo-beaver">Beaver</span></span></a>
+    </div>
+    <div class="header-right">
+      <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search docs..." autocomplete="off"><div class="search-results" id="search-results"></div></div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">中文</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      <a href="https://github.com/microsoft/obeaver" class="github-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Getting Started</span><span data-zh>快速入门</span></div>
+      <a href="index.html" class="sidebar-link"><span class="nav-icon">🏠</span> <span data-en>Home</span><span data-zh>首页</span></a>
+      <a href="quickstart.html" class="sidebar-link"><span class="nav-icon">🚀</span> <span data-en>Quickstart</span><span data-zh>快速开始</span></a>
+      <a href="models.html" class="sidebar-link"><span class="nav-icon">🧩</span> <span data-en>Models</span><span data-zh>模型</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Usage</span><span data-zh>使用指南</span></div>
+      <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
+      <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>Deployment</span><span data-zh>部署</span></div>
+      <a href="docker.html" class="sidebar-link"><span class="nav-icon">🐳</span> Docker</a>
+      <a href="architecture.html" class="sidebar-link"><span class="nav-icon">🏗️</span> <span data-en>Architecture</span><span data-zh>架构说明</span></a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title"><span data-en>More</span><span data-zh>更多</span></div>
+      <a href="acknowledgements.html" class="sidebar-link"><span class="nav-icon">🌟</span> <span data-en>Related Projects</span><span data-zh>相关项目</span></a>
+      <a href="thanks.html" class="sidebar-link active"><span class="nav-icon">❤️</span> <span data-en>Thanks</span><span data-zh>感谢</span></a>
+    </div>
+  </nav>
+</aside>
+
+<div class="docs-layout">
+  <main class="main-content content">
+
+    <h1><span data-en>Thanks</span><span data-zh>感谢</span></h1>
+    <p><span data-en>oBeaver would not be possible without the support, feedback, and encouragement from the following people.</span><span data-zh>oBeaver 的诞生离不开以下人士的支持、反馈与鼓励。</span></p>
+
+    <!-- Microsoft FTEs -->
+    <div class="thanks-section">
+      <h2>
+        <span class="section-icon">🏢</span>
+        <span><span data-en>Microsoft</span><span data-zh>微软</span></span>
+      </h2>
+      <p><span data-en>Special thanks to the following Microsoft FTEs for their support and guidance throughout the development of oBeaver.</span><span data-zh>特别感谢以下微软 FTE 在 oBeaver 开发过程中提供的支持与指导。</span></p>
+      <div class="thanks-people">
+        <a href="https://github.com/leestott" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/leestott.png?size=48" alt="leestott" loading="lazy">
+          @leestott
+        </a>
+        <a href="https://github.com/SCuffy" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/SCuffy.png?size=48" alt="SCuffy" loading="lazy">
+          @SCuffy
+        </a>
+        <a href="https://github.com/haxudev" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/haxudev.png?size=48" alt="haxudev" loading="lazy">
+          @haxudev
+        </a>
+        <a href="https://github.com/jacwu" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/jacwu.png?size=48" alt="jacwu" loading="lazy">
+          @jacwu
+        </a>
+      </div>
+    </div>
+
+    <!-- Friends -->
+    <div class="thanks-section">
+      <h2>
+        <span class="section-icon">🤝</span>
+        <span><span data-en>Friends</span><span data-zh>好朋友</span></span>
+      </h2>
+      <p><span data-en>Thanks to our good friends for their valuable feedback and continuous encouragement.</span><span data-zh>感谢好朋友们的宝贵反馈与持续鼓励。</span></p>
+      <div class="thanks-people">
+        <a href="https://github.com/lextm" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/lextm.png?size=48" alt="lextm" loading="lazy">
+          @lextm
+        </a>
+        <a href="https://github.com/geffzhang" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/geffzhang.png?size=48" alt="geffzhang" loading="lazy">
+          @geffzhang
+        </a>
+        <a href="https://github.com/eampat" class="thanks-person" target="_blank" rel="noopener noreferrer">
+          <img src="https://github.com/eampat.png?size=48" alt="eampat" loading="lazy">
+          @eampat
+        </a>
+      </div>
+    </div>
+
+    <!-- Family -->
+    <div class="thanks-section">
+      <h2>
+        <span class="section-icon">👨‍👩‍👧‍👦</span>
+        <span><span data-en>Family</span><span data-zh>家人</span></span>
+      </h2>
+      <p><span data-en>Finally, heartfelt thanks to my family for their unconditional love and support throughout this journey. None of this would have been possible without them.</span><span data-zh>最后，衷心感谢我的家人一路以来无条件的爱与支持。没有他们，这一切都不可能实现。</span></p>
+      <div class="family-names">
+        <span class="family-name"><span data-en>👨 Father</span><span data-zh>👨 父亲</span></span>
+        <span class="family-name"><span data-en>👩 Mother</span><span data-zh>👩 母亲</span></span>
+        <span class="family-name"><span data-en>👩‍❤️‍👨 Wife</span><span data-zh>👩‍❤️‍👨 太太</span></span>
+        <span class="family-name">👶 Zhiqian <span data-zh>智谦</span></span>
+        <span class="family-name">👧 Huixuan <span data-zh>慧璇</span></span>
+      </div>
+    </div>
+
+    <nav class="page-nav">
+      <a href="acknowledgements.html">
+        <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
+        <span class="nav-title"><span data-en>← Related Projects</span><span data-zh>← 相关项目</span></span>
+      </a>
+      <div></div>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 oBeaver · Apache 2.0 License</span>
+  <div class="footer-links">
+    <a href="https://github.com/microsoft/obeaver" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</footer>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

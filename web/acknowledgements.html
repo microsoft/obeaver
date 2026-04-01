@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oBeaver integrations — use with OpenAI SDK, LangChain, LlamaIndex, CI pipelines.">
-  <title>Integrations — oBeaver</title>
+  <meta name="description" content="oBeaver related projects — open-source projects that inspired oBeaver.">
+  <title>Related Projects — oBeaver</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="imgs/obeaver-logo.svg" type="image/svg+xml">
 </head>
@@ -39,7 +39,7 @@
       <a href="features.html" class="sidebar-link"><span class="nav-icon">⚡</span> <span data-en>Features</span><span data-zh>功能特性</span></a>
       <a href="tools.html" class="sidebar-link"><span class="nav-icon">🛠️</span> <span data-en>Function Tools</span><span data-zh>函数工具</span></a>
       <a href="api.html" class="sidebar-link"><span class="nav-icon">📡</span> <span data-en>API Reference</span><span data-zh>API 参考</span></a>
-      <a href="integrations.html" class="sidebar-link active"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
+      <a href="integrations.html" class="sidebar-link"><span class="nav-icon">🔗</span> <span data-en>Integrations</span><span data-zh>集成方案</span></a>
       <a href="benchmark.html" class="sidebar-link"><span class="nav-icon">📊</span> <span data-en>Benchmark</span><span data-zh>性能基准</span></a>
     </div>
     <div class="sidebar-section">
@@ -49,7 +49,7 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-title"><span data-en>More</span><span data-zh>更多</span></div>
-      <a href="acknowledgements.html" class="sidebar-link"><span class="nav-icon">🌟</span> <span data-en>Related Projects</span><span data-zh>相关项目</span></a>
+      <a href="acknowledgements.html" class="sidebar-link active"><span class="nav-icon">🌟</span> <span data-en>Related Projects</span><span data-zh>相关项目</span></a>
       <a href="thanks.html" class="sidebar-link"><span class="nav-icon">❤️</span> <span data-en>Thanks</span><span data-zh>感谢</span></a>
     </div>
   </nav>
@@ -58,67 +58,50 @@
 <div class="docs-layout">
   <main class="main-content content">
 
-    <h1><span data-en>Integrations</span><span data-zh>集成方案</span></h1>
-    <p><span data-en>oBeaver exposes an OpenAI-compatible API, so it works seamlessly with any framework that supports the OpenAI protocol. Just change the <code>base_url</code> to your local server.</span><span data-zh>oBeaver 提供 OpenAI 兼容 API，可与任何支持 OpenAI 协议的框架无缝配合。只需将 <code>base_url</code> 指向本地服务器。</span></p>
+    <h1><span data-en>Related Projects</span><span data-zh>相关项目</span></h1>
+    <p><span data-en>oBeaver is inspired by and builds upon the ideas from the following excellent open-source projects. We are grateful to each of these communities for paving the way.</span><span data-zh>oBeaver 的灵感来源于以下优秀的开源项目，并在其理念基础上构建。我们衷心感谢这些社区的开拓与贡献。</span></p>
 
-    <!-- OpenAI SDK -->
-    <h2 id="openai-sdk">OpenAI Python SDK</h2>
-    <div class="code-block">
-      <div class="code-block-header">
-        <span class="code-block-lang">python</span>
-        <button class="copy-btn" data-code='from openai import OpenAI
-
-client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
-
-response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
-    messages=[{"role": "user", "content": "What is the capital of France?"}],
-    stream=True,
-)
-for chunk in response:
-    print(chunk.choices[0].delta.content or "", end="", flush=True)'>Copy</button>
-      </div>
-      <pre><code>from openai import OpenAI
-
-client = OpenAI(base_url="http://127.0.0.1:18000/v1", api_key="unused")
-
-response = client.chat.completions.create(
-    model="Phi-4-mini-instruct-generic-cpu:5",
-    messages=[{"role": "user", "content": "What is the capital of France?"}],
-    stream=True,
-)
-for chunk in response:
-    print(chunk.choices[0].delta.content or "", end="", flush=True)</code></pre>
+    <div class="features-grid" style="margin-top: 32px;">
+      <a href="https://github.com/ollama/ollama" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🦙</div>
+        <h3>Ollama</h3>
+        <p><span data-en>Run large language models locally with a simple CLI. The pioneer of making local LLM inference accessible to everyone.</span><span data-zh>通过简洁的 CLI 在本地运行大语言模型。引领本地 LLM 推理走进千家万户的先驱。</span></p>
+      </a>
+      <a href="https://github.com/jundot/omlx" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🍎</div>
+        <h3>oMLX</h3>
+        <p><span data-en>Run large language models on Apple Silicon, ONNX-based. Demonstrating the power of on-device inference on macOS.</span><span data-zh>在 Apple Silicon 上运行大语言模型，基于 ONNX。展示了 macOS 上设备端推理的强大潜力。</span></p>
+      </a>
+      <a href="https://github.com/vllm-project/vllm" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">⚡</div>
+        <h3>vLLM</h3>
+        <p><span data-en>High-throughput and memory-efficient inference engine for LLMs. Setting the standard for production-grade LLM serving.</span><span data-zh>高吞吐量、高内存效率的 LLM 推理引擎。为生产级 LLM 服务树立了标杆。</span></p>
+      </a>
+      <a href="https://github.com/microsoft/foundry-local" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🏭</div>
+        <h3>Foundry Local</h3>
+        <p><span data-en>Microsoft's local model inference runtime with NPU/GPU/CPU acceleration. Enabling hardware-optimised local inference across devices.</span><span data-zh>微软本地模型推理运行时，支持 NPU/GPU/CPU 加速。实现跨设备的硬件优化本地推理。</span></p>
+      </a>
+      <a href="https://github.com/microsoft/onnxruntime-genai" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🧬</div>
+        <h3>ONNX Runtime GenAI</h3>
+        <p><span data-en>Generative AI extensions for ONNX Runtime. Bringing efficient generative model inference to the ONNX ecosystem.</span><span data-zh>ONNX Runtime 的生成式 AI 扩展。将高效的生成模型推理引入 ONNX 生态系统。</span></p>
+      </a>
+      <a href="https://github.com/microsoft/Olive" class="feature-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🫒</div>
+        <h3>Olive</h3>
+        <p><span data-en>Microsoft's model optimization toolkit for ONNX Runtime. Streamlining model conversion, quantization, and optimization workflows.</span><span data-zh>微软面向 ONNX Runtime 的模型优化工具包。简化模型转换、量化和优化工作流。</span></p>
+      </a>
     </div>
-
-    <div class="callout info">
-      <p><span data-en><strong>Tip:</strong> Point any OpenAI-compatible framework (LangChain, LlamaIndex, Microsoft Agent Framework, CrewAI, etc.) at <code>http://127.0.0.1:18000/v1</code> and it just works. The <code>api_key</code> can be any non-empty string.</span><span data-zh><strong>提示：</strong>将任何 OpenAI 兼容框架（LangChain、LlamaIndex、Microsoft Agent Framework、CrewAI 等）指向 <code>http://127.0.0.1:18000/v1</code> 即可使用。<code>api_key</code> 可以是任意非空字符串。</span></p>
-    </div>
-
-    <!-- Compatible Frameworks -->
-    <h2 id="supported"><span data-en>Compatible Frameworks</span><span data-zh>兼容框架</span></h2>
-    <p><span data-en>Any framework that supports the OpenAI API protocol works with oBeaver:</span><span data-zh>任何支持 OpenAI API 协议的框架都可与 oBeaver 配合使用：</span></p>
-    <table>
-      <thead>
-        <tr><th>Framework</th><th>Type</th><th>Notes</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>OpenAI Python SDK</strong></td><td>Base SDK</td><td>Direct support. Change <code>base_url</code> only.</td></tr>
-        <tr><td><strong>LangChain</strong></td><td>Orchestration</td><td>Via <code>ChatOpenAI</code> with custom <code>base_url</code></td></tr>
-        <tr><td><strong>LlamaIndex</strong></td><td>RAG Framework</td><td>Via <code>OpenAILike</code> with custom <code>api_base</code></td></tr>
-        <tr><td><strong>Microsoft Agent Framework</strong></td><td>Agentic AI</td><td>Full tool-calling support</td></tr>
-        <tr><td><strong>CrewAI</strong></td><td>Multi-agent</td><td>Via OpenAI-compatible endpoint</td></tr>
-      </tbody>
-    </table>
 
     <nav class="page-nav">
-      <a href="api.html">
+      <a href="architecture.html">
         <span class="nav-label"><span data-en>Previous</span><span data-zh>上一页</span></span>
-        <span class="nav-title"><span data-en>← API Reference</span><span data-zh>← API 参考</span></span>
+        <span class="nav-title"><span data-en>← Architecture</span><span data-zh>← 架构说明</span></span>
       </a>
-      <a href="benchmark.html" class="next">
+      <a href="thanks.html" class="next">
         <span class="nav-label"><span data-en>Next</span><span data-zh>下一页</span></span>
-        <span class="nav-title"><span data-en>Benchmark →</span><span data-zh>性能基准 →</span></span>
+        <span class="nav-title"><span data-en>Thanks →</span><span data-zh>感谢 →</span></span>
       </a>
     </nav>
 

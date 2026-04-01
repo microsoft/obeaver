@@ -744,6 +744,17 @@ oBeaver is inspired by and builds upon the ideas from the following excellent pr
 | [vLLM](https://github.com/vllm-project/vllm) | High-throughput and memory-efficient inference engine for LLMs |
 | [Foundry Local](https://github.com/microsoft/foundry-local) | Microsoft's local model inference runtime with NPU/GPU/CPU acceleration |
 | [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai) | Generative AI extensions for ONNX Runtime |
+| [Olive](https://github.com/microsoft/Olive) | Microsoft's model optimization toolkit for ONNX Runtime |
+
+---
+
+## Thanks
+
+Special thanks to Microsoft FTEs [@leestoot](https://github.com/leestoot), [@SCuffy](https://github.com/SCuffy), and [@haxudev](https://github.com/haxudev) for their support and guidance.
+
+Thanks to our good friends [@lextm](https://github.com/lextm) and [@geffzhang](https://github.com/geffzhang) for their valuable feedback.
+
+Finally, heartfelt thanks to my family — my father, my mother, my wife, and my two babies Zhiqian and Huixuan — for their love and support throughout this journey.
 
 ---
 
