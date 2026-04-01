@@ -31,7 +31,6 @@
   - [模型转换](#模型转换)
 - **示例与集成**
   - [使用 OpenAI Python SDK](#使用-openai-python-sdk)
-  - [集成方案](#集成方案)
 - **参考文档**
   - [API 参考](#api-参考)
   - [Docker](#docker)
@@ -552,49 +551,6 @@ for chunk in response:
 ```
 
 将任何 OpenAI 兼容框架（LangChain、LlamaIndex、Microsoft Agent Framework、CrewAI）指向 `http://127.0.0.1:18000/v1` 即可直接使用。
-
----
-
-## 集成方案
-
-### 与 LangChain 集成
-
-```python
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(
-    base_url="http://127.0.0.1:18000/v1",
-    api_key="unused",
-    model="Phi-4-mini-instruct-generic-cpu:5",
-)
-response = llm.invoke("用一句话解释 ONNX Runtime。")
-```
-
-### 与 LlamaIndex 集成
-
-```python
-from llama_index.llms.openai_like import OpenAILike
-
-llm = OpenAILike(
-    api_base="http://127.0.0.1:18000/v1",
-    api_key="unused",
-    model="Phi-4-mini-instruct-generic-cpu:5",
-)
-```
-
-### 在 CI / 自动评估中使用
-
-```bash
-# 在后台启动服务
-obeaver serve --engine ort ./models/phi3-mini-int4 &
-sleep 5
-
-# 对本地端点运行评估脚本
-python eval.py --api-base http://127.0.0.1:18000/v1
-
-# 清理
-kill %1
-```
 
 ---
 

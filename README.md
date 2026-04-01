@@ -51,10 +51,6 @@
       - [Conversion Commands](#conversion-commands)
 - [Examples \& Integrations](#examples--integrations)
   - [Use with the OpenAI Python SDK](#use-with-the-openai-python-sdk)
-  - [Integration Patterns](#integration-patterns)
-    - [With LangChain](#with-langchain)
-    - [With LlamaIndex](#with-llamaindex)
-    - [In CI / automated evaluation](#in-ci--automated-evaluation)
 - [Reference](#reference)
   - [API Reference](#api-reference)
     - [Chat server (`obeaver serve`)](#chat-server-obeaver-serve)
@@ -585,49 +581,6 @@ for chunk in response:
 ```
 
 Point any OpenAI-compatible framework (LangChain, LlamaIndex, Microsoft Agent Framework, CrewAI) at `http://127.0.0.1:18000/v1` and it just works.
-
----
-
-## Integration Patterns
-
-### With LangChain
-
-```python
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(
-    base_url="http://127.0.0.1:18000/v1",
-    api_key="unused",
-    model="Phi-4-mini-instruct-generic-cpu:5",
-)
-response = llm.invoke("Explain ONNX Runtime in one sentence.")
-```
-
-### With LlamaIndex
-
-```python
-from llama_index.llms.openai_like import OpenAILike
-
-llm = OpenAILike(
-    api_base="http://127.0.0.1:18000/v1",
-    api_key="unused",
-    model="Phi-4-mini-instruct-generic-cpu:5",
-)
-```
-
-### In CI / automated evaluation
-
-```bash
-# Start server in background
-obeaver serve --engine ort ./models/phi3-mini-int4 &
-sleep 5
-
-# Run your evaluation script against the local endpoint
-python eval.py --api-base http://127.0.0.1:18000/v1
-
-# Cleanup
-kill %1
-```
 
 ---
 
