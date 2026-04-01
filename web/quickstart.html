@@ -295,6 +295,70 @@ obeaver dashboard -e ort         # ORT engine (scans ./models)</code></pre>
     <p><span data-en>Then open</span><span data-zh>然后打开</span> <code>http://127.0.0.1:1573/</code></p>
     <p><span data-en>The dashboard includes model selector, system memory monitoring, inference parameters, a chat interface, and server logs.</span><span data-zh>仪表盘包含模型选择器、系统内存监控、推理参数、聊天界面和服务器日志。</span></p>
 
+    <!-- Uninstall -->
+    <h2 id="uninstall"><span data-en>Uninstall</span><span data-zh>卸载</span></h2>
+    <p><span data-en>To completely remove oBeaver and its associated files from your system:</span><span data-zh>要从系统中完全移除 oBeaver 及其相关文件：</span></p>
+
+    <h3><span data-en>1. Uninstall the Python package</span><span data-zh>1. 卸载 Python 包</span></h3>
+    <p><span data-en>Run the following command to uninstall oBeaver from your Python environment:</span><span data-zh>运行以下命令从 Python 环境中卸载 oBeaver：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="pip uninstall obeaver">Copy</button>
+      </div>
+      <pre><code>pip uninstall obeaver</code></pre>
+    </div>
+
+    <h3><span data-en>2. Remove the configuration file</span><span data-zh>2. 删除配置文件</span></h3>
+    <p><span data-en>oBeaver stores its configuration in <code>~/.obeaver/</code>. Remove it with:</span><span data-zh>oBeaver 的配置保存在 <code>~/.obeaver/</code> 目录下。使用以下命令删除：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="rm -rf ~/.obeaver">Copy</button>
+      </div>
+      <pre><code>rm -rf ~/.obeaver</code></pre>
+    </div>
+
+    <h3><span data-en>3. Remove downloaded models (optional)</span><span data-zh>3. 删除已下载的模型（可选）</span></h3>
+    <p><span data-en>The model directory is the path you set during <code>obeaver init</code>. Run <code>obeaver</code> (with no arguments) to check your current model directory path:</span><span data-zh>模型目录是你在执行 <code>obeaver init</code> 时设定的路径。运行 <code>obeaver</code>（不带参数）即可查看当前模型目录路径：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="obeaver">Copy</button>
+      </div>
+      <pre><code>obeaver</code></pre>
+    </div>
+    <p><span data-en>Then remove the displayed model directory:</span><span data-zh>然后删除显示的模型目录：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="rm -rf /path/to/your/models">Copy</button>
+      </div>
+      <pre><code>rm -rf /path/to/your/models</code></pre>
+    </div>
+
+    <h3><span data-en>4. Remove the source code (optional)</span><span data-zh>4. 删除源码（可选）</span></h3>
+    <p><span data-en>If you cloned the oBeaver repository, remove the project directory:</span><span data-zh>如果你克隆了 oBeaver 仓库，删除项目目录：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="rm -rf /path/to/obeaver">Copy</button>
+      </div>
+      <pre><code>rm -rf /path/to/obeaver</code></pre>
+    </div>
+
+    <h3><span data-en>5. Uninstall Foundry Local (optional)</span><span data-zh>5. 卸载 Foundry Local（可选）</span></h3>
+    <p><span data-en>If you no longer need Foundry Local:</span><span data-zh>如果你不再需要 Foundry Local：</span></p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+        <button class="copy-btn" data-code="brew uninstall microsoft/foundrylocal/foundrylocal   # macOS
+winget uninstall Microsoft.FoundryLocal              # Windows">Copy</button>
+      </div>
+      <pre><code>brew uninstall microsoft/foundrylocal/foundrylocal   # macOS
+winget uninstall Microsoft.FoundryLocal              # Windows</code></pre>
+    </div>
+
     <!-- Next Steps -->
     <h2 id="next-steps"><span data-en>Next Steps</span><span data-zh>后续步骤</span></h2>
     <ul>
