@@ -35,6 +35,7 @@
   - [API 参考](#api-参考)
   - [Docker](#docker)
   - [架构说明](#架构说明)
+- [卸载](#卸载)
 - [许可证](#许可证)
 
 ---
@@ -520,6 +521,22 @@ VL 模型转换使用 [Olive](https://github.com/microsoft/Olive) 优化管道�
   ```
 
 > 对于 Qwen 3 VL，必须加上 `--build-from-source` 以确保与最新的 Olive 和 onnxruntime-genai 功能兼容。
+>
+> 使用 `--build-from-source` 前，必须先安装 CMake：
+>
+> ```bash
+> # macOS
+> brew install cmake
+>
+> # Windows
+> winget install Kitware.CMake
+>
+> # Linux（Debian/Ubuntu）
+> sudo apt-get update && sudo apt-get install -y cmake
+>
+> # Linux（Fedora/RHEL）
+> sudo dnf install -y cmake
+> ```
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
@@ -704,6 +721,59 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ---
 
+## 卸载
+
+要从系统中完全移除 oBeaver 及其相关文件：
+
+### 1. 卸载 Python 包
+
+运行以下命令从 Python 环境中卸载 oBeaver：
+
+```bash
+pip uninstall obeaver
+```
+
+### 2. 删除配置文件
+
+oBeaver 的配置保存在 `~/.obeaver/` 目录下。使用以下命令删除：
+
+```bash
+rm -rf ~/.obeaver
+```
+
+### 3. 删除已下载的模型（可选）
+
+模型目录是你在执行 `obeaver init` 时设定的路径。运行 `obeaver`（不带参数）即可查看当前模型目录路径：
+
+```bash
+obeaver
+```
+
+然后删除显示的模型目录：
+
+```bash
+rm -rf /path/to/your/models
+```
+
+### 4. 删除源码（可选）
+
+如果你克隆了 oBeaver 仓库，删除项目目录：
+
+```bash
+rm -rf /path/to/obeaver
+```
+
+### 5. 卸载 Foundry Local（可选）
+
+如果你不再需要 Foundry Local：
+
+```bash
+brew uninstall microsoft/foundrylocal/foundrylocal   # macOS
+winget uninstall Microsoft.FoundryLocal              # Windows
+```
+
+---
+
 ## 致谢
 
 oBeaver 的灵感来源于以下优秀的开源项目，并在其理念基础上构建：
@@ -731,4 +801,4 @@ oBeaver 的灵感来源于以下优秀的开源项目，并在其理念基础上
 
 ## 许可证
 
-Apache 2.0
+MIT

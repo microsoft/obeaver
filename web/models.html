@@ -319,6 +319,37 @@ obeaver convert Qwen/Qwen2.5-VL-3B-Instruct --type vl
 obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></pre>
     </div>
 
+    <div class="callout warning">
+      <p><span data-en><strong>CMake is required when using <code>--build-from-source</code>.</strong> Install CMake before converting Qwen 3 VL or other models that need a source build of onnxruntime-genai.</span><span data-zh><strong>使用 <code>--build-from-source</code> 时需要安装 CMake。</strong> 在转换 Qwen 3 VL 或其他需要从源码构建 onnxruntime-genai 的模型前，请先安装 CMake。</span></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+          <button class="copy-btn" data-code="# macOS
+brew install cmake
+
+# Windows
+winget install Kitware.CMake
+
+# Linux (Debian/Ubuntu)
+sudo apt-get update && sudo apt-get install -y cmake
+
+# Linux (Fedora/RHEL)
+sudo dnf install -y cmake">Copy</button>
+        </div>
+        <pre><code># macOS
+brew install cmake
+
+# Windows
+winget install Kitware.CMake
+
+# Linux (Debian/Ubuntu)
+sudo apt-get update && sudo apt-get install -y cmake
+
+# Linux (Fedora/RHEL)
+sudo dnf install -y cmake</code></pre>
+      </div>
+    </div>
+
     <div class="callout info">
       <p><span data-en><strong>VL models always use the ORT engine.</strong> When a VL model directory is detected (contains <code>vision.onnx</code>), the engine is automatically set to <code>ort</code>.</span><span data-zh><strong>VL 模型始终使用 ORT 引擎。</strong> 当检测到 VL 模型目录（包含 <code>vision.onnx</code>）时，引擎会自动设置为 <code>ort</code>。</span></p>
     </div>

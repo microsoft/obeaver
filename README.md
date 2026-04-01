@@ -65,6 +65,7 @@
     - [Foundry Local engine flow](#foundry-local-engine-flow)
     - [ORT engine flow](#ort-engine-flow)
     - [Tool-calling internals](#tool-calling-internals)
+  - [Uninstall](#uninstall)
   - [License](#license)
 
 ---
@@ -551,6 +552,22 @@ VL model conversion uses the [Olive](https://github.com/microsoft/Olive) optimiz
 
 > For Qwen 3 VL, the `--build-from-source` flag is required to ensure compatibility with the latest Olive and onnxruntime-genai features.
 
+> When using `--build-from-source`, CMake must be installed first.
+>
+> ```bash
+> # macOS
+> brew install cmake
+>
+> # Windows
+> winget install Kitware.CMake
+>
+> # Linux (Debian/Ubuntu)
+> sudo apt-get update && sudo apt-get install -y cmake
+>
+> # Linux (Fedora/RHEL)
+> sudo dnf install -y cmake
+> ```
+
 | Flag | Default | Description |
 |------|---------|-------------|
 | `-m` / `--model` | *(required)* | Hugging Face model name or local path |
@@ -733,6 +750,59 @@ og.Model(path) → og.Tokenizer(model) → og.GeneratorParams(model)
 
 ---
 
+## Uninstall
+
+To completely remove oBeaver and its associated files from your system:
+
+### 1. Uninstall the Python package
+
+Run the following command to uninstall oBeaver from your Python environment:
+
+```bash
+pip uninstall obeaver
+```
+
+### 2. Remove the configuration file
+
+oBeaver stores its configuration in `~/.obeaver/`. Remove it with:
+
+```bash
+rm -rf ~/.obeaver
+```
+
+### 3. Remove downloaded models (optional)
+
+The model directory is the path you set during `obeaver init`. Run `obeaver` with no arguments to check your current model directory path:
+
+```bash
+obeaver
+```
+
+Then remove the displayed model directory:
+
+```bash
+rm -rf /path/to/your/models
+```
+
+### 4. Remove the source code (optional)
+
+If you cloned the oBeaver repository, remove the project directory:
+
+```bash
+rm -rf /path/to/obeaver
+```
+
+### 5. Uninstall Foundry Local (optional)
+
+If you no longer need Foundry Local:
+
+```bash
+brew uninstall microsoft/foundrylocal/foundrylocal   # macOS
+winget uninstall Microsoft.FoundryLocal              # Windows
+```
+
+---
+
 ## Acknowledgements
 
 oBeaver is inspired by and builds upon the ideas from the following excellent projects:
@@ -760,4 +830,4 @@ Finally, heartfelt thanks to my family — my father, my mother, my wife, and my
 
 ## License
 
-Apache 2.0
+MIT
