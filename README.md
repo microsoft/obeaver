@@ -188,7 +188,7 @@ Before using oBeaver, you need models. Choose based on your engine:
 No manual download needed — pass a catalog alias and Foundry handles it:
 
 ```bash
-obeaver run Phi-4-mini-instruct-generic-cpu:5   # auto-downloads on first use
+obeaver run phi-4-mini   # auto-downloads on first use
 ```
 
 > **💡 Tip:** Run `obeaver models` to list all locally cached models. On macOS/Windows, run `foundry model list` to browse the full Foundry Local catalog for more aliases.
@@ -248,8 +248,8 @@ Start an interactive multi-turn chat in your terminal.
 
 **Foundry Local** (macOS/Windows — auto-downloads models from catalog):
 ```bash
-obeaver run Phi-4-mini-instruct-generic-cpu:5
-obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # show TTFT + tok/s
+obeaver run phi-4-mini
+obeaver run phi-4-mini --timings   # show TTFT + tok/s
 ```
 
 **ORT engine** (all platforms — point to a local ONNX model directory):

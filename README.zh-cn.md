@@ -158,7 +158,7 @@ obeaver models
 无需手动下载——传入 catalog alias，Foundry 会自动处理：
 
 ```bash
-obeaver run Phi-4-mini-instruct-generic-cpu:5   # 首次使用时自动下载
+obeaver run phi-4-mini   # 首次使用时自动下载
 ```
 
 > **💡 提示：** 运行 `obeaver models` 列出所有本地缓存的模型。在 macOS/Windows 上，运行 `foundry model list` 浏览完整的 Foundry Local 目录获取更多别名。
@@ -218,8 +218,8 @@ oBeaver 已安装且模型就绪后，以下是核心使用方式。
 
 **Foundry Local**（macOS/Windows——自动从目录下载模型）：
 ```bash
-obeaver run Phi-4-mini-instruct-generic-cpu:5
-obeaver run Phi-4-mini-instruct-generic-cpu:5 --timings   # 显示 TTFT + tok/s
+obeaver run phi-4-mini
+obeaver run phi-4-mini --timings   # 显示 TTFT + tok/s
 ```
 
 **ORT 引擎**（全平台——指向本地 ONNX 模型目录）：
