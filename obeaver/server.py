@@ -716,7 +716,7 @@ def build_app(
         from obeaver.engine_foundrylocal import FoundryEngine
         _engine = FoundryEngine(
             model_alias=str(model_path),
-            device=None if execution_provider == "cpu" else execution_provider,
+            device=execution_provider or "cpu",
         )
         # Reuse the manager reference from the engine to avoid a second bootstrap
         try:

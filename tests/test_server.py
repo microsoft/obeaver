@@ -6,6 +6,7 @@ Run with:
 """
 
 import json
+import sys
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -45,6 +46,15 @@ class FakeEmbedEngine:
         if isinstance(texts, str):
             texts = [texts]
         return [[0.1, 0.2, 0.3] for _ in texts]
+
+
+class FakeFoundryCtorEngine:
+    """Minimal FoundryEngine stub for constructor forwarding tests."""
+
+    model_name = "foundry-test-model"
+
+    def stream(self, *, messages, config=None):
+        yield "ok"
 
 
 # ---------------------------------------------------------------------------
@@ -184,6 +194,37 @@ def embed_client():
         yield client
     finally:
         srv._embed_engine = original
+
+
+# ---------------------------------------------------------------------------
+# build_app — Foundry device selection
+# ---------------------------------------------------------------------------
+
+
+class TestBuildAppFoundryDeviceSelection:
+    def test_build_app_defaults_foundry_alias_to_cpu_device(self) -> None:
+        import obeaver.server as srv
+
+        fake_ctor = MagicMock(return_value=FakeFoundryCtorEngine())
+        fake_module = MagicMock(FoundryEngine=fake_ctor)
+
+        with patch.dict(sys.modules, {"obeaver.engine_foundrylocal": fake_module}):
+            app = srv.build_app(model_path="Phi-4-mini", engine_type="foundry", execution_provider="cpu")
+
+        assert app is not None
+        fake_ctor.assert_called_once_with(model_alias="Phi-4-mini", device="cpu")
+
+    def test_build_app_preserves_explicit_foundry_device(self) -> None:
+        import obeaver.server as srv
+
+        fake_ctor = MagicMock(return_value=FakeFoundryCtorEngine())
+        fake_module = MagicMock(FoundryEngine=fake_ctor)
+
+        with patch.dict(sys.modules, {"obeaver.engine_foundrylocal": fake_module}):
+            app = srv.build_app(model_path="Phi-4-mini", engine_type="foundry", execution_provider="cuda")
+
+        assert app is not None
+        fake_ctor.assert_called_once_with(model_alias="Phi-4-mini", device="cuda")
 
 
 # ---------------------------------------------------------------------------
