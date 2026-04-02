@@ -258,6 +258,142 @@ def _patch_cmake_fallback(repo_dir: Path) -> None:
               "CMAKE_OSX_ARCHITECTURES into CMakeLists.txt")
 
 
+def _find_msvc_lib_dirs() -> list[str]:
+    """Find MSVC and Windows SDK library directories on Windows.
+
+    Returns a list of absolute paths to x64 library directories, or an
+    empty list if detection fails.
+    """
+    lib_dirs: list[str] = []
+
+    # ── MSVC lib dir via vswhere ──
+    vswhere = (
+        Path(os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)"))
+        / "Microsoft Visual Studio" / "Installer" / "vswhere.exe"
+    )
+    if vswhere.exists():
+        result = subprocess.run(
+            [str(vswhere), "-latest", "-property", "installationPath"],
+            capture_output=True, text=True,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            vs_path = Path(result.stdout.strip())
+            msvc_root = vs_path / "VC" / "Tools" / "MSVC"
+            if msvc_root.exists():
+                # Pick the latest toolset version
+                versions = sorted(msvc_root.iterdir(), reverse=True)
+                for ver in versions:
+                    lib_x64 = ver / "lib" / "x64"
+                    if lib_x64.exists():
+                        lib_dirs.append(str(lib_x64))
+                        break
+
+    # ── Windows SDK (ucrt + um) ──
+    sdk_root = Path(os.environ.get(
+        "WindowsSdkDir",
+        r"C:\Program Files (x86)\Windows Kits\10",
+    ))
+    sdk_lib = sdk_root / "Lib"
+    if sdk_lib.exists():
+        # Pick the latest SDK version
+        versions = sorted(
+            [d for d in sdk_lib.iterdir() if d.is_dir() and d.name[0].isdigit()],
+            reverse=True,
+        )
+        for ver in versions:
+            ucrt = ver / "ucrt" / "x64"
+            um = ver / "um" / "x64"
+            if ucrt.exists():
+                lib_dirs.append(str(ucrt))
+            if um.exists():
+                lib_dirs.append(str(um))
+            if ucrt.exists() or um.exists():
+                break
+
+    return lib_dirs
+
+
+def _patch_disable_spectre(repo_dir: Path) -> None:
+    """Disable Spectre mitigation and inject MSVC lib paths for the build.
+
+    When the Visual Studio installation does not include Spectre-mitigated
+    libraries (an optional component), MSBuild raises MSB8040.  When the
+    build is not launched from a VS Developer Command Prompt, the linker
+    cannot find ``msvcprt.lib`` because the ``LIB`` environment variable
+    is not set.
+
+    We drop a ``Directory.Build.targets`` file that:
+      - Sets ``SpectreMitigation`` to ``false``.
+      - Adds the MSVC and Windows SDK library directories to the linker
+        search path via ``AdditionalLibraryDirectories``.
+
+    We use ``.targets`` rather than ``.props`` because MSBuild evaluates
+    targets *after* all project content, so our overrides win.
+    """
+    if platform.system() != "Windows":
+        return
+
+    lib_dirs = _find_msvc_lib_dirs()
+    lib_dirs_xml = ""
+    if lib_dirs:
+        dirs_str = ";".join(lib_dirs)
+        lib_dirs_xml = (
+            '  <ItemDefinitionGroup>\n'
+            '    <Link>\n'
+            f'      <AdditionalLibraryDirectories>'
+            f'{dirs_str};%(AdditionalLibraryDirectories)'
+            f'</AdditionalLibraryDirectories>\n'
+            '    </Link>\n'
+            '    <Lib>\n'
+            f'      <AdditionalLibraryDirectories>'
+            f'{dirs_str};%(AdditionalLibraryDirectories)'
+            f'</AdditionalLibraryDirectories>\n'
+            '    </Lib>\n'
+            '  </ItemDefinitionGroup>\n'
+        )
+        print(f"[build-from-source] Detected MSVC lib dirs: {lib_dirs}")
+
+    targets_content = (
+        '<?xml version="1.0" encoding="utf-8"?>\n'
+        '<Project>\n'
+        '  <PropertyGroup>\n'
+        '    <SpectreMitigation>false</SpectreMitigation>\n'
+        '  </PropertyGroup>\n'
+        f'{lib_dirs_xml}'
+        '</Project>\n'
+    )
+
+    # Place it both at the repo root and in the build output directory
+    # so MSBuild finds it regardless of which ancestor it walks to first.
+    for target_dir in [repo_dir, repo_dir / "build"]:
+        target_dir.mkdir(parents=True, exist_ok=True)
+        targets_file = target_dir / "Directory.Build.targets"
+        if targets_file.exists():
+            continue
+        targets_file.write_text(targets_content, encoding="utf-8")
+    print("[build-from-source] Created Directory.Build.targets: "
+          "disabled Spectre mitigation + injected lib paths")
+
+
+def _fix_source_encoding(repo_dir: Path) -> None:
+    """Re-encode Python source files that contain non-UTF-8 bytes.
+
+    The upstream ``build.py`` may contain Windows-1252 characters (e.g.
+    ``\x97`` em-dash) that are not valid UTF-8.  Python 3 expects source
+    files to be UTF-8 (PEP 3120), so we detect and transcode them.
+    """
+    for py_file in repo_dir.glob("*.py"):
+        raw = py_file.read_bytes()
+        try:
+            raw.decode("utf-8")
+        except UnicodeDecodeError:
+            # Try common Windows fallback encoding
+            text = raw.decode("cp1252")
+            py_file.write_bytes(text.encode("utf-8"))
+            print(f"[build-from-source] Re-encoded {py_file.name} from "
+                  f"cp1252 to UTF-8")
+
+
 def _patch_skip_examples(repo_dir: Path) -> None:
     """Patch build.py to unconditionally skip building C examples.
 
@@ -270,17 +406,17 @@ def _patch_skip_examples(repo_dir: Path) -> None:
     if not build_py.exists():
         return
 
-    content = build_py.read_text()
+    content = build_py.read_text(encoding="utf-8")
 
     # Pattern: the call to build_examples is guarded by a condition like:
     #   if not (arguments.skip_examples or arguments.android or arguments.ios):
     #       build_examples(arguments, environment)
     # We replace it with a pass-through that always skips.
     old = "build_examples(arguments, environment)"
-    new = "pass  # [obeaver] skip examples build — only wheel needed"
+    new = "pass  # [obeaver] skip examples build - only wheel needed"
     if old in content and "[obeaver]" not in content:
         content = content.replace(old, new)
-        build_py.write_text(content)
+        build_py.write_text(content, encoding="utf-8")
         print("[build-from-source] Patched build.py: skipped examples build")
 
 
@@ -320,6 +456,40 @@ def _is_olive_from_source() -> bool:
     return "github.com/microsoft/Olive" in output
 
 
+def _find_vcvarsall() -> Path | None:
+    """Locate vcvarsall.bat via vswhere on Windows.
+
+    Returns the Path to vcvarsall.bat, or None if not on Windows or not found.
+    """
+    if platform.system() != "Windows":
+        return None
+
+    # If we're already in a Developer Command Prompt, no need
+    lib_env = os.environ.get("LIB", "")
+    if "MSVC" in lib_env and "lib" in lib_env.lower():
+        return None
+
+    vswhere = (
+        Path(os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)"))
+        / "Microsoft Visual Studio" / "Installer" / "vswhere.exe"
+    )
+    if not vswhere.exists():
+        return None
+
+    result = subprocess.run(
+        [str(vswhere), "-latest", "-property", "installationPath"],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0 or not result.stdout.strip():
+        return None
+
+    vcvarsall = (
+        Path(result.stdout.strip())
+        / "VC" / "Auxiliary" / "Build" / "vcvarsall.bat"
+    )
+    return vcvarsall if vcvarsall.exists() else None
+
+
 def _build_ort_genai_from_source(device: str, work_dir: Path) -> None:
     """Clone, build, and install onnxruntime-genai from source.
 
@@ -353,6 +523,12 @@ def _build_ort_genai_from_source(device: str, work_dir: Path) -> None:
         check=True,
     )
 
+    # Fix non-UTF-8 bytes in source files (e.g. cp1252 em-dashes)
+    _fix_source_encoding(repo_dir)
+
+    # Disable Spectre mitigation if Spectre libs are not installed
+    _patch_disable_spectre(repo_dir)
+
     # Fix arch-related cmake issues (e.g. osx-x64 → osx-arm64)
     _patch_cmake_for_arch(repo_dir)
 
@@ -363,11 +539,28 @@ def _build_ort_genai_from_source(device: str, work_dir: Path) -> None:
 
     print(f"[build-from-source] Building Python wheel: "
           f"build.py {' '.join(build_args)} ...")
-    subprocess.run(
-        [sys.executable, "build.py"] + build_args,
-        cwd=str(repo_dir),
-        check=True,
-    )
+
+    # On Windows, run via vcvarsall.bat so the MSVC toolchain environment
+    # (LIB, INCLUDE, PATH) is available to cmake and MSBuild.
+    vcvarsall = _find_vcvarsall()
+    if vcvarsall is not None:
+        # Build a single cmd /c command that initializes MSVC env first
+        py = sys.executable
+        args_str = " ".join(build_args)
+        cmd = f'"{vcvarsall}" x64 && "{py}" build.py {args_str}'
+        print("[build-from-source] Using vcvarsall.bat for MSVC environment")
+        subprocess.run(
+            cmd,
+            cwd=str(repo_dir),
+            check=True,
+            shell=True,
+        )
+    else:
+        subprocess.run(
+            [sys.executable, "build.py"] + build_args,
+            cwd=str(repo_dir),
+            check=True,
+        )
 
     # Find and install the built wheel
     wheels = sorted(glob.glob(str(repo_dir / wheel_glob)))

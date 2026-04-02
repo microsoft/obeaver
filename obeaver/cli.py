@@ -386,9 +386,40 @@ def dashboard(
     """
     import uvicorn
 
+    from obeaver.config import get_models_dir
     from obeaver.server import build_dashboard_app
 
     _engine = engine_type or _default_engine()
+
+    # Check if models exist for the selected engine before launching
+    models_root = get_models_dir()
+    engine_folder = "ort" if _engine == "ort" else "foundrylocal"
+    engine_dir = models_root / engine_folder
+    rows: list[tuple[str, str, str]] = []
+    if engine_dir.is_dir():
+        rows.extend(_collect_models(engine_dir, engine_folder))
+    if not rows:
+        if _engine == "ort":
+            console.print(
+                f"\n[bold red]No models found in {engine_dir}.[/] "
+                "Please add an ORT model before launching the dashboard.\n\n"
+                "  [dim]Examples:[/]\n"
+                "    obeaver convert Qwen/Qwen3-0.6B                  "
+                "[dim]# convert a HF model to ONNX[/]\n"
+                "    hf download onnx-community/Qwen3-Embedding-0.6B "
+                f"--local-dir {engine_dir}/Qwen3-Embedding-0.6B  "
+                "[dim]# download a pre-converted model[/]\n"
+            )
+        else:
+            console.print(
+                f"\n[bold red]No models found in {engine_dir}.[/] "
+                "Please load a Foundry Local model before launching the dashboard.\n\n"
+                "  [dim]Example:[/]\n"
+                "    obeaver run phi-4-mini          "
+                "[dim]# downloads & caches a Foundry Local model[/]\n"
+            )
+        raise typer.Exit(code=1)
+
     console.print(
         f"\n[bold cyan]obeaver dashboard[/] — engine=[yellow]{_engine}[/]  "
         f"addr=[blue]http://{host}:{port}[/]\n"

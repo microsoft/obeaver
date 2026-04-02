@@ -2,7 +2,7 @@
 #
 #
 # Supported platforms:
-#   - linux/amd64 (x86_64)  — onnxruntime-genai installed from PyPI / Microsoft feed
+#   - linux/amd64 (x86_64)  — onnxruntime-genai compiled from source
 #   - linux/arm64 (aarch64) — onnxruntime-genai compiled from source
 #                             ref: https://onnxruntime.ai/docs/genai/howto/build-from-source.html\#linux-build
 #
@@ -34,9 +34,7 @@ ARG ORT_GENAI_REF=main
 
 # ==========================================================================
 # STAGE: ort-genai-builder
-# Build onnxruntime-genai from source for arm64 (aarch64).
-# This stage is only materialised when TARGETARCH=arm64; BuildKit skips it
-# entirely for amd64 builds because deps-amd64 does not depend on it.
+# Build onnxruntime-genai from source for both amd64 and arm64.
 # Ref: https://onnxruntime.ai/docs/genai/howto/build-from-source.html\#linux-build
 # ==========================================================================
 FROM python:${PYTHON_VERSION} AS ort-genai-builder
@@ -112,7 +110,7 @@ RUN python build.py --config Release --build --skip_examples --skip_tests
 # ==========================================================================
 # STAGE: deps-amd64
 # Install Python deps for x86_64.
-# onnxruntime-genai is pulled from PyPI / Microsoft ORT feed.
+# onnxruntime-genai is installed from the wheel built in ort-genai-builder.
 # ==========================================================================
 FROM python:${PYTHON_VERSION}-slim AS deps-amd64
 
@@ -148,12 +146,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         "numpy>=1.24.0" \
         "huggingface-hub>=0.23.0"
 
-# onnxruntime-genai — x86_64 manylinux wheel available on PyPI;
-# Microsoft ORT feed carries additional/newer builds.
+# onnxruntime-genai — installed from the wheel compiled from source for amd64
+COPY --from=ort-genai-builder /ort-genai-src/build/Linux/Release/wheel/ /tmp/ort-genai-wheels/
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install "onnxruntime-genai>=0.6.0" \
-        --extra-index-url \
-        https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/OnnxRuntime/pypi/simple/
+    pip install /tmp/ort-genai-wheels/*.whl && \
+    rm -rf /tmp/ort-genai-wheels
 
 # Server & CLI runtime deps
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -226,7 +223,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # STAGE: deps
 # Selects the correct platform-specific deps stage via TARGETARCH.
 # BuildKit evaluates TARGETARCH from --platform and resolves the name:
-#   amd64 -> deps-amd64  (ort-genai-builder is never built)
+#   amd64 -> deps-amd64  (ort-genai-builder is built from source)
 #   arm64 -> deps-arm64  (ort-genai-builder is built from source)
 # ==========================================================================
 FROM deps-${TARGETARCH} AS deps

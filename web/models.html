@@ -320,33 +320,47 @@ obeaver convert Qwen/Qwen3-VL-2B-Instruct --type vl --build-from-source</code></
     </div>
 
     <div class="callout warning">
-      <p><span data-en><strong>CMake is required when using <code>--build-from-source</code>.</strong> Install CMake before converting Qwen 3 VL or other models that need a source build of onnxruntime-genai.</span><span data-zh><strong>使用 <code>--build-from-source</code> 时需要安装 CMake。</strong> 在转换 Qwen 3 VL 或其他需要从源码构建 onnxruntime-genai 的模型前，请先安装 CMake。</span></p>
+      <p><span data-en><strong>CMake and a C++ compiler are required when using <code>--build-from-source</code>.</strong> On Windows you also need <strong>Visual Studio 2022+</strong> with the <strong>"Desktop development with C++"</strong> workload (including the <em>MSVC v143+ x64/x86 build tools</em> component). Install CMake and the compiler before converting Qwen 3 VL or other models that need a source build of onnxruntime-genai.</span><span data-zh><strong>使用 <code>--build-from-source</code> 时需要安装 CMake 和 C++ 编译器。</strong> 在 Windows 上还需要安装 <strong>Visual Studio 2022+</strong>，并勾选 <strong>"使用 C++ 的桌面开发"</strong> 工作负载（包含 <em>MSVC v143+ x64/x86 生成工具</em> 组件）。在转换 Qwen 3 VL 或其他需要从源码构建 onnxruntime-genai 的模型前，请先完成安装。</span></p>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang">bash</span>
           <button class="copy-btn" data-code="# macOS
 brew install cmake
 
-# Windows
+# Windows — Step 1: Install Visual Studio 2022 Build Tools
+#   Download from https://visualstudio.microsoft.com/downloads/
+#   In the installer, select:
+#     ✅ Desktop development with C++
+#       → MSVC v143+ x64/x86 build tools (checked by default)
+#       → Windows SDK (checked by default)
+
+# Windows — Step 2: Install CMake
 winget install Kitware.CMake
 
 # Linux (Debian/Ubuntu)
-sudo apt-get update && sudo apt-get install -y cmake
+sudo apt-get update && sudo apt-get install -y cmake build-essential
 
 # Linux (Fedora/RHEL)
-sudo dnf install -y cmake">Copy</button>
+sudo dnf install -y cmake gcc-c++">Copy</button>
         </div>
         <pre><code># macOS
 brew install cmake
 
-# Windows
+# Windows — Step 1: Install Visual Studio 2022 Build Tools
+#   Download from https://visualstudio.microsoft.com/downloads/
+#   In the installer, select:
+#     ✅ Desktop development with C++
+#       → MSVC v143+ x64/x86 build tools (checked by default)
+#       → Windows SDK (checked by default)
+
+# Windows — Step 2: Install CMake
 winget install Kitware.CMake
 
 # Linux (Debian/Ubuntu)
-sudo apt-get update && sudo apt-get install -y cmake
+sudo apt-get update && sudo apt-get install -y cmake build-essential
 
 # Linux (Fedora/RHEL)
-sudo dnf install -y cmake</code></pre>
+sudo dnf install -y cmake gcc-c++</code></pre>
       </div>
     </div>
 
